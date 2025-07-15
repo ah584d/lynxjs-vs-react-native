@@ -1,0 +1,27 @@
+.nav-bar {
+	width: 100%;
+	height: 48px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+	justify-content: space-between;
+	.nav-back {
+		position: absolute;
+		width: 100%;
+		text-align: start;
+		font-size: 16px;
+		font-weight: 500;
+		color: black;
+		left: 20px;
+		z-index: 2;
+	}
+	.nav-title {
+		position: absolute;
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 500;
+		color: black;
+	}
+}

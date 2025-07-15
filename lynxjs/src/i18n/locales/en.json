@@ -1,0 +1,9 @@
+{
+	"genre": "Genre",
+	"all": "All",
+	"action": "Action",
+	"comedy": "Comedy",
+	"drama": "Drama",
+	"year": "Year",
+	"get_movies": "Get Movies"
+}
