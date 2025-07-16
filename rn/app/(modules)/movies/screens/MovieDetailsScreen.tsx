@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '@/types/common';
 import { RouteProp } from '@react-navigation/native';
-import { observer } from 'mobx-react-lite';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useMovieStore } from '../stores/MovieStore';
+import { useMovieStore } from '../stores/useMovieStore';
 
 type MovieDetailsScreenRouteProp = RouteProp<RootStackParamList, 'MovieDetails'>;
 
@@ -12,15 +10,15 @@ interface MovieDetailsScreenProps {
   route: MovieDetailsScreenRouteProp;
 }
 
-export const MovieDetailsScreen = observer(({ route }: MovieDetailsScreenProps) => {
+export const MovieDetailsScreen = ({ route }: MovieDetailsScreenProps) => {
   const { movieId } = route.params;
   const movieStore = useMovieStore();
 
   useEffect(() => {
-    movieStore.fetchMovieDetails(movieId);
+    // movieStore.(movieId);
   }, [movieId]);
 
-  if (movieStore.isLoading && !movieStore.selectedMovie) {
+  if (movieStore.isLoading /*&& !movieStore.selectedMovie*/) {
     return (
       <View style={styles.container}>
         <Text>Loading...</Text>
@@ -36,36 +34,37 @@ export const MovieDetailsScreen = observer(({ route }: MovieDetailsScreenProps) 
     );
   }
 
-  const movie = movieStore.selectedMovie;
+  const movie = null; // movieStore.selectedMovie;
   if (!movie) return null;
 
-  const backdropUrl = movie.backdrop_path ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}` : 'https://via.placeholder.com/500x281?text=No+Backdrop';
+  const backdropUrl = {}; //movie.backdrop_path ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}` : 'https://via.placeholder.com/500x281?text=No+Backdrop';
 
   return (
-    <ScrollView style={styles.container}>
-      <Image source={{ uri: backdropUrl }} style={styles.backdrop} />
-      <View style={styles.content}>
-        <Text style={styles.title}>{movie.title}</Text>
-        <View style={styles.metaContainer}>
-          <View style={styles.ratingContainer}>
-            <Icon name='star' size={20} color='#FFD700' />
-            <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
-          </View>
-          <Text style={styles.year}>{new Date(movie.release_date).getFullYear()}</Text>
-          <Text style={styles.runtime}>{movie.runtime} min</Text>
-        </View>
-        <View style={styles.genresContainer}>
-          {movie.genres.map(genre => (
-            <Text key={genre.id} style={styles.genre}>
-              {genre.name}
-            </Text>
-          ))}
-        </View>
-        <Text style={styles.overview}>{movie.overview}</Text>
-      </View>
-    </ScrollView>
+    // <ScrollView style={styles.container}>
+    //   <Image source={{ uri: backdropUrl }} style={styles.backdrop} />
+    //   <View style={styles.content}>
+    //     <Text style={styles.title}>{movie?.title}</Text>
+    //     <View style={styles.metaContainer}>
+    //       <View style={styles.ratingContainer}>
+    //         <Icon name='star' size={20} color='#FFD700' />
+    //         <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
+    //       </View>
+    //       <Text style={styles.year}>{new Date(movie.release_date).getFullYear()}</Text>
+    //       <Text style={styles.runtime}>{movie.runtime} min</Text>
+    //     </View>
+    //     <View style={styles.genresContainer}>
+    //       {movie.genres.map(genre => (
+    //         <Text key={genre.id} style={styles.genre}>
+    //           {genre.name}
+    //         </Text>
+    //       ))}
+    //     </View>
+    //     <Text style={styles.overview}>{movie.overview}</Text>
+    //   </View>
+    // </ScrollView>
+    <></>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {

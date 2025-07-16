@@ -22,6 +22,7 @@
     "@lynx-js/types": "^3.2.0",
     "@types/react": "^18.3.18",
     "dotenv": "^16.4.7",
+    "prettier": "^3.6.2",
     "typescript": "~5.7.3"
   },
   "engines": {

@@ -1,3 +1,4 @@
+import { API_KEY, TMDB_BASE_URL } from '@/common/constants';
 import { create } from 'zustand';
 
 export interface Movie {
@@ -21,7 +22,7 @@ interface MovieStore {
   setFilter: (filter: string | null) => void;
 }
 
-export const useMovieStore = create<MovieStore>((set, get) => ({
+export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
   popularMovies: [],
   searchResults: [],
   isLoading: false,
@@ -31,8 +32,8 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
   fetchPopularMovies: async () => {
     set({ isLoading: true, error: null });
     try {
-      // Replace with your real API call
-      const response = await fetch('https://api.example.com/movies/popular');
+      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
+      const response = await fetch(url);
       const data = await response.json();
       set({ popularMovies: data.results, isLoading: false });
     } catch (e) {
@@ -46,9 +47,7 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
       set({ searchResults: [] });
       return;
     }
-    const results = popularMovies.filter(movie =>
-      movie.title.toLowerCase().includes(query.toLowerCase())
-    );
+    const results = popularMovies.filter((movie: Movie) => movie.title.toLowerCase().includes(query.toLowerCase()));
     set({ searchResults: results });
   },
 
@@ -59,9 +58,7 @@ export const useMovieStore = create<MovieStore>((set, get) => ({
       set({ searchResults: [] });
       return;
     }
-    const results = popularMovies.filter(movie =>
-      movie.genre && movie.genre.toLowerCase() === filter.toLowerCase()
-    );
+    const results = popularMovies.filter((movie: Movie) => movie.genre && movie.genre.toLowerCase() === filter.toLowerCase());
     set({ searchResults: results });
   },
 }));

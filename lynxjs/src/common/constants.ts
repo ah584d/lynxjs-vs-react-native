@@ -20,3 +20,8 @@ export const GENRE_MAP: Record<number, string> = {
     10752: 'War',
     37: 'Western',
 };
+
+
+
+export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+export const API_KEY = process.env.TMDB_API_KEY;
