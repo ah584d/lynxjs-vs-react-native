@@ -16,10 +16,10 @@ export default function App() {
     return null;
   }
   return (
-    // <SafeAreaProvider>
+    <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <RootNavigator />
       </ThemeProvider>
-    // </SafeAreaProvider>
+    </SafeAreaProvider>
   );
 }

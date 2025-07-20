@@ -1,16 +1,23 @@
 import React from 'react';
 import { RootStackParamList } from '@/types/common';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MovieDetailsScreen } from '../movies/screens/MovieDetailsScreen';
 import HomeScreen from '../movies/screens/HomeScreen';
+import { MovieDetailsScreen } from '../movies/screens/MovieDetailsScreen';
+import { NavigationHeader } from './NavigationHeader';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Home' component={HomeScreen} options={{ title: 'Movie With RN' }} />
-      <Stack.Screen name='MovieDetails' component={MovieDetailsScreen} options={{ title: 'Movie Details' }} />
+      <Stack.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{
+          header: () => <NavigationHeader />,
+        }}
+      />
+      <Stack.Screen name='MovieDetails' component={MovieDetailsScreen} />
     </Stack.Navigator>
   );
 };
