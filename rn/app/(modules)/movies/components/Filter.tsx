@@ -1,22 +1,27 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from '@/(modules)/movies/components/Button';
+import { Colors } from '@/common/colors';
 
 interface FilterProps {
   title: string;
   filters: string[];
-  onFilterChange: (filter: string) => void;
-  selectedFilterIndex?: number;
+  onFilterChange: (filter: string, index: number) => void;
+  currentSelection?: number;
 }
 
-export const Filter = ({ title, filters, onFilterChange, selectedFilterIndex }: FilterProps) => {
+export const Filter = ({ title, filters, onFilterChange, currentSelection }: FilterProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.filterContainer}>
         {filters.map((filter, index) => (
-          <TouchableOpacity key={filter} onPress={() => onFilterChange(filter)} style={[styles.filterButton, index === selectedFilterIndex && styles.selectedFilterButton]}>
-            <Text style={[styles.filterButtonText, index === selectedFilterIndex && styles.selectedFilterButtonText]}>{filter}</Text>
-          </TouchableOpacity>
+          <Button
+            key={filter}
+            title={filter}
+            onPress={() => onFilterChange(filter, index)}
+            customStyle={index === currentSelection ? styles.selectedFilterButton : undefined}
+            customStyleText={index === currentSelection ? styles.selectedFilterButtonText : undefined}
+          />
         ))}
       </View>
     </View>
@@ -25,7 +30,6 @@ export const Filter = ({ title, filters, onFilterChange, selectedFilterIndex }: 
 
 const styles = StyleSheet.create({
   container: {
-    // padding: 16,
     backgroundColor: Colors.light.background,
   },
   title: {
@@ -37,21 +41,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  filterButton: {
-    padding: 8,
-    borderWidth: 1,
-    borderColor: Colors.light.border,
-    borderRadius: 4,
-    margin: 4,
-  },
   selectedFilterButton: {
-    backgroundColor: Colors.light.primary,
-  },
-  filterButtonText: {
-    fontSize: 14,
-    color: Colors.light.text,
+    backgroundColor: 'green',
+    borderColor: 'purple',
   },
   selectedFilterButtonText: {
-    color: Colors.light.background,
+    color: 'red',
   },
 });

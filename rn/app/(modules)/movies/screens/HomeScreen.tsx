@@ -1,33 +1,41 @@
-import React from 'react';
-import { StyleSheet, View, useColorScheme } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Colors } from '@/common/colors';
 import { Filter } from '../components/Filter';
+import { useMovieStore } from '../stores/useMovieStore';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme();
+  const [genreFilter, setGenreFilter] = React.useState<number | undefined>(undefined);
+  const [yearFilter, setYearFilter] = React.useState<number | undefined>(3);
+  const fetchPopularMovies = useMovieStore(state => state.fetchPopularMovies);
+  const popularMovies = useMovieStore(state => state.popularMovies);
 
+  useEffect(() => {
+    fetchPopularMovies();
+  }, [genreFilter, yearFilter, fetchPopularMovies]);
+
+  console.log(`====> DEBUG popularMovies: `, popularMovies);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.genreFilter}>
-          <Filter title='Genre' filters={['Action', 'Comedy', 'Drama']} onFilterChange={onFilterGenreChange} />
+        <View style={styles.filter}>
+          <Filter title='Genre' currentSelection={genreFilter} filters={['Action', 'Comedy', 'Drama']} onFilterChange={onFilterGenreChange} />
         </View>
-        <View style={styles.yearFilter}>
-          <Filter title='Year' filters={['2022', '2023', '2024', '2025']} onFilterChange={onFilterYearChange} />
+        <View style={styles.filter}>
+          <Filter title='Year' currentSelection={yearFilter} filters={['2022', '2023', '2024', '2025']} onFilterChange={onFilterYearChange} />
         </View>
       </View>
-      <View style={styles.body}>
-        <View style={styles.list}></View>
-      </View>
+      <View style={styles.body}></View>
       <View style={styles.footer}></View>
     </View>
   );
 
-  function onFilterGenreChange(filter: string) {
-    console.log(`====> DEBUG filter: `, filter);
+  function onFilterGenreChange(_filter: string, index: number) {
+    setGenreFilter(c => (c === index ? undefined : index));
   }
-  function onFilterYearChange(filter: string) {
-    console.log(`====> DEBUG filter: `, filter);
+
+  function onFilterYearChange(_filter: string, index: number) {
+    setYearFilter(c => (c === index ? undefined : index));
   }
 }
 
@@ -39,30 +47,16 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 0.3,
-    borderWidth: 2,
-    borderColor: 'purple',
   },
-  genreFilter: {
+  filter: {
     padding: 10,
-    borderWidth: 2,
-  },
-  yearFilter: {
-    padding: 10,
-
-    borderWidth: 2,
   },
   body: {
     flex: 0.7,
     borderWidth: 2,
     borderColor: 'gray',
   },
-  list: {
-    borderWidth: 2,
-    borderColor: 'green',
-  },
   footer: {
     flex: 0.15,
-    borderWidth: 2,
-    borderColor: 'gray',
   },
 });

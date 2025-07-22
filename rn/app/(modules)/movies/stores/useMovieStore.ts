@@ -29,14 +29,17 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
   error: null,
   filter: null,
 
-  fetchPopularMovies: async () => {
+  fetchPopularMovies: async (page?: number) => {
     set({ isLoading: true, error: null });
+    console.log(`====> DEBUG TMDBBASEURL: `, TMDB_BASE_URL, API_KEY);
     try {
-      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
+      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false${page ? `&page=${page}` : ''}`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(`====> DEBUG response: `, data);
       set({ popularMovies: data.results, isLoading: false });
     } catch (e) {
+      console.log('Error occurred while fetching movies:', e);
       set({ error: 'Failed to fetch movies', isLoading: false });
     }
   },
