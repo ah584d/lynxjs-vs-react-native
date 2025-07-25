@@ -32,7 +32,9 @@ export default function MovieDetailsScreen() {
     );
   }
 
-  if (!movie) return null;
+  if (!movie) {
+    return null;
+  }
 
   const posterUrl = movie.posterUrl || 'https://via.placeholder.com/500x281?text=No+Poster';
 

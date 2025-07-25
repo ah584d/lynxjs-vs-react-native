@@ -1,15 +1,7 @@
 import { API_KEY, TMDB_BASE_URL } from '@/common/constants';
+import { Movie } from '@/types/common.types';
 import { create } from 'zustand';
-
-export interface Movie {
-  id: number;
-  title: string;
-  rating: number;
-  releaseDate: string;
-  overview: string;
-  posterUrl: string;
-  genre?: string;
-}
+import mock from '../../../mocks/movie.mock.json';
 
 interface MovieStore {
   popularMovies: Movie[];
@@ -34,10 +26,13 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
     console.log(`====> DEBUG TMDBBASEURL: `, TMDB_BASE_URL, API_KEY);
     try {
       let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false${page ? `&page=${page}` : ''}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(`====> DEBUG response: `, data);
-      set({ popularMovies: data.results, isLoading: false });
+      console.log(`====> DEBUG url: `, url);
+      //const response = await fetch(url);
+      //const data = await response.json();
+      //console.log(`====> DEBUG response: `, data, mock.results);
+
+      //set({ popularMovies: data.results, isLoading: false });
+      set({ popularMovies: mock.results, isLoading: false });
     } catch (e) {
       console.log('Error occurred while fetching movies:', e);
       set({ error: 'Failed to fetch movies', isLoading: false });

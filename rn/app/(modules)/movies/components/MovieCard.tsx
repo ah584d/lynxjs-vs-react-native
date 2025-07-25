@@ -1,32 +1,28 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Movie } from '../services/MovieService';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Movie } from '@/types/common.types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface MovieCardProps {
   movie: Movie;
-  onPress: () => void;
+  onPress: (movieId: number) => void;
 }
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
-  const posterUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : 'https://via.placeholder.com/500x750?text=No+Poster';
+  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress(movie.id)}>
       <Image source={{ uri: posterUrl }} style={styles.poster} />
       <View style={styles.details}>
         <Text style={styles.title} numberOfLines={1}>
           {movie.title}
         </Text>
         <View style={styles.ratingContainer}>
-          <Icon name="star" size={16} color="#FFD700" />
-          <Text style={styles.rating}>{movie.vote_average.toFixed(1)}</Text>
+          <Icon name='star' size={16} color='#FFD700' />
+          <Text style={styles.rating}>{movie?.vote_average?.toFixed(1)}</Text>
         </View>
-        <Text style={styles.releaseDate}>
-          {new Date(movie.release_date).getFullYear()}
-        </Text>
+        <Text style={styles.releaseDate}>{new Date(movie?.release_date ?? '').getFullYear()}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { Colors } from '@/common/colors';
 import { Filter } from '../components/Filter';
 import { useMovieStore } from '../stores/useMovieStore';
+import { MovieCard } from '../components/MovieCard';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = React.useState<number | undefined>(undefined);
@@ -14,7 +15,7 @@ export default function HomeScreen() {
     fetchPopularMovies();
   }, [genreFilter, yearFilter, fetchPopularMovies]);
 
-  console.log(`====> DEBUG popularMovies: `, popularMovies);
+  console.log(`====> DEBUG popularMovies: `, popularMovies?.length);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,11 +26,17 @@ export default function HomeScreen() {
           <Filter title='Year' currentSelection={yearFilter} filters={['2022', '2023', '2024', '2025']} onFilterChange={onFilterYearChange} />
         </View>
       </View>
-      <View style={styles.body}></View>
+      <View style={styles.body}>
+        <FlatList data={popularMovies} renderItem={({ item }) => <MovieCard movie={item} onPress={onMoviePress}/>} keyExtractor={item => item.id.toString()} />
+      </View>
       <View style={styles.footer}></View>
     </View>
   );
 
+  function onMoviePress(movieId: number):void {
+    console.log(`====> DEBUG redirect movieId: `, movieId);
+
+  }
   function onFilterGenreChange(_filter: string, index: number) {
     setGenreFilter(c => (c === index ? undefined : index));
   }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { RootStackParamList } from '@/types/common';
+import { RootStackParamList } from '@/types/common.types';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../movies/screens/HomeScreen';
-import { MovieDetailsScreen } from '../movies/screens/MovieDetailsScreen';
+import MovieDetailsScreen from '../movies/screens/[movieId]';
 import { NavigationHeader } from './NavigationHeader';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
