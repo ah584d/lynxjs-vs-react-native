@@ -1,7 +1,7 @@
 import { API_KEY, TMDB_BASE_URL } from '@/common/constants';
+import mock from '@/mocks/movie.mock.json';
 import { Movie } from '@/types/common.types';
 import { create } from 'zustand';
-import mock from '../../../mocks/movie.mock.json';
 
 interface MovieStore {
   popularMovies: Movie[];
@@ -23,7 +23,6 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
 
   fetchPopularMovies: async (page?: number) => {
     set({ isLoading: true, error: null });
-    console.log(`====> DEBUG TMDBBASEURL: `, TMDB_BASE_URL, API_KEY);
     try {
       let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false${page ? `&page=${page}` : ''}`;
       console.log(`====> DEBUG url: `, url);
@@ -56,7 +55,7 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
       set({ searchResults: [] });
       return;
     }
-    const results = popularMovies.filter((movie: Movie) => movie.genre && movie.genre.toLowerCase() === filter.toLowerCase());
+    const results = {} as any;//  popularMovies.filter((movie: Movie) => movie.genre && movie.genre.toLowerCase() === filter.toLowerCase());
     set({ searchResults: results });
   },
 }));

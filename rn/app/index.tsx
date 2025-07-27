@@ -1,1 +1,1 @@
-export { default } from './(modules)/movies/screens/HomeScreen';
+export { default } from './movies/screens/HomeScreen';

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 import { Movie } from '@/types/common.types';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface MovieCardProps {
   movie: Movie;
@@ -9,11 +9,14 @@ interface MovieCardProps {
 }
 
 export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
+  const [imageError, setImageError] = useState(false);
+
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
+  console.log(`====> DEBUG posterUrl: `, posterUrl);
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(movie.id)}>
-      <Image source={{ uri: posterUrl }} style={styles.poster} />
+      <RenderMoviePicture />
       <View style={styles.details}>
         <Text style={styles.title} numberOfLines={1}>
           {movie.title}
@@ -26,6 +29,16 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
       </View>
     </TouchableOpacity>
   );
+
+  function RenderMoviePicture(): ReactElement {
+    return imageError ? (
+      <View style={styles.poster}>
+        <Icon name='emoji-sad' size={40} color='orange'  />
+      </View>
+    ) : (
+      <Image source={{ uri: posterUrl }} style={styles.poster} onError={() => setImageError(true)} />
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -45,6 +58,10 @@ const styles = StyleSheet.create({
     width: 80,
     height: 120,
     borderRadius: 4,
+    borderColor: 'gray',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   details: {
     flex: 1,
