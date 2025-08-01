@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useMovieStore } from '@/movies/stores/useMovieStore';
-import { useLocalSearchParams } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useLocalSearchParams } from 'expo-router';
+import { useMovieStore } from '@/stores/useMovieStore';
 
 export default function MovieDetailsScreen() {
   console.log(`====> DEBUG MovieDetailsScreen: `);
-  const { movieId } = useLocalSearchParams();
+  const { id: movieId } = useLocalSearchParams<{ id: string }>();
   const { popularMovies, isLoading, error } = useMovieStore();
   const [movie, setMovie] = useState<any>(null);
 

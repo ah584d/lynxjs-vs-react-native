@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Colors } from '@/common/colors';
-import { Button } from '@/movies/components/Button';
+import { Button } from '@/components/Button';
 
 interface FilterProps {
   title: string;

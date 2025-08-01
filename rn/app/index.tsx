@@ -1,1 +1,1 @@
-export { default } from './movies/screens/HomeScreen';
+export { default } from './movies/HomeScreen';

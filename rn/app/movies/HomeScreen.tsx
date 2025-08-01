@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { useMovieStore } from '@/movies/stores/useMovieStore';
+import { useMovieStore } from '@/stores/useMovieStore';
 import { Filter } from '../components/Filter';
 import { MovieCard } from '../components/MovieCard';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(undefined);
   const [yearFilter, setYearFilter] = useState<number | undefined>(3);
-
-  const router = useRouter();
 
   const fetchPopularMovies = useMovieStore(state => state.fetchPopularMovies);
   const popularMovies = useMovieStore(state => state.popularMovies);
@@ -39,13 +37,9 @@ export default function HomeScreen() {
 
   function onMoviePress(movieId: number): void {
     console.log(`====> DEBUG redirect movieId: `, movieId);
-      router.push(`/movies/screens/movie/${movieId}`);
-
-    // router.navigate({
-    //   pathname: `/movies/screens/movie/[movieId]`,
-    //   params: { movieId },
-    // });
+    router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
+
   function onFilterGenreChange(_filter: string, index: number) {
     setGenreFilter(c => (c === index ? undefined : index));
   }
