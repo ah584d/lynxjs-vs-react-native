@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderColor: Colors.light.icon,
-    borderRadius: 4,
+    borderRadius: 8,
     margin: 4,
   },
 

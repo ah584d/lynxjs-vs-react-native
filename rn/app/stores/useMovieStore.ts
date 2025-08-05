@@ -9,7 +9,7 @@ interface MovieStore {
   isLoading: boolean;
   error: string | null;
   filter: string | null;
-  fetchPopularMovies: () => Promise<void>;
+  fetchPopularMovies: (year?: number, genre?: string) => Promise<void>;
   searchMovies: (query: string) => void;
   setFilter: (filter: string | null) => void;
 }

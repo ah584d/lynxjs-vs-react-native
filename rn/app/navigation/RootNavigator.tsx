@@ -1,7 +1,5 @@
 import React from 'react';
 import { Stack } from 'expo-router';
-import HomeScreen from '@/movies/HomeScreen';
-import MovieDetailsScreen from '@/movies/movie/[id]';
 import { NavigationHeader } from './NavigationHeader';
 
 export const RootNavigator = () => {
@@ -13,7 +11,13 @@ export const RootNavigator = () => {
           header: () => <NavigationHeader />,
         }}
       />
-      <Stack.Screen name='movies/movie/[id]' />
+      <Stack.Screen
+        name='movies/movie/[id]'
+        options={{
+          headerTitle: 'Movie Detail',
+          headerBackButtonDisplayMode: 'minimal',
+        }}
+      />
     </Stack>
   );
 };

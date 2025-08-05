@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Movie } from '@/types/common.types';
@@ -8,7 +8,7 @@ interface MovieCardProps {
   onPress: (movieId: number) => void;
 }
 
-export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
+export const MovieCard: FC<MovieCardProps> = ({ movie, onPress }) => {
   const [imageError, setImageError] = useState(false);
 
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
@@ -33,7 +33,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
   function RenderMoviePicture(): ReactElement {
     return imageError ? (
       <View style={styles.poster}>
-        <Icon name='emoji-sad' size={40} color='orange'  />
+        <Icon name='emoji-sad' size={40} color='orange' />
       </View>
     ) : (
       <Image source={{ uri: posterUrl }} style={styles.poster} onError={() => setImageError(true)} />

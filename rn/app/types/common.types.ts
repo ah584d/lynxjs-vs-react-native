@@ -1,4 +1,3 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export interface MovieApiResponse {
   page: number;
@@ -12,7 +11,6 @@ export type RootStackParamList = {
   MovieDetails: { movieId: number };
 };
 
-export type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export interface Movie {
   adult: boolean;

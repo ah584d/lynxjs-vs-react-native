@@ -12,7 +12,9 @@ interface FilterProps {
 export const Filter = ({ title, filters, onFilterChange, currentSelection }: FilterProps) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>
+        {title}: {getCurrentSelection(currentSelection)}
+      </Text>
       <View style={styles.filterContainer}>
         {filters.map((filter, index) => (
           <Button
@@ -26,6 +28,13 @@ export const Filter = ({ title, filters, onFilterChange, currentSelection }: Fil
       </View>
     </View>
   );
+
+  function getCurrentSelection(index?: number): string {
+    if (index === undefined) {
+      return 'All';
+    }
+    return filters[index];
+  }
 };
 
 const styles = StyleSheet.create({
@@ -33,8 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
     marginBottom: 8,
   },
   filterContainer: {
@@ -43,9 +51,9 @@ const styles = StyleSheet.create({
   },
   selectedFilterButton: {
     backgroundColor: 'green',
-    borderColor: 'purple',
+    //borderColor: 'purple',
   },
   selectedFilterButtonText: {
-    color: 'red',
+    color: 'white',
   },
 });

@@ -6,7 +6,7 @@ export const NavigationHeader = () => {
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
       <View style={styles.header}>
-        <Text style={styles.title}>Navigation Header</Text>
+        <Text style={styles.title}>Movie With Lynx</Text>
       </View>
     </SafeAreaView>
   );
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     color: Colors.light.text,
     fontWeight: 'bold',
   },

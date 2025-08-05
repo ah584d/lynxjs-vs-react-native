@@ -27,5 +27,6 @@
   ],
   "importOrderSeparation": false,
   "importOrderSortSpecifiers": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  //	"importOrderParserPlugins": ["typescript", "decorators-legacy"]
 }

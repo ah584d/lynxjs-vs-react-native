@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { useMovieStore } from '@/stores/useMovieStore';
+import { Movie } from '@/types/common.types';
 import { Filter } from '../components/Filter';
 import { MovieCard } from '../components/MovieCard';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(undefined);
   const [yearFilter, setYearFilter] = useState<number | undefined>(3);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchPopularMovies = useMovieStore(state => state.fetchPopularMovies);
   const popularMovies = useMovieStore(state => state.popularMovies);
@@ -16,6 +18,12 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchPopularMovies();
   }, [genreFilter, yearFilter, fetchPopularMovies]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchPopularMovies();
+    setRefreshing(false);
+  }, []);
 
   console.log(`====> DEBUG popularMovies: `, popularMovies?.length);
   return (
@@ -29,14 +37,16 @@ export default function HomeScreen() {
         </View>
       </View>
       <View style={styles.body}>
-        <FlatList data={popularMovies} renderItem={({ item }) => <MovieCard movie={item} onPress={onMoviePress} />} keyExtractor={item => item.id.toString()} />
+        <FlatList data={popularMovies} renderItem={renderItem} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} />
       </View>
       <View style={styles.footer}></View>
     </View>
   );
 
+  function renderItem({ item }: { item: Movie }): ReactElement {
+    return <MovieCard movie={item} onPress={onMoviePress} />;
+  }
   function onMoviePress(movieId: number): void {
-    console.log(`====> DEBUG redirect movieId: `, movieId);
     router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
 
