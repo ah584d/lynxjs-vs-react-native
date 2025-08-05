@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import { Colors } from '@/common/colors';
 import { Movie } from '@/types/common.types';
 
 interface MovieCardProps {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 120,
     borderRadius: 4,
-    borderColor: 'gray',
+    borderColor: Colors.light.border,
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -46,6 +46,7 @@ export default function HomeScreen() {
   function renderItem({ item }: { item: Movie }): ReactElement {
     return <MovieCard movie={item} onPress={onMoviePress} />;
   }
+
   function onMoviePress(movieId: number): void {
     router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 0.7,
     borderWidth: 2,
-    borderColor: 'gray',
+    borderColor: Colors.light.border,
   },
   footer: {
     flex: 0.15,

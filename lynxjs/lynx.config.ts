@@ -7,13 +7,15 @@ import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin'
 dotenv.config()
 
 export default defineConfig({
+  server: {
+    host: "localhost",
+  },
   plugins: [
     pluginQRCode({
       schema(url) {
         // We use `?fullscreen=true` to open the page in LynxExplorer in full screen mode
         // return `${url}?fullscreen=true`
-        return 'http://lynxjs.local:3000/main.lynx.bundle?fullscreen=true'
-
+        return 'http://localhost:3000/main.lynx.bundle?fullscreen=true'
       },
     }),
     pluginReactLynx(),
