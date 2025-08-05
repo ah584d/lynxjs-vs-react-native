@@ -6,7 +6,7 @@ import type { IMovie } from "../../types/Movie.js";
 import "./Movies.css";
 import { useNavigate } from "react-router";
 import { t } from "../../i18n/i18n.js";
-import { API_KEY, GENRE_MAP, TMDB_BASE_URL } from "../../common/Constants.js";
+import { API_KEY, GENRE_MAP, TMDB_BASE_URL } from "../../common/constants.js";
 
 
 export function Movies() {
