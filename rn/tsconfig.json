@@ -5,7 +5,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["./app/*"]
+      "@app/*": ["./app/*"],
+      "@/*": ["./src/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

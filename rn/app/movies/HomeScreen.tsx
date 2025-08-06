@@ -4,8 +4,8 @@ import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { useMovieStore } from '@/stores/useMovieStore';
 import { Movie } from '@/types/common.types';
-import { Filter } from '../components/Filter';
-import { MovieCard } from '../components/MovieCard';
+import { Filter } from '../../src/components/Filter';
+import { MovieCard } from '../../src/components/MovieCard';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(undefined);
