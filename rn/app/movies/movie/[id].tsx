@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useLocalSearchParams } from 'expo-router';
-import { useMovieStore } from '@/stores/useMovieStore';
+import { Colors } from '@/common/colors';
+import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 
 export default function MovieDetailsScreen() {
@@ -37,7 +38,7 @@ export default function MovieDetailsScreen() {
     return null;
   }
 
-  const posterUrl = movie.poster_path || 'https://via.placeholder.com/500x281?text=No+Poster';
+  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
   return (
     <ScrollView style={styles.container}>
@@ -64,17 +65,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  poster: {
-    height: 200,
-    borderRadius: 4,
-    borderColor: 'gray',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   body: {
     paddingHorizontal: 16,
+  },
+  poster: {
+    width: 250,
+    height: 350,
+    borderRadius: 4,
+    borderColor: Colors.light.border,
+    borderWidth: 1,
+    marginVertical: 16,
+    alignSelf: 'center',
   },
   title: {
     fontSize: 24,

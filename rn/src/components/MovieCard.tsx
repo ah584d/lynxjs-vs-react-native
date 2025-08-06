@@ -14,7 +14,7 @@ export const MovieCard: FC<MovieCardProps> = ({ movie, onPress }) => {
 
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
-  console.log(`====> DEBUG posterUrl: `, posterUrl);
+  console.log(`====> DEBUG posterUrl in Movie card: `, posterUrl);
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(movie.id)}>
       <RenderMoviePicture />

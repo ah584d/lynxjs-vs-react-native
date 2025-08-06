@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from 'expo-router';
-import { NavigationHeader } from './NavigationHeader';
+import { NavigationHeader } from '@/components/NavigationHeader';
 
 export const RootNavigator = () => {
   return (

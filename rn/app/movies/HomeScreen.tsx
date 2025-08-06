@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { useMovieStore } from '@/stores/useMovieStore';
+import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 import { Filter } from '../../src/components/Filter';
 import { MovieCard } from '../../src/components/MovieCard';
