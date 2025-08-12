@@ -1,8 +1,8 @@
 import type { ReactNode } from '@lynx-js/react';
 import type { CSSProperties } from '@lynx-js/types';
 import { useNavigate } from 'react-router';
-import NavBar from '../NavBar/NavBar.jsx';
-import SafeViewArea from '../SafeViewArea/SafeViewArea.jsx';
+import NavBar from '../NavBar/index.jsx';
+import SafeViewArea from '../SafeViewArea/index.jsx';
 import './styles.css';
 
 interface PageViewProps {

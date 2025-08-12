@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import mock from '@/__mocks__/movie.mock.json';
-import { API_KEY, TMDB_BASE_URL } from '@/common/constants';
 import { Movie } from '@/types/common.types';
+import { getUrl } from '@/services/utils';
 
 interface MovieStore {
   popularMovies: Movie[];
@@ -9,7 +9,7 @@ interface MovieStore {
   isLoading: boolean;
   error: string | null;
   filter: string | null;
-  fetchPopularMovies: (year?: number, genre?: string) => Promise<void>;
+  fetchPopularMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
   searchMovies: (query: string) => void;
   setFilter: (filter: string | null) => void;
 }
@@ -21,10 +21,10 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
   error: null,
   filter: null,
 
-  fetchPopularMovies: async (page?: number) => {
+  fetchPopularMovies: async (page: number, year?: string, genreId?: number) => {
     set({ isLoading: true, error: null });
     try {
-      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false${page ? `&page=${page}` : ''}`;
+      const url = getUrl(page, year, genreId);
       console.log(`====> DEBUG url: `, url);
       const response = await fetch(url);
       const data = await response.json();

@@ -16,12 +16,12 @@ export default function HomeScreen() {
   const popularMovies = useMovieStore(state => state.popularMovies);
 
   useEffect(() => {
-    fetchPopularMovies();
+    fetchPopularMovies(1);
   }, [genreFilter, yearFilter, fetchPopularMovies]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await fetchPopularMovies();
+    await fetchPopularMovies(1);
     setRefreshing(false);
   }, []);
 
