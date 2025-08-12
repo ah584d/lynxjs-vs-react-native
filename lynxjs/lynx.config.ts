@@ -20,7 +20,7 @@ export default defineConfig({
       },
     }),
     pluginReactLynx(),
-    //pluginTypeCheck(),
+    pluginTypeCheck(),
   ],
   source: {
     define: {
