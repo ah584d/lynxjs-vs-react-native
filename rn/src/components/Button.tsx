@@ -6,11 +6,12 @@ interface ButtonProps {
   onPress: () => void;
   customStyle?: StyleProp<ViewStyle>;
   customStyleText?: StyleProp<TextStyle>;
+  disabled?: boolean;
 }
 
-export const Button = ({ title, onPress, customStyle, customStyleText }: ButtonProps) => {
+export const Button = ({ title, onPress, customStyle, customStyleText, disabled = false }: ButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.container, customStyle]} onPress={onPress}>
+    <TouchableOpacity style={[styles.container, customStyle]} onPress={onPress} disabled={disabled}>
       <Text style={[styles.text, customStyleText]}>{title}</Text>
     </TouchableOpacity>
   );
@@ -18,13 +19,14 @@ export const Button = ({ title, onPress, customStyle, customStyleText }: ButtonP
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Colors.light.lightGray,
     padding: 8,
-    borderWidth: 1,
-    borderColor: Colors.light.icon,
     borderRadius: 8,
     margin: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 54,
   },
-
   text: {
     fontSize: 14,
     color: Colors.light.text,

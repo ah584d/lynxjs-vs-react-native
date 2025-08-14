@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import mock from '@/__mocks__/movie.mock.json';
-import { Movie } from '@/types/common.types';
 import { getUrl } from '@/services/utils';
+import { Movie } from '@/types/common.types';
 
 interface MovieStore {
   popularMovies: Movie[];
@@ -12,6 +12,7 @@ interface MovieStore {
   fetchPopularMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
   searchMovies: (query: string) => void;
   setFilter: (filter: string | null) => void;
+  setIsLoading: (status: boolean) => void;
 }
 
 export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
@@ -28,7 +29,6 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
       console.log(`====> DEBUG url: `, url);
       const response = await fetch(url);
       const data = await response.json();
-      // console.log(`====> DEBUG response: `, data, mock.results);
 
       set({ popularMovies: data.results, isLoading: false });
       //set({ popularMovies: mock.results, isLoading: false });
@@ -57,5 +57,9 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
     }
     const results = {} as any; //  popularMovies.filter((movie: Movie) => movie.genre && movie.genre.toLowerCase() === filter.toLowerCase());
     set({ searchResults: results });
+  },
+
+  setIsLoading: (status: boolean) => {
+    set({ isLoading: status });
   },
 }));

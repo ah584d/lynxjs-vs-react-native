@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   header: {
-    height: 40,
+    height: 36,
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     color: Colors.light.text,
     fontWeight: 'bold',
   },

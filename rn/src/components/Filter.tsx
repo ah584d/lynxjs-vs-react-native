@@ -50,10 +50,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   selectedFilterButton: {
-    backgroundColor: 'green',
-    //borderColor: 'purple',
+    backgroundColor: Colors.light.buttonBackground,
   },
   selectedFilterButtonText: {
-    color: 'white',
+    color: Colors.light.white,
   },
 });
