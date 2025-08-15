@@ -38,7 +38,9 @@ export const MovieCard: FC<MovieCardProps> = ({ movie, onPress, customStyle }) =
     // TODO: to extract
     return imageError ? (
       <View style={styles.poster}>
-        <Icon name='emoji-sad' size={40} color='orange' />
+        <Text style={styles.oopsText}>Oops!!</Text>
+        <Icon name='emoji-sad' size={60} color='orange' />
+        <Text style={styles.oopsText}>something went wrong</Text>
       </View>
     ) : (
       <Image source={{ uri: posterUrl }} style={styles.poster} onError={() => setImageError(true)} />
@@ -71,6 +73,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.grayBorder,
     borderWidth: 1,
     marginBottom: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   details: {
     flex: 1,
@@ -95,5 +99,12 @@ const styles = StyleSheet.create({
   releaseDate: {
     fontSize: 14,
     color: '#666',
+  },
+  oopsText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.light.purple,
+    padding: 16,
+    textAlign: 'center'
   },
 });

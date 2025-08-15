@@ -21,7 +21,8 @@ export const Colors = {
     lightGray2: '#d0cbcb4d',
     movieCardBackGround: '#f5f5f5',
     blue: '#2e47e7ff',
-    lightGreen: '#eaf5eaff'
+    lightGreen: '#eaf5eaff',
+    purple: '#9f44e0ff'
   },
   dark: {
     text: '#ECEDEE',
