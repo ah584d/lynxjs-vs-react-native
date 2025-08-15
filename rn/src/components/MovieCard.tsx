@@ -46,6 +46,8 @@ export const MovieCard: FC<MovieCardProps> = ({ movie, onPress, customStyle }) =
   }
 };
 
+export const MovieCardMemo = React.memo(MovieCard);
+
 const styles = StyleSheet.create({
   container: {
     padding: 10,

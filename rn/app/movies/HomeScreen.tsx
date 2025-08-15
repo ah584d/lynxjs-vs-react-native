@@ -5,13 +5,13 @@ import { Colors } from '@/common/colors';
 import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
-import { MovieCard } from '@/components/MovieCard';
+import { MovieCard, MovieCardMemo } from '@/components/MovieCard';
 import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 
 export default function HomeScreen() {
-  const [genreFilter, setGenreFilter] = useState<number>(0);
-  const [yearFilter, setYearFilter] = useState<number>(3);
+  const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
+  const [yearFilter, setYearFilter] = useState<number | undefined>(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
 
@@ -25,9 +25,13 @@ export default function HomeScreen() {
 
   const onRefresh = useCallback(async () => {
     setForceRefresh(true);
-    await fetchMovies(currentPage, yearFilter ? YEARS_FILTER[yearFilter] : ALL, genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]]);
+    const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
+    const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
+    console.log(`====> DEBUG year: `, year);
+    console.log(`====> DEBUG genre: `, genre);
+    await fetchMovies(currentPage, year, genre);
     setForceRefresh(false);
-  }, [forceRefresh]);
+  }, [forceRefresh, yearFilter, genreFilter]);
 
   console.log(`\n\n====> DEBUG movies list: `, popularMovies?.length);
   return (
@@ -66,7 +70,7 @@ export default function HomeScreen() {
   );
 
   function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
-    return <MovieCard movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} />;
+    return <MovieCardMemo movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} />;
   }
 
   function onMoviePress(movieId: number): void {
