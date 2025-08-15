@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import mock from '@/__mocks__/movie.mock.json';
+import { MovieService } from '@/services/movie.service';
 import { getUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
 
@@ -9,7 +10,7 @@ interface MovieStore {
   isLoading: boolean;
   error: string | null;
   filter: string | null;
-  fetchPopularMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
+  fetchMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
   searchMovies: (query: string) => void;
   setFilter: (filter: string | null) => void;
   setIsLoading: (status: boolean) => void;
@@ -22,16 +23,14 @@ export const useMovieStore = create<MovieStore>((set: any, get: any) => ({
   error: null,
   filter: null,
 
-  fetchPopularMovies: async (page: number, year?: string, genreId?: number) => {
+  fetchMovies: async (page: number, year?: string, genreId?: number) => {
     set({ isLoading: true, error: null });
     try {
       const url = getUrl(page, year, genreId);
-      console.log(`====> DEBUG url: `, url);
-      const response = await fetch(url);
-      const data = await response.json();
+      // const response = await MovieService.getMovies(url);
 
-      set({ popularMovies: data.results, isLoading: false });
-      //set({ popularMovies: mock.results, isLoading: false });
+      //set({ popularMovies: response, isLoading: false });
+      set({ popularMovies: mock.results, isLoading: false });
     } catch (e) {
       console.log('Error occurred while fetching movies:', e);
       set({ error: 'Failed to fetch movies', isLoading: false });

@@ -16,15 +16,19 @@ export const Filter = ({ title, filters, onFilterChange, currentSelection }: Fil
         {title}: {getCurrentSelection(currentSelection)}
       </Text>
       <View style={styles.filterContainer}>
-        {filters.map((filter, index) => (
-          <Button
-            key={filter}
-            title={filter}
-            onPress={() => onFilterChange(filter, index)}
-            customStyle={index === currentSelection ? styles.selectedFilterButton : undefined}
-            customStyleText={index === currentSelection ? styles.selectedFilterButtonText : undefined}
-          />
-        ))}
+        {filters.map((filter, index) => {
+          const isSelected = index === currentSelection;
+          const spacingStyle = { marginLeft: index === 0 ? 0 : 8 };
+          return (
+            <Button
+              key={filter}
+              title={filter}
+              onPress={() => onFilterChange(filter, index)}
+              customStyle={[isSelected ? styles.selectedFilterButton : undefined, spacingStyle]}
+              customStyleText={isSelected ? styles.selectedFilterButtonText : undefined}
+            />
+          );
+        })}
       </View>
     </View>
   );
@@ -43,11 +47,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 7,
   },
   filterContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   selectedFilterButton: {
     backgroundColor: Colors.light.buttonBackground,

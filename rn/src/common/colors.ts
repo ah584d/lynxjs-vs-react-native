@@ -14,10 +14,14 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
-    border: 'gray',
+    grayBorder: 'gray',
     buttonBackground: 'green',
     white: 'white',
-    lightGray: '#9e9b9b4d'
+    lightGray: '#9e9b9b4d',
+    lightGray2: '#d0cbcb4d',
+    movieCardBackGround: '#f5f5f5',
+    blue: '#2e47e7ff',
+    lightGreen: '#eaf5eaff'
   },
   dark: {
     text: '#ECEDEE',

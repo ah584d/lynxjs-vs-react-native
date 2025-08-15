@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
+import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
 import { MovieCard } from '@/components/MovieCard';
@@ -9,34 +10,34 @@ import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 
 export default function HomeScreen() {
-  const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
-  const [yearFilter, setYearFilter] = useState<number | undefined>(3);
+  const [genreFilter, setGenreFilter] = useState<number>(0);
+  const [yearFilter, setYearFilter] = useState<number>(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
 
-  const fetchPopularMovies = useMovieStore(state => state.fetchPopularMovies);
+  const fetchMovies = useMovieStore(state => state.fetchMovies);
   const popularMovies = useMovieStore(state => state.popularMovies);
   const isLoading = useMovieStore(state => state.isLoading);
 
   useEffect(() => {
-    fetchPopularMovies(currentPage);
-  }, [fetchPopularMovies, currentPage]);
+    fetchMovies(currentPage);
+  }, [fetchMovies, currentPage]);
 
   const onRefresh = useCallback(async () => {
-    setForceRefresh(true)
-    await fetchPopularMovies(currentPage);
-    setForceRefresh(false)
-  }, [currentPage]);
+    setForceRefresh(true);
+    await fetchMovies(currentPage, yearFilter ? YEARS_FILTER[yearFilter] : ALL, genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]]);
+    setForceRefresh(false);
+  }, [forceRefresh]);
 
-  console.log(`====> DEBUG popularMovies: `, popularMovies?.length);
+  console.log(`\n\n====> DEBUG movies list: `, popularMovies?.length);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.filter}>
-          <Filter title='Genre' currentSelection={genreFilter} filters={['All', 'Action', 'Comedy', 'Drama']} onFilterChange={onFilterGenreChange} />
+          <Filter title='Genre' currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
         </View>
         <View style={styles.filter}>
-          <Filter title='Year' currentSelection={yearFilter} filters={['2022', '2023', '2024', '2025']} onFilterChange={onFilterYearChange} />
+          <Filter title='Year' currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
         </View>
       </View>
       <View style={styles.body}>
@@ -55,7 +56,7 @@ export default function HomeScreen() {
       <View style={styles.footer}>
         <Button
           title={isLoading ? 'Loading...' : 'Refresh list'}
-          onPress={() => setCurrentPage(currentPage + 1)}
+          onPress={onRefresh}
           customStyle={[styles.loadButton, isLoading && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
           disabled={isLoading}
@@ -64,8 +65,8 @@ export default function HomeScreen() {
     </View>
   );
 
-  function renderItem({ item }: { item: Movie }): ReactElement {
-    return <MovieCard movie={item} onPress={onMoviePress} />;
+  function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
+    return <MovieCard movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} />;
   }
 
   function onMoviePress(movieId: number): void {
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    flex: 0.25,
+    flex: 0.2,
   },
   filter: {
     paddingVertical: 4,
@@ -112,12 +113,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   body: {
-    flex: 0.8,
-    borderWidth: 2,
-    borderColor: Colors.light.border,
+    flex: 0.7,
+  },
+  cardCustomStyle: {
+    backgroundColor: Colors.light.lightGreen,
   },
   footer: {
-    flex: 0.15,
+    paddingTop: 12,
+    flex: 0.12,
     alignItems: 'center',
   },
   loadButton: {

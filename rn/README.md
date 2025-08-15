@@ -48,3 +48,7 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+### Important
+do not let any component which is not router-related into app folder otherwise you will get warning: "Route "./folder_inside_app_folder/YourComponent.tsx" is missing the required default export. Ensure a React component is exported as default"

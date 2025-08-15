@@ -5,8 +5,8 @@ const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 export const MovieService = {
-  async getPopularMovies(): Promise<Movie[]> {
-    const response = await axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+  async getMovies(url: string): Promise<Movie[]> {
+    const response = await axios.get(url);
     return response.data.results;
   },
 

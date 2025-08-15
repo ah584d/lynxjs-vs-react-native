@@ -20,9 +20,9 @@ export const Button = ({ title, onPress, customStyle, customStyleText, disabled 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.light.lightGray,
-    padding: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 6,
     borderRadius: 8,
-    margin: 4,
     justifyContent: 'center',
     alignItems: 'center',
     minWidth: 54,

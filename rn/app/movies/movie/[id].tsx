@@ -63,7 +63,7 @@ export default function MovieDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: Colors.light.movieCardBackGround,
   },
   body: {
     paddingHorizontal: 16,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 350,
     borderRadius: 4,
-    borderColor: Colors.light.border,
+    borderColor: Colors.light.grayBorder,
     borderWidth: 1,
     marginVertical: 16,
     alignSelf: 'center',
