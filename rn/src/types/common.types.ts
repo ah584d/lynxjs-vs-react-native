@@ -1,4 +1,3 @@
-
 export interface MovieApiResponse {
   page: number;
   results: Movie[];
@@ -11,10 +10,9 @@ export type RootStackParamList = {
   MovieDetails: { movieId: number };
 };
 
-
 export interface Movie {
   adult: boolean;
-  backdrop_path: string;
+  backdrop_path: string | null;
   genre_ids: number[];
   id: number;
   original_language: string;

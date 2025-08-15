@@ -8,15 +8,15 @@ import { Movie } from '@/types/common.types';
 
 export default function MovieDetailsScreen() {
   const { id: movieId } = useLocalSearchParams<{ id: string }>();
-  const { popularMovies, isLoading, error } = useMovieStore();
+  const { moviesList, isLoading, error } = useMovieStore();
   const [movie, setMovie] = useState<Movie>();
 
   useEffect(() => {
     if (movieId) {
-      const found = popularMovies.find(item => item.id.toString() === movieId);
+      const found = moviesList.find(item => item.id.toString() === movieId);
       setMovie(found);
     }
-  }, [movieId, popularMovies]);
+  }, [movieId, moviesList]);
 
   if (isLoading && !movie) {
     return (

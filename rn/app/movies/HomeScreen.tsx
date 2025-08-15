@@ -1,11 +1,11 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
-import { MovieCard, MovieCardMemo } from '@/components/MovieCard';
+import { MovieCardMemo } from '@/components/MovieCard';
 import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 
@@ -14,9 +14,10 @@ export default function HomeScreen() {
   const [yearFilter, setYearFilter] = useState<number | undefined>(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
+  const flatListRef = useRef<FlatList<Movie> | null>(null);
 
   const fetchMovies = useMovieStore(state => state.fetchMovies);
-  const popularMovies = useMovieStore(state => state.popularMovies);
+  const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
 
   useEffect(() => {
@@ -24,16 +25,19 @@ export default function HomeScreen() {
   }, [fetchMovies, currentPage]);
 
   const onRefresh = useCallback(async () => {
+    setCurrentPage(1);
     setForceRefresh(true);
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
     const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
     console.log(`====> DEBUG year: `, year);
     console.log(`====> DEBUG genre: `, genre);
-    await fetchMovies(currentPage, year, genre);
+    // request page 1 explicitly after resetting currentPage so we refresh the first page
+    await fetchMovies(1, year, genre);
     setForceRefresh(false);
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [forceRefresh, yearFilter, genreFilter]);
 
-  console.log(`\n\n====> DEBUG movies list: `, popularMovies?.length);
+  console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -46,10 +50,14 @@ export default function HomeScreen() {
       </View>
       <View style={styles.body}>
         <FlatList
-          data={popularMovies}
+          ref={flatListRef}
+          data={moviesList}
           renderItem={renderItem}
-          contentContainerStyle={popularMovies?.length ? undefined : styles.emptyListContainer}
+          keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
+          contentContainerStyle={moviesList?.length ? undefined : styles.emptyListContainer}
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={onRefresh} />}
+          onEndReachedThreshold={0.3}
+          onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
         />
         {isLoading && (
           <View style={styles.centeredOverlay}>
@@ -70,6 +78,7 @@ export default function HomeScreen() {
   );
 
   function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
+    // let FlatList handle the key via keyExtractor; do not create non-stable keys (e.g. Symbol)
     return <MovieCardMemo movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} />;
   }
 
