@@ -1,6 +1,6 @@
 import { API_KEY, TMDB_BASE_URL } from '@/common/constants.js';
 
-export const fetchMovies = async (genreId: number | null, year: string) => {
+export const fetchMovies = async (genreId: number | null, year: string, page: number) => {
   try {
     let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
     if (genreId !== null) {
