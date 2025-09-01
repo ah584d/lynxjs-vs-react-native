@@ -12,7 +12,6 @@
 # node.js
 #
 */node_modules/
-*.yaml
 */dist/
 
 #
