@@ -1,16 +1,14 @@
 import { useLynxGlobalEventListener, useState } from '@lynx-js/react';
-import { useEffect } from 'react';
+import { type ReactElement, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { GENRE_MAP } from '../../common/constants.js';
-import { PageView } from '../../common/index.js';
-import { t } from '../../i18n/i18n.js';
-import type { IMovie } from '../../types/Movie.js';
+import { API_KEY, GENRE_MAP, TMDB_BASE_URL } from '@/common/constants.js';
+import { PageView } from '@/common/index.js';
+import { t } from '@/i18n/i18n.js';
+import { fetchMovies } from '@/services/http.service.js';
+import type { IMovie } from '@/types/common.types.js';
 import './Movies.css';
 
-const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = process.env.TMDB_API_KEY;
-
-export function Movies() {
+export function Movies(): ReactElement {
   const [hasMoreData, setHadMoreData] = useState(true);
   const [page, setPage] = useState(1);
   const [eventLog, setEventLog] = useState<string>('');
@@ -22,86 +20,6 @@ export function Movies() {
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState<string>('2025');
   const [useHighestRated, setUseHighestRated] = useState(false);
-
-  const handleActionGenre = (_type: number | null) => () => {
-    console.log(`type: ${_type}`);
-    setSelectedGenre(_type);
-  };
-
-  const handleActionYear = (_year: string) => () => {
-    console.log(`year: ${_year}`);
-    setSelectedYear(_year);
-  };
-
-  const handleActionRecommend = () => {
-    setUseHighestRated(prev => !prev);
-  };
-
-  const getGenreNames = (genreIds: number[]): string => {
-    if (!genreIds || genreIds.length === 0) return 'Unknown';
-
-    return genreIds.map(id => GENRE_MAP[id] || 'Unknown').join(', ');
-  };
-
-  const fetchMovies = async (genreId: number | null, year: string) => {
-    setLoading(true);
-
-    try {
-      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
-      if (genreId !== null) {
-        url += `&with_genres=${genreId}`;
-      }
-      if (year !== 'all') {
-        const yearStart = parseInt(year);
-        const yearEnd = yearStart + 9;
-        url += `&primary_release_date.gte=${yearStart}-01-01&primary_release_date.lte=${yearEnd}-12-31`;
-      }
-      const response = await fetch(url);
-      const data = await response.json();
-
-      return data.results;
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  async function handleGetMovies() {
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear);
-    setPage(prev => prev + 1);
-
-    if (freshMovies.length === 0) {
-      setDisplayedMovies([]);
-      return;
-    }
-
-    if (useHighestRated) {
-      const sortedMovies = [...freshMovies].sort((a, b) => b.vote_average - a.vote_average);
-      setDisplayedMovies(sortedMovies.slice(0, 3));
-    } else {
-      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
-
-      setDisplayedMovies(uniqueMovies);
-    }
-  }
-
-  const addDataToLower = async () => {
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear);
-
-    if (freshMovies.length > 0) {
-      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
-      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
-      console.log('uniqueMovies', uniqueMovies, page);
-
-      if (freshMovies.length < 20) {
-        setHadMoreData(false);
-      }
-    }
-
-    setPage(prev => prev + 1);
-  };
 
   useEffect(() => {
     handleGetMovies();
@@ -129,7 +47,7 @@ export function Movies() {
           <view className='Header'>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
               <text className='Title'>Movie With Lynx</text>
-              <text className='Title'>{displayedMovies.length}</text>
+              {/* <text className='Title'>{displayedMovies.length}</text> */}
             </view>
             <view className='FilterSection'>
               <text className='FilterLabel'>{`${t('genre')}: ${(selectedGenre && GENRE_MAP?.[selectedGenre]) || t('all')}`}</text>
@@ -219,10 +137,10 @@ export function Movies() {
               )}
             </list>
 
-            <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
+            {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
               <text style={{ color: 'red' }}>{eventLog}</text>
-            </view>
+            </view> */}
           </view>
 
           <view className='RecommendButton' bindtap={handleGetMovies}>
@@ -232,4 +150,64 @@ export function Movies() {
       </view>
     </PageView>
   );
+
+  async function addDataToLower() {
+    setLoading(true);
+    const freshMovies = await fetchMovies(selectedGenre, selectedYear);
+    setLoading(false);
+    if (freshMovies.length > 0) {
+      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
+      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
+      console.log('uniqueMovies', uniqueMovies, page);
+
+      if (freshMovies.length < 20) {
+        setHadMoreData(false);
+      }
+    }
+
+    setPage(prev => prev + 1);
+  }
+
+  async function handleGetMovies() {
+    const freshMovies = await fetchMovies(selectedGenre, selectedYear);
+    setPage(prev => prev + 1);
+
+    if (freshMovies.length === 0) {
+      setDisplayedMovies([]);
+      return;
+    }
+
+    if (useHighestRated) {
+      const sortedMovies = [...freshMovies].sort((a, b) => b.vote_average - a.vote_average);
+      setDisplayedMovies(sortedMovies.slice(0, 3));
+    } else {
+      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
+
+      setDisplayedMovies(uniqueMovies);
+    }
+  }
+
+  function handleActionGenre(_type: number | null) {
+    () => {
+      console.log(`type: ${_type}`);
+      setSelectedGenre(_type);
+    };
+  }
+
+  function handleActionYear(_year: string) {
+    () => {
+      console.log(`year: ${_year}`);
+      setSelectedYear(_year);
+    };
+  }
+
+  function handleActionRecommend() {
+    setUseHighestRated(prev => !prev);
+  }
+
+  function getGenreNames(genreIds: number[]): string {
+    if (!genreIds || genreIds.length === 0) return 'Unknown';
+
+    return genreIds.map(id => GENRE_MAP[id] || 'Unknown').join(', ');
+  }
 }

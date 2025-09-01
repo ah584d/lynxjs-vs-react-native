@@ -12,8 +12,9 @@
 
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "exclude": ["dist/"],
+  "exclude": ["dist/"]
 }
-
-
