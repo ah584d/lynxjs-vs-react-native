@@ -17,12 +17,14 @@ export const Colors = {
     grayBorder: 'gray',
     buttonBackground: 'green',
     white: 'white',
+    darkGray: '#000',
     lightGray: '#9e9b9b4d',
     lightGray2: '#d0cbcb4d',
     movieCardBackGround: '#f5f5f5',
     blue: '#2e47e7ff',
     lightGreen: '#eaf5eaff',
-    purple: '#9f44e0ff'
+    purple: '#9f44e0ff',
+    yellow:'#FFD700'
   },
   dark: {
     text: '#ECEDEE',

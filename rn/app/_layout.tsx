@@ -3,7 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import { RootNavigator } from '@app/movies/RootNavigator';
+import { RootNavigator } from '@/components/RootNavigator';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function App() {

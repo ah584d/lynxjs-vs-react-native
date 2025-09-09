@@ -1,105 +1,27 @@
 import { useLynxGlobalEventListener, useState } from '@lynx-js/react';
 import { type ReactElement, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { API_KEY, GENRE_MAP, TMDB_BASE_URL } from '@/common/constants.js';
-import { PageView } from '@/common/index.js';
+import { GENRE_MAP } from '@/common/constants.js';
+import { PageView } from '@/components/index.js';
 import { t } from '@/i18n/i18n.js';
 import { fetchMovies } from '@/services/http.service.js';
+import { getGenreNames, getUniqueMoviesById } from '@/services/utils.js';
 import type { IMovie } from '@/types/common.types.js';
 import './Movies.css';
 
 export function Movies(): ReactElement {
+  const [firstLoad, setFirstLoad] = useState(true);
+
   const [hasMoreData, setHadMoreData] = useState(true);
   const [page, setPage] = useState(1);
-  const [eventLog, setEventLog] = useState<string>('');
+  const [eventLog, setEventLog] = useState('');
   const navigate = useNavigate();
 
   const [displayedMovies, setDisplayedMovies] = useState<IMovie[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string>('2025');
-  const [useHighestRated, setUseHighestRated] = useState(false);
-
-  const handleActionGenre = (_type: number | null) => () => {
-    console.log(`type: ${_type}`);
-    setSelectedGenre(_type);
-  };
-
-  const handleActionYear = (_year: string) => () => {
-    console.log(`year: ${_year}`);
-    setSelectedYear(_year);
-  };
-
-  const handleActionRecommend = () => {
-    setUseHighestRated(prev => !prev);
-  };
-
-  const getGenreNames = (genreIds: number[]): string => {
-    if (!genreIds || genreIds.length === 0) return 'Unknown';
-
-    return genreIds.map(id => GENRE_MAP[id] || 'Unknown').join(', ');
-  };
-
-  const fetchMovies_ = async (genreId: number | null, year: string, page?: number) => {
-    setLoading(true);
-
-    try {
-      let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`;
-      if (genreId !== null) {
-        url += `&with_genres=${genreId}`;
-      }
-      if (year !== 'all') {
-        const yearStart = parseInt(year);
-        const yearEnd = yearStart + 9;
-        url += `&primary_release_date.gte=${yearStart}-01-01&primary_release_date.lte=${yearEnd}-12-31`;
-      }
-      const response = await fetch(url);
-      const data = await response.json();
-
-      return data.results;
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  async function handleGetMovies() {
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page);
-    setPage(prev => prev + 1);
-
-    if (freshMovies.length === 0) {
-      setDisplayedMovies([]);
-      return;
-    }
-
-    if (useHighestRated) {
-      const sortedMovies = [...freshMovies].sort((a, b) => b.vote_average - a.vote_average);
-      setDisplayedMovies(sortedMovies.slice(0, 3));
-    } else {
-      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
-
-      setDisplayedMovies(uniqueMovies);
-    }
-  }
-
-  const addDataToLower = async () => {
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page);
-
-    if (freshMovies.length > 0) {
-      const uniqueMovies = Array.from(new Set(freshMovies.map((movie: IMovie) => movie.id))).map(id => freshMovies.find((movie: IMovie) => movie.id === id));
-      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
-      console.log('uniqueMovies', uniqueMovies, page);
-
-      if (freshMovies.length < 20) {
-        setHadMoreData(false);
-      }
-    }
-
-    setPage(prev => prev + 1);
-  };
+  const [selectedYear, setSelectedYear] = useState('2025');
 
   useEffect(() => {
     handleGetMovies();
@@ -119,6 +41,53 @@ export function Movies(): ReactElement {
     log.sort();
     setEventLog(log.join(', '));
   });
+
+  const handleActionGenre = (_type: number | null) => () => {
+    console.log(`type: ${_type}`);
+    setSelectedGenre(_type);
+  };
+
+  const handleActionYear = (_year: string) => () => {
+    console.log(`year: ${_year}`);
+    setSelectedYear(_year);
+  };
+
+  async function handleGetMovies(): Promise<void> {
+    console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
+
+    setLoading(true);
+    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page);
+    setLoading(false);
+
+    if (freshMovies.length === 0) {
+      setDisplayedMovies([]);
+      return;
+    }
+
+    const uniqueMovies = getUniqueMoviesById(freshMovies);
+    setDisplayedMovies(uniqueMovies);
+  }
+
+  async function addDataToLower(): Promise<void> {
+    // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+    if (firstLoad) {
+      setFirstLoad(false);
+    } else {
+      setPage(prev => prev + 1);
+    }
+    console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
+    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page + 1);
+
+    if (freshMovies.length > 0) {
+      const uniqueMovies = getUniqueMoviesById(freshMovies);
+      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
+
+      if (freshMovies.length < 20) {
+        setHadMoreData(false);
+      }
+    }
+
+  }
 
   return (
     <PageView>
@@ -150,16 +119,7 @@ export function Movies(): ReactElement {
             <view className='FilterSection'>
               <text className='FilterLabel'>{`${t('year')}: ${selectedYear}`}</text>
               <view className='FilterOptionsYear'>
-                {Array(4)
-                  .fill(0)
-                  .map((_, i) => {
-                    const _keyItem = `${2000 + (i + 22)}`;
-                    return (
-                      <view key={i} className={selectedYear == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
-                        <text>{_keyItem}s</text>
-                      </view>
-                    );
-                  })}
+                <RenderYearsFilters />
               </view>
             </view>
           </view>
@@ -186,7 +146,7 @@ export function Movies(): ReactElement {
                       className={index % 2 === 0 ? 'ItemBgOdd' : ''}
                       style='width:100%;border-bottom:1px solid #ccc'>
                       <view style='display:flex;align-items:center;justify-content:flex-end;padding-right:10px;padding-top:10px'>
-                        <text className='MovieTitle'>Index: {index}</text>
+                        <text className='MovieTitle'># {index}</text>
                       </view>
                       <view className='PosterContainer'>
                         <image src={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} className='MoviePoster' />
@@ -230,4 +190,21 @@ export function Movies(): ReactElement {
       </view>
     </PageView>
   );
+
+  function RenderYearsFilters(): ReactElement {
+    return (
+      <>
+        {Array(4)
+          .fill(0)
+          .map((_, i) => {
+            const _keyItem = `${2000 + (i + 22)}`;
+            return (
+              <view key={i} className={selectedYear == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
+                <text>{_keyItem}s</text>
+              </view>
+            );
+          })}
+      </>
+    );
+  }
 }

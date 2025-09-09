@@ -16,13 +16,14 @@ export default function HomeScreen() {
   const [forceRefresh, setForceRefresh] = useState(false);
   const flatListRef = useRef<FlatList<Movie> | null>(null);
 
-  const fetchMovies = useMovieStore(state => state.fetchMovies);
+  console.log(`====> DEBUG genreFilter: `, genreFilter);
+  const getMovies = useMovieStore(state => state.getMovies);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
 
   useEffect(() => {
-    fetchMovies(currentPage);
-  }, [fetchMovies, currentPage]);
+    getMovies(currentPage);
+  }, [getMovies, currentPage]);
 
   const onRefresh = useCallback(async () => {
     setCurrentPage(1);
@@ -32,7 +33,7 @@ export default function HomeScreen() {
     console.log(`====> DEBUG year: `, year);
     console.log(`====> DEBUG genre: `, genre);
     // request page 1 explicitly after resetting currentPage so we refresh the first page
-    await fetchMovies(1, year, genre);
+    await getMovies(1, year, genre);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [forceRefresh, yearFilter, genreFilter]);
@@ -87,11 +88,11 @@ export default function HomeScreen() {
   }
 
   function onFilterGenreChange(_filter: string, index: number) {
-    setGenreFilter(c => (c === index ? undefined : index));
+    setGenreFilter(index);
   }
 
   function onFilterYearChange(_filter: string, index: number) {
-    setYearFilter(c => (c === index ? undefined : index));
+    setYearFilter(index);
   }
 }
 

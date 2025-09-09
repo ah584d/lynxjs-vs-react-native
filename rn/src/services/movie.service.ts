@@ -1,10 +1,10 @@
-import { Movie, MovieDetails } from '@/types/common.types';
 import axios from 'axios';
+import { Movie, MovieDetails } from '@/types/common.types';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
-export const MovieService = {
+export const movieService = {
   async getMovies(url: string): Promise<Movie[]> {
     const response = await axios.get(url);
     return response.data.results;

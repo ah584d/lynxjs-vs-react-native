@@ -3,6 +3,7 @@ import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle }
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
 import { Movie } from '@/types/common.types';
+import { getGenreNames } from '@/services/utils';
 
 interface MovieCardProps {
   movie: Movie;
@@ -15,7 +16,7 @@ export const MovieCard: FC<MovieCardProps> = ({ movie, onPress, customStyle }) =
 
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
-  console.log(`====> DEBUG posterUrl in Movie card: `, posterUrl);
+// console.log(`====> DEBUG posterUrl in Movie card: `, posterUrl);
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
       <View style={styles.posterContainer}>
@@ -26,10 +27,12 @@ export const MovieCard: FC<MovieCardProps> = ({ movie, onPress, customStyle }) =
           {movie.title}
         </Text>
         <View style={styles.ratingContainer}>
-          <Icon name='star' size={18} color='#FFD700' />
+          <Icon name='star' size={18} color={Colors.light.yellow} />
           <Text style={styles.rating}>{movie?.vote_average?.toFixed(1)}/10</Text>
         </View>
-        <Text style={styles.releaseDate}>Release date: {new Date(movie?.release_date ?? '').getFullYear()}</Text>
+        <Text style={styles.subText}>{movie.overview}</Text>
+        <Text style={styles.subText}>Release date: {new Date(movie?.release_date ?? '').getFullYear()}</Text>
+        <Text style={styles.subText}>Genres: {getGenreNames(movie.genre_ids)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -96,15 +99,17 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     color: Colors.light.blue,
   },
-  releaseDate: {
+  subText: {
     fontSize: 14,
-    color: '#666',
+    color: Colors.light.darkGray,
+        marginBottom: 5,
+
   },
   oopsText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.light.purple,
     padding: 16,
-    textAlign: 'center'
+    textAlign: 'center',
   },
 });

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router';
-import { PageView } from '../../common/index.js';
+import { PageView } from '@/components/index.js';
 import '../Movies/Movies.css';
 
 export function Movie() {

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import mock_1 from '@/__mocks__/movies_1.mock.json';
-import mock_2 from '@/__mocks__/movies_2.mock.json';
-import { MovieService } from '@/services/movie.service';
+// import mock_1 from '@/__mocks__/movies_1.mock.json';
+// import mock_2 from '@/__mocks__/movies_2.mock.json';
+import { movieService } from '@/services/movie.service';
 import { getUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
 
@@ -14,7 +14,7 @@ interface MovieStore {
 }
 
 type MovieAction = {
-  fetchMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
+  getMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
   searchMovies: (query: string) => void;
   setFilter: (filter: string | null) => void;
   setIsLoading: (status: boolean) => void;
@@ -27,11 +27,11 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   error: null,
   filter: null,
 
-  fetchMovies: async (page: number, year?: string, genreId?: number) => {
+  getMovies: async (page: number, year?: string, genreId?: number) => {
     set({ isLoading: true, error: null });
     try {
       const url = getUrl(page, year, genreId);
-      const response = /*page !== 2 ? mock_1.results : mock_2.results;*/  await MovieService.getMovies(url);
+      const response = await movieService.getMovies(url);
 
       // if this is a next page, we merge new results with existing one
       const existingMovies = get().moviesList;
