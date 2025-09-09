@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-// import mock_1 from '@/__mocks__/movies_1.mock.json';
-// import mock_2 from '@/__mocks__/movies_2.mock.json';
-import { movieService } from '@/services/movie.service';
+import { movieService } from '@/services/http.service';
 import { getUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
 
@@ -13,12 +11,9 @@ interface MovieStore {
   filter: string | null;
 }
 
-type MovieAction = {
+interface MovieAction {
   getMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
-  searchMovies: (query: string) => void;
-  setFilter: (filter: string | null) => void;
-  setIsLoading: (status: boolean) => void;
-};
+}
 
 export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   moviesList: [],
@@ -41,30 +36,5 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       console.log('Error occurred while fetching movies:', e);
       set({ error: 'Failed to fetch movies', isLoading: false });
     }
-  },
-
-  searchMovies: (query: string) => {
-    const { moviesList } = get();
-    if (!query) {
-      set({ searchResults: [] });
-      return;
-    }
-    const results = moviesList.filter((movie: Movie) => movie.title.toLowerCase().includes(query.toLowerCase()));
-    set({ searchResults: results });
-  },
-
-  setFilter: (filter: string | null) => {
-    set({ filter });
-    const { moviesList } = get();
-    if (!filter) {
-      set({ searchResults: [] });
-      return;
-    }
-    const results = {} as any; //  moviesList.filter((movie: Movie) => movie.genre && movie.genre.toLowerCase() === filter.toLowerCase());
-    set({ searchResults: results });
-  },
-
-  setIsLoading: (status: boolean) => {
-    set({ isLoading: status });
   },
 }));
