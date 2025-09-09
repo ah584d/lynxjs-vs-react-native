@@ -11,17 +11,18 @@ import './Movies.css';
 
 export function Movies(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
+  const [filterChanged, setFilterChanged] = useState(false);
 
   const [hasMoreData, setHadMoreData] = useState(true);
   const [page, setPage] = useState(1);
   const [eventLog, setEventLog] = useState('');
-  const navigate = useNavigate();
 
   const [displayedMovies, setDisplayedMovies] = useState<IMovie[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState('2025');
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetMovies();
@@ -43,16 +44,20 @@ export function Movies(): ReactElement {
   });
 
   const handleActionGenre = (_type: number | null) => () => {
-    console.log(`type: ${_type}`);
+    // console.log(`type: ${_type}`);
+    setFilterChanged(true);
     setSelectedGenre(_type);
   };
 
   const handleActionYear = (_year: string) => () => {
-    console.log(`year: ${_year}`);
+    // console.log(`year: ${_year}`);
+    setFilterChanged(true);
     setSelectedYear(_year);
   };
 
   async function handleGetMovies(): Promise<void> {
+    setFilterChanged(false);
+
     console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
 
     setLoading(true);
@@ -86,7 +91,6 @@ export function Movies(): ReactElement {
         setHadMoreData(false);
       }
     }
-
   }
 
   return (
@@ -177,14 +181,14 @@ export function Movies(): ReactElement {
               )}
             </list>
 
-            <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
+            {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
               <text style={{ color: 'red' }}>{eventLog}</text>
-            </view>
+            </view> */}
           </view>
 
-          <view className='RecommendButton' bindtap={handleGetMovies}>
-            <text className='ButtonText'>{loading ? 'Loading...' : t('get_movies')}</text>
+          <view class={`RecommendButton${!filterChanged ? ' RecommendButtonDisabled' : ''}`} bindtap={handleGetMovies}>
+            <text class={`ButtonText${!filterChanged ? ' ButtonTextDisabled' : ''}`}>{loading ? 'Loading...' : t('get_movies')}</text>
           </view>
         </view>
       </view>
