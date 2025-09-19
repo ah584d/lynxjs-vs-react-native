@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "rspeedy build",
+    "build:android": "rspeedy build && cd dist && cp main.lynx.bundle ../android/app/src/main/assets/",
     "dev": "rspeedy dev",
     "dev:profiler": "export RSDOCTOR=true && pnpm run dev",
     "format": "prettier --write",

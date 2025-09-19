@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { movieService } from '@/services/http.service';
-import { getUrl } from '@/services/utils';
+import { getUrl, movieService } from '@/services/http.service';
 import { Movie } from '@/types/common.types';
 
 interface MovieStore {
