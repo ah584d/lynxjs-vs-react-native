@@ -11,12 +11,11 @@ interface MovieCardProps {
   customStyle?: StyleProp<ViewStyle>;
 }
 
-export const MovieCard: FC<MovieCardProps> = ({ movie, onPress, customStyle }) => {
+export const MovieCard= ({ movie, onPress, customStyle }: MovieCardProps): ReactElement => {
   const [imageError, setImageError] = useState(false);
 
   const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
 
-// console.log(`====> DEBUG posterUrl in Movie card: `, posterUrl);
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
       <View style={styles.posterContainer}>

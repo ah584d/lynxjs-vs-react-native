@@ -17,26 +17,24 @@ export default function HomeScreen() {
   const [dirtyFilter, setDirtyFilter] = useState(false);
   const flatListRef = useRef<FlatList<Movie> | null>(null);
 
-  console.log(`====> DEBUG genreFilter: `, genreFilter);
   const getMovies = useMovieStore(state => state.getMovies);
   const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
 
   useEffect(() => {
-    getMovies(currentPage);
+    getMovies(currentPage, yearFilter, genreFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
 
+  console.log(`====> DEBUG yearFilter: `, yearFilter, `, genreFilter: `, genreFilter);
   const onRefresh = useCallback(async () => {
     setDirtyFilter(false);
     setCurrentPage(1);
     setForceRefresh(true);
-    const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
-    const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
-    console.log(`====> DEBUG year: `, year);
-    console.log(`====> DEBUG genre: `, genre);
+
     // request page 1 explicitly after resetting currentPage so we refresh the first page
-    await getMovies(1, year, genre);
+    await getMovies(1, yearFilter, genreFilter);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies]);
@@ -63,11 +61,11 @@ export default function HomeScreen() {
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
         />
-        {isLoading && (
+        {/* {isLoading && (
           <View style={styles.centeredOverlay}>
             <ActivityIndicator size='large' color={Colors.light.buttonBackground} />
           </View>
-        )}
+        )} */}
       </View>
       <View style={styles.footer}>
         <Button
