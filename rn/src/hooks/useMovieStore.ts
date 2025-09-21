@@ -12,6 +12,7 @@ interface MovieStore {
 
 interface MovieAction {
   getMovies: (page: number, year?: string, genreId?: number) => Promise<void>;
+  resetList: () => Promise<void>;
 }
 
 export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
@@ -36,4 +37,5 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       set({ error: 'Failed to fetch movies', isLoading: false });
     }
   },
+  resetList: async () => set({ moviesList: [] }),
 }));

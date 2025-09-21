@@ -14,10 +14,12 @@ export default function HomeScreen() {
   const [yearFilter, setYearFilter] = useState<number | undefined>(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
+  const [dirtyFilter, setDirtyFilter] = useState(false);
   const flatListRef = useRef<FlatList<Movie> | null>(null);
 
   console.log(`====> DEBUG genreFilter: `, genreFilter);
   const getMovies = useMovieStore(state => state.getMovies);
+  const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
 
@@ -26,6 +28,7 @@ export default function HomeScreen() {
   }, [getMovies, currentPage]);
 
   const onRefresh = useCallback(async () => {
+    setDirtyFilter(false);
     setCurrentPage(1);
     setForceRefresh(true);
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
@@ -36,7 +39,7 @@ export default function HomeScreen() {
     await getMovies(1, year, genre);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-  }, [forceRefresh, yearFilter, genreFilter]);
+  }, [yearFilter, genreFilter, getMovies]);
 
   console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
   return (
@@ -56,7 +59,7 @@ export default function HomeScreen() {
           renderItem={renderItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
           contentContainerStyle={moviesList?.length ? undefined : styles.emptyListContainer}
-          refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={onRefresh} />}
+          refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={resetListAndGetMovies} />}
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
         />
@@ -70,7 +73,7 @@ export default function HomeScreen() {
         <Button
           title={isLoading ? 'Loading...' : 'Refresh list'}
           onPress={onRefresh}
-          customStyle={[styles.loadButton, isLoading && styles.loadButtonDisabled]}
+          customStyle={[styles.loadButton, (isLoading || !dirtyFilter) && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
           disabled={isLoading}
         />
@@ -88,11 +91,22 @@ export default function HomeScreen() {
   }
 
   function onFilterGenreChange(_filter: string, index: number) {
+    if (index !== genreFilter) {
+      setDirtyFilter(true);
+    }
     setGenreFilter(index);
   }
 
   function onFilterYearChange(_filter: string, index: number) {
+    if (index !== yearFilter) {
+      setDirtyFilter(true);
+    }
     setYearFilter(index);
+  }
+
+  function resetListAndGetMovies() {
+    resetList();
+    onRefresh();
   }
 }
 
@@ -122,8 +136,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    // optional: dim background while loading
-    // backgroundColor: 'rgba(0,0,0,0.05)',
     zIndex: 10,
   },
   body: {
