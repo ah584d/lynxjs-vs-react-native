@@ -7,7 +7,7 @@ export function getUrl(page: number, year?: string, genreId?: number): string {
 
   if (year && year !== ALL) {
     const yearStart = parseInt(year);
-    const yearEnd = yearStart + 9;
+    const yearEnd = yearStart;// yearStart + 9;
     url += `&primary_release_date.gte=${yearStart}-01-01&primary_release_date.lte=${yearEnd}-12-31`;
   }
   if (genreId) {
