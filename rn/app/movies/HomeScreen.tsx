@@ -1,8 +1,8 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
+import { GENRES_FILTER, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
 import { MovieCardMemo } from '@/components/MovieCard';
@@ -21,13 +21,14 @@ export default function HomeScreen() {
   const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
+  const error = useMovieStore(state => state.error);
 
   useEffect(() => {
     getMovies(currentPage, yearFilter, genreFilter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
 
-  console.log(`====> DEBUG yearFilter: `, yearFilter, `, genreFilter: `, genreFilter);
+  // console.log(`====> DEBUG yearFilter: `, yearFilter, `, genreFilter: `, genreFilter);
   const onRefresh = useCallback(async () => {
     setDirtyFilter(false);
     setCurrentPage(1);
@@ -66,6 +67,17 @@ export default function HomeScreen() {
             <ActivityIndicator size='large' color={Colors.light.buttonBackground} />
           </View>
         )} */}
+        {error && (
+          <View style={styles.errorContainer}>
+            <View style={styles.errorBox}>
+              <ActivityIndicator size='small' color={Colors.light.buttonBackground} style={{ marginBottom: 8 }} />
+              <Button title='Retry' onPress={onRefresh} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
+              <View style={styles.errorTextWrapper}>
+                <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
+              </View>
+            </View>
+          </View>
+        )}
       </View>
       <View style={styles.footer}>
         <Button
@@ -109,6 +121,43 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 0, 0, 0.08)',
+    zIndex: 20,
+  },
+  errorBox: {
+    backgroundColor: Colors.light.white,
+    borderRadius: 12,
+    padding: 24,
+    alignItems: 'center',
+    shadowColor: Colors.light.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    minWidth: 260,
+  },
+  errorTextWrapper: {
+    marginTop: 12,
+    paddingHorizontal: 8,
+  },
+  errorText: {
+    color: Colors.light.buttonBackground,
+    fontSize: 16,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  errorButton: {
+    backgroundColor: Colors.light.buttonBackground,
+    marginTop: 8,
+  },
   container: {
     flex: 1,
     justifyContent: 'space-between',
