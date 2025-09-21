@@ -44,14 +44,16 @@ export function Movies(): ReactElement {
   });
 
   const handleActionGenre = (_type: number | null) => () => {
-    // console.log(`type: ${_type}`);
-    setFilterChanged(true);
+    if (_type !== selectedGenre) {
+      setFilterChanged(true);
+    }
     setSelectedGenre(_type);
   };
 
   const handleActionYear = (_year: string) => () => {
-    // console.log(`year: ${_year}`);
-    setFilterChanged(true);
+    if (_year !== selectedYear) {
+      setFilterChanged(true);
+    }
     setSelectedYear(_year);
   };
 
@@ -61,7 +63,7 @@ export function Movies(): ReactElement {
     console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
 
     setLoading(true);
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page);
+    const freshMovies = await fetchMovies(selectedYear, selectedGenre, page);
     setLoading(false);
 
     if (freshMovies.length === 0) {
@@ -71,26 +73,6 @@ export function Movies(): ReactElement {
 
     const uniqueMovies = getUniqueMoviesById(freshMovies);
     setDisplayedMovies(uniqueMovies);
-  }
-
-  async function addDataToLower(): Promise<void> {
-    // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
-    if (firstLoad) {
-      setFirstLoad(false);
-    } else {
-      setPage(prev => prev + 1);
-    }
-    console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
-    const freshMovies = await fetchMovies(selectedGenre, selectedYear, page + 1);
-
-    if (freshMovies.length > 0) {
-      const uniqueMovies = getUniqueMoviesById(freshMovies);
-      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
-
-      if (freshMovies.length < 20) {
-        setHadMoreData(false);
-      }
-    }
   }
 
   return (
@@ -105,18 +87,7 @@ export function Movies(): ReactElement {
             <view className='FilterSection'>
               <text className='FilterLabel'>{`${t('genre')}: ${(selectedGenre && GENRE_MAP?.[selectedGenre]) || t('all')}`}</text>
               <view className='FilterOptions'>
-                <view className={selectedGenre == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
-                  <text>{t('all')}</text>
-                </view>
-                <view className={selectedGenre == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
-                  <text>{t('action')}</text>
-                </view>
-                <view className={selectedGenre == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
-                  <text>{t('comedy')}</text>
-                </view>
-                <view className={selectedGenre == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
-                  <text>{t('drama')}</text>
-                </view>
+                <RenderGenreFilters />
               </view>
             </view>
 
@@ -195,6 +166,28 @@ export function Movies(): ReactElement {
     </PageView>
   );
 
+  async function addDataToLower(): Promise<void> {
+    // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+    if (firstLoad) {
+      setFirstLoad(false);
+    } else {
+      setPage(prev => prev + 1);
+    }
+    console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
+    setLoading(true);
+    const freshMovies = await fetchMovies(selectedYear, selectedGenre, page + 1);
+    setLoading(false);
+
+    if (freshMovies.length > 0) {
+      const uniqueMovies = getUniqueMoviesById(freshMovies);
+      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
+
+      if (freshMovies.length < 20) {
+        setHadMoreData(false);
+      }
+    }
+  }
+
   function RenderYearsFilters(): ReactElement {
     return (
       <>
@@ -204,10 +197,28 @@ export function Movies(): ReactElement {
             const _keyItem = `${2000 + (i + 22)}`;
             return (
               <view key={i} className={selectedYear == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
-                <text>{_keyItem}s</text>
+                <text>{_keyItem}</text>
               </view>
             );
           })}
+      </>
+    );
+  }
+  function RenderGenreFilters(): ReactElement {
+    return (
+      <>
+        <view className={selectedGenre == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
+          <text>{t('all')}</text>
+        </view>
+        <view className={selectedGenre == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
+          <text>{t('action')}</text>
+        </view>
+        <view className={selectedGenre == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
+          <text>{t('comedy')}</text>
+        </view>
+        <view className={selectedGenre == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
+          <text>{t('drama')}</text>
+        </view>
       </>
     );
   }

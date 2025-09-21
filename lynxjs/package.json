@@ -14,7 +14,8 @@
     "@lynx-js/react": "^0.105.1",
     "i18next": "^24.2.3",
     "json": "^11.0.0",
-    "react-router": "6"
+    "react-router": "6",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@lynx-js/qrcode-rsbuild-plugin": "^0.4.0",
