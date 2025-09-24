@@ -1,8 +1,9 @@
+import type { ReactElement } from 'react';
 import { useLocation } from 'react-router';
 import { PageView } from '@/components/index.js';
 import '../Movies/Movies.css';
 
-export function Movie() {
+export function Movie(): ReactElement {
   const location = useLocation();
   const movieData = location.state?.movie;
 

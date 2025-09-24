@@ -20,3 +20,7 @@ export const getGenreNames = (genreIds: number[]): string => {
 
   return genreIds.map(id => GENRE_MAP[id] || 'Unknown').join(', ');
 };
+
+export const getMoviesByRating = (moviesList: IMovie[]): IMovie[] => {
+  return moviesList.sort((a, b) => b.vote_average - a.vote_average);
+};
