@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   selectedFilterButton: {
-    backgroundColor: Colors.light.buttonBackground,
+    backgroundColor: Colors.light.green,
   },
   selectedFilterButtonText: {
     color: Colors.light.white,

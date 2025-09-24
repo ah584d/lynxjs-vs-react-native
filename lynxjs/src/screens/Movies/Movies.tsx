@@ -59,11 +59,12 @@ export function Movies(): ReactElement {
 
   async function handleGetMovies(): Promise<void> {
     setFilterChanged(false);
+    setPage(1);
 
     console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
 
     setLoading(true);
-    const freshMovies = await fetchMovies(selectedYear, selectedGenre, page);
+    const freshMovies = await fetchMovies(1, selectedYear, selectedGenre);
     setLoading(false);
 
     if (freshMovies.length === 0) {
@@ -158,7 +159,7 @@ export function Movies(): ReactElement {
             </view> */}
           </view>
 
-          <view class={`RecommendButton${!filterChanged ? ' RecommendButtonDisabled' : ''}`} bindtap={handleGetMovies}>
+          <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={handleGetMovies}>
             <text class={`ButtonText${!filterChanged ? ' ButtonTextDisabled' : ''}`}>{loading ? 'Loading...' : t('get_movies')}</text>
           </view>
         </view>
@@ -175,7 +176,7 @@ export function Movies(): ReactElement {
     }
     console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
     setLoading(true);
-    const freshMovies = await fetchMovies(selectedYear, selectedGenre, page + 1);
+    const freshMovies = await fetchMovies(page + 1, selectedYear, selectedGenre);
     setLoading(false);
 
     if (freshMovies.length > 0) {

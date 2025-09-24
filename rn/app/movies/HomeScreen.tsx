@@ -64,13 +64,13 @@ export default function HomeScreen() {
         />
         {/* {isLoading && (
           <View style={styles.centeredOverlay}>
-            <ActivityIndicator size='large' color={Colors.light.buttonBackground} />
+            <ActivityIndicator size='large' color={Colors.light.green} />
           </View>
         )} */}
         {error && (
           <View style={styles.errorContainer}>
             <View style={styles.errorBox}>
-              <ActivityIndicator size='small' color={Colors.light.buttonBackground} style={{ marginBottom: 8 }} />
+              <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
               <Button title='Retry' onPress={onRefresh} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
               <View style={styles.errorTextWrapper}>
                 <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
@@ -85,7 +85,7 @@ export default function HomeScreen() {
           onPress={onRefresh}
           customStyle={[styles.loadButton, (isLoading || !dirtyFilter) && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
-          disabled={isLoading}
+          disabled={isLoading || !dirtyFilter}
         />
       </View>
     </View>
@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   errorText: {
-    color: Colors.light.buttonBackground,
+    color: Colors.light.green,
     fontSize: 16,
     textAlign: 'center',
     fontWeight: '600',
   },
   errorButton: {
-    backgroundColor: Colors.light.buttonBackground,
+    backgroundColor: Colors.light.green,
     marginTop: 8,
   },
   container: {
@@ -198,12 +198,13 @@ const styles = StyleSheet.create({
   },
   loadButton: {
     width: '90%',
-    backgroundColor: Colors.light.buttonBackground,
+    backgroundColor: Colors.light.green,
     height: 54,
     padding: 12,
   },
   loadButtonDisabled: {
     opacity: 0.5,
+    backgroundColor: Colors.light.grayBorder,
   },
   loadButtonLabel: {
     fontSize: 20,

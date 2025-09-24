@@ -31,12 +31,12 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
     try {
       const url = getUrl(page, year, genre);
       const response = await movieService.getMovies(url);
+      const sortedMovies = getMoviesByRating(response);
 
       // if this is a next page, we merge new results with existing one
       const existingMovies = get().moviesList;
-      const movies = page > 1 ? [...existingMovies, ...response] : response;
-      const sortedMovies = getMoviesByRating(movies);
-      set({ moviesList: sortedMovies, isLoading: false });
+      const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
+      set({ moviesList: movies, isLoading: false });
     } catch (e) {
       console.log('Error occurred while fetching movies:', e);
       set({ error: 'Failed to fetch movies', isLoading: false });
