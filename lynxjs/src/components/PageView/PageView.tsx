@@ -22,7 +22,6 @@ function PageView({ children, style, title, isBack }: PageViewProps) {
           <NavBar
             title={title}
             onBack={() => {
-              console.log(1);
               navigate('/');
             }}
           />

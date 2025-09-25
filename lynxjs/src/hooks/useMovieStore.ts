@@ -1,11 +1,11 @@
 import { create } from 'zustand';
+import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants.js';
+import { getUrl, movieService } from '@/services/http.service.js';
+import { getMoviesByRating } from '@/services/utils.js';
 // import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
 // import { getUrl, movieService } from '@/services/http.service.js';
 // import { getMoviesByRating } from '@/services/utils';
 import { type IMovie } from '@/types/common.types.js';
-import { ALL, GENRE_MAP, GENRES_FILTER, YEARS_FILTER } from '@/common/constants.js';
-import { getUrl, movieService } from '@/services/http.service.js';
-import { getMoviesByRating } from '@/services/utils.js';
 
 interface MovieStore {
   moviesList: IMovie[];
@@ -30,10 +30,10 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   getMovies: async (page: number, yearFilter?: number, genreFilter?: number) => {
     set({ isLoading: true, error: null });
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
-    const genre = genreFilter ;// && GENRE_MAP[GENRES_FILTER[genreFilter]];
+    const genre = genreFilter; // && GENRE_MAP[GENRES_FILTER[genreFilter]];
     try {
       const url = getUrl(page, year, genre);
-      const response = await movieService.getMovies(url);
+      const response = await movieService.fetchMovies(url);
       const sortedMovies = getMoviesByRating(response);
 
       // if this is a next page, we merge new results with existing one
@@ -41,7 +41,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
       set({ moviesList: movies, isLoading: false });
     } catch (e) {
-      console.log('Error occurred while fetching movies:', e);
+      console.log('Error occurred while fetching movies:', e instanceof Error ? e.message : e);
       set({ error: 'Failed to fetch movies', isLoading: false });
     }
   },

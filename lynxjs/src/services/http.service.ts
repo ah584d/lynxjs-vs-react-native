@@ -19,13 +19,13 @@ export function getUrl(page: number, year?: string, genreId?: number): string {
 }
 
 export const movieService = {
-  async getMovies(url: string): Promise<IMovie[]> {
+  async fetchMovies(url: string): Promise<IMovie[]> {
     const response = await fetch(url);
     return response.json();
   },
 };
 
-export const fetchMovies = async (page: number, year: string, genreId: number | null) => {
+export async function fetchMovies(page: number, year: string, genreId: number | null): Promise<[IMovie[] | null, unknown | null]> {
   try {
     let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
     if (year !== 'all') {
@@ -43,9 +43,9 @@ export const fetchMovies = async (page: number, year: string, genreId: number | 
     const response = await fetch(url);
     const data = await response.json();
 
-    return data.results;
+    return [data.results, null];
   } catch (error) {
     console.error('Error fetching movies:', error);
-    return [];
+    return [null, error];
   }
-};
+}

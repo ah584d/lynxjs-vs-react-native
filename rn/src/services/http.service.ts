@@ -20,7 +20,7 @@ export function getUrl(page: number, year?: string, genreId?: number): string {
 }
 
 export const movieService = {
-  async getMovies(url: string): Promise<Movie[]> {
+  async fetchMovies(url: string): Promise<Movie[]> {
     const response = await axios.get(url);
     return response.data.results;
   },

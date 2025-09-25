@@ -22,6 +22,7 @@ export function Movies(): ReactElement {
 
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState('2025');
+  const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,27 +59,38 @@ export function Movies(): ReactElement {
   };
 
   async function handleGetMovies(): Promise<void> {
+    setIsOffline(false);
     setFilterChanged(false);
     setPage(1);
 
     console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
 
     setLoading(true);
-    const freshMovies = await fetchMovies(1, selectedYear, selectedGenre);
+    const [freshMovies, error] = await fetchMovies(1, selectedYear, selectedGenre);
     setLoading(false);
 
-    if (freshMovies.length === 0) {
+    if (error) {
+      setIsOffline(true);
+      return;
+    }
+
+    if (freshMovies?.length === 0) {
       setDisplayedMovies([]);
       return;
     }
 
-    const uniqueMovies = getUniqueMoviesById(freshMovies);
+    const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
     setDisplayedMovies(uniqueMovies);
   }
 
   return (
     <PageView>
       <view className='AppContainer'>
+        {isOffline && (
+          <view className='offline-container'>
+            <text className='offline-text'>You are offline. Please check your internet connection.</text>
+          </view>
+        )}
         <view className='MainContent'>
           <view className='Header'>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
@@ -152,7 +164,6 @@ export function Movies(): ReactElement {
                 </list-item>
               )}
             </list>
-
             {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
               <text style={{ color: 'red' }}>{eventLog}</text>
@@ -176,14 +187,18 @@ export function Movies(): ReactElement {
     }
     console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
     setLoading(true);
-    const freshMovies = await fetchMovies(page + 1, selectedYear, selectedGenre);
+    const [freshMovies, error] = await fetchMovies(page + 1, selectedYear, selectedGenre);
     setLoading(false);
 
-    if (freshMovies.length > 0) {
-      const uniqueMovies = getUniqueMoviesById(freshMovies);
+    if (error) {
+      setIsOffline(true);
+      return;
+    }
+    if (freshMovies?.length ?? 0 > 0) {
+      const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
       setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
 
-      if (freshMovies.length < 20) {
+      if (freshMovies?.length ?? 0 < 20) {
         setHadMoreData(false);
       }
     }
@@ -205,6 +220,7 @@ export function Movies(): ReactElement {
       </>
     );
   }
+
   function RenderGenreFilters(): ReactElement {
     return (
       <>

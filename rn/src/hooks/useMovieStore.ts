@@ -30,7 +30,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
     const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
     try {
       const url = getUrl(page, year, genre);
-      const response = await movieService.getMovies(url);
+      const response = await movieService.fetchMovies(url);
       const sortedMovies = getMoviesByRating(response);
 
       // if this is a next page, we merge new results with existing one
@@ -38,7 +38,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
       set({ moviesList: movies, isLoading: false });
     } catch (e) {
-      console.log('Error occurred while fetching movies:', e);
+      console.log('Error occurred while fetching movies:', e instanceof Error ? e.message : e);
       set({ error: 'Failed to fetch movies', isLoading: false });
     }
   },

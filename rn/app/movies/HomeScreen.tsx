@@ -28,7 +28,6 @@ export default function HomeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
 
-  // console.log(`====> DEBUG yearFilter: `, yearFilter, `, genreFilter: `, genreFilter);
   const onRefresh = useCallback(async () => {
     setDirtyFilter(false);
     setCurrentPage(1);
@@ -41,6 +40,7 @@ export default function HomeScreen() {
   }, [yearFilter, genreFilter, getMovies]);
 
   console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
