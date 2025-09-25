@@ -1,6 +1,7 @@
 import { pluginQRCode } from '@lynx-js/qrcode-rsbuild-plugin';
 import { pluginReactLynx } from '@lynx-js/react-rsbuild-plugin';
 import { defineConfig } from '@lynx-js/rspeedy';
+import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import dotenv from 'dotenv';
@@ -21,6 +22,7 @@ export default defineConfig({
     }),
     pluginReactLynx(),
     pluginTypeCheck(),
+    pluginSass(),
   ],
   source: {
     define: {

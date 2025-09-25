@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import { useLocation } from 'react-router';
 import { PageView } from '@/components/index.js';
 import '../Movies/Movies.css';
+import styles from './movie.module.scss';
 
 export function Movie(): ReactElement {
   const location = useLocation();
@@ -11,14 +12,14 @@ export function Movie(): ReactElement {
     <PageView isBack title='Movie Detail'>
       <view class='display:flex;flex-direction:column;'>
         <scroll-view style={{ width: 'calc(100% - 10px)', height: '85vh' }} scroll-orientation='vertical'>
-          <image src={`https://image.tmdb.org/t/p/w342${movieData.poster_path || movieData.poster_path}`} style='width:90vw;height:400px;object-fit:contain;align-self:center' />
+          <image src={`https://image.tmdb.org/t/p/w342${movieData.poster_path || movieData.poster_path}`} className={styles['picture']} />
           <view style='padding:20px'>
             <text className='Title'>{movieData.title}</text>
-            <text className='Title2'>{movieData.description}</text>
-            <text className='Title2'>Rating: ★ {movieData.vote_average.toFixed(1)}/10</text>
-            <text className='Title2'>Release Date: {movieData.release_date}</text>
-            <text className='Title2'>
-              Overview: {movieData.overview}
+            <text className={styles['sub-title']}>{movieData.description}</text>
+            <text className={styles['sub-title']}>Rating: ★ {movieData.vote_average.toFixed(1)}/10</text>
+            <text className={styles['sub-title']}>Release Date: {movieData.release_date}</text>
+            <text className={styles['sub-title']}>
+              Overview:
               {movieData.overview}
             </text>
           </view>
