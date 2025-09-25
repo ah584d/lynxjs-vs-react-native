@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   loadButton: {
     width: '90%',
     backgroundColor: Colors.light.green,
-    height: 54,
+    height: 50,
     padding: 12,
   },
   loadButtonDisabled: {
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.grayBorder,
   },
   loadButtonLabel: {
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 20,
     fontWeight: 'bold',
     color: Colors.light.white,

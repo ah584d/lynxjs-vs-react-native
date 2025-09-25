@@ -8,6 +8,7 @@ import { fetchMovies } from '@/services/http.service.js';
 import { getGenreNames, getUniqueMoviesById } from '@/services/utils.js';
 import type { IMovie } from '@/types/common.types.js';
 import './Movies.css';
+import { useMovieStore } from '@/hooks/useMovieStore.js';
 
 export function Movies(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
@@ -24,6 +25,11 @@ export function Movies(): ReactElement {
   const [selectedYear, setSelectedYear] = useState('2025');
   const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
+
+  const getMovies = useMovieStore(state => state.getMovies);
+  const moviesList = useMovieStore(state => state.moviesList);
+  const isLoading = useMovieStore(state => state.isLoading);
+  const error = useMovieStore(state => state.error);
 
   useEffect(() => {
     handleGetMovies();
