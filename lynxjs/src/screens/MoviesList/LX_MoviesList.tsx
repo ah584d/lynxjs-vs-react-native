@@ -1,13 +1,12 @@
-import { type ReactElement, useEffect, useLynxGlobalEventListener, useState } from '@lynx-js/react';
+import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRE_MAP } from '@/common/LX_constants.js';
-import { MovieCard } from '@/components/atoms/LX_MovieCard.jsx';
-import { MoviePicture } from '@/components/atoms/LX_MoviePicture.jsx';
+import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { t } from '@/i18n/i18n.js';
 import { fetchMovies } from '@/services/LX_http.service.js';
-import { getGenreNames, getUniqueMoviesById } from '@/services/LX_utils.js';
+import { getUniqueMoviesById } from '@/services/LX_utils.js';
 import type { IMovie } from '@/types/LX_common.types.js';
 import './moviesList.css';
 
@@ -16,14 +15,13 @@ export function MoviesList(): ReactElement {
   const [filterChanged, setFilterChanged] = useState(false);
 
   const [hasMoreData, setHadMoreData] = useState(true);
-  const [page, setPage] = useState(1);
-  const [eventLog, setEventLog] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [displayedMovies, setDisplayedMovies] = useState<IMovie[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
-  const [selectedYear, setSelectedYear] = useState('2025');
+  const [genreFilter, setGenreFilter] = useState<number | null>(null);
+  const [yearFilter, setYearFilter] = useState('2025');
   const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
 
@@ -32,37 +30,30 @@ export function MoviesList(): ReactElement {
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
 
+
+  // useEffect(() => {
+  //   getMovies(currentPage, yearFilter, genreFilter);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [getMovies, currentPage]);
+
   useEffect(() => {
     handleGetMovies();
   }, []);
 
-  useLynxGlobalEventListener('exposure', e => {
-    (e as { 'exposure-id': string }[]).forEach(item => {
-      setEventLog(log => log + (log === '' ? '' : ', ') + item['exposure-id']);
-    });
-  });
 
-  useLynxGlobalEventListener('disexposure', e => {
-    let log = eventLog.split(', ');
-    (e as { 'exposure-id': string }[]).forEach(item => {
-      log = log.filter(id => id !== item['exposure-id']);
-    });
-    log.sort();
-    setEventLog(log.join(', '));
-  });
 
   const handleActionGenre = (_type: number | null) => () => {
-    if (_type !== selectedGenre) {
+    if (_type !== genreFilter) {
       setFilterChanged(true);
     }
-    setSelectedGenre(_type);
+    setGenreFilter(_type);
   };
 
   const handleActionYear = (_year: string) => () => {
-    if (_year !== selectedYear) {
+    if (_year !== yearFilter) {
       setFilterChanged(true);
     }
-    setSelectedYear(_year);
+    setYearFilter(_year);
   };
 
   const goToPerformance = () => {
@@ -72,12 +63,12 @@ export function MoviesList(): ReactElement {
   async function handleGetMovies(): Promise<void> {
     setIsOffline(false);
     setFilterChanged(false);
-    setPage(1);
+    setCurrentPage(1);
 
-    console.log('====> DEBUG handleGetMovies: page: ', page, 'firstLoad:', firstLoad);
+    console.log('====> DEBUG handleGetMovies: page: ', currentPage, 'firstLoad:', firstLoad);
 
     setLoading(true);
-    const [freshMovies, error] = await fetchMovies(1, selectedYear, selectedGenre);
+    const [freshMovies, error] = await fetchMovies(1, yearFilter, genreFilter);
     setLoading(false);
 
     if (error) {
@@ -114,14 +105,14 @@ export function MoviesList(): ReactElement {
               </view>
             </view>
             <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('genre')}: ${(selectedGenre && GENRE_MAP?.[selectedGenre]) || t('all')}`}</text>
+              <text className='FilterLabel'>{`${t('genre')}: ${(genreFilter && GENRE_MAP?.[genreFilter]) || t('all')}`}</text>
               <view className='FilterOptions'>
                 <RenderGenreFilters />
               </view>
             </view>
 
             <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('year')}: ${selectedYear}`}</text>
+              <text className='FilterLabel'>{`${t('year')}: ${yearFilter}`}</text>
               <view className='FilterOptionsYear'>
                 <RenderYearsFilters />
               </view>
@@ -158,7 +149,7 @@ export function MoviesList(): ReactElement {
           </view>
 
           <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={handleGetMovies}>
-            <text class={`ButtonText${!filterChanged ? ' ButtonTextDisabled' : ''}`}>{loading ? 'Loading...' : t('get_movies')}</text>
+            <text class={`button-text${!filterChanged ? ' button-text-disabled' : ''}`}>{loading ? 'Loading...' : t('get_movies')}</text>
           </view>
         </view>
       </view>
@@ -170,11 +161,11 @@ export function MoviesList(): ReactElement {
     if (firstLoad) {
       setFirstLoad(false);
     } else {
-      setPage(prev => prev + 1);
+      setCurrentPage(prev => prev + 1);
     }
-    console.log('====> DEBUG addDataToLower: page: ', page, 'firstLoad:', firstLoad);
+    console.log('====> DEBUG addDataToLower: page: ', currentPage, 'firstLoad:', firstLoad);
     setLoading(true);
-    const [freshMovies, error] = await fetchMovies(page + 1, selectedYear, selectedGenre);
+    const [freshMovies, error] = await fetchMovies(currentPage + 1, yearFilter, genreFilter);
     setLoading(false);
 
     if (error) {
@@ -199,7 +190,7 @@ export function MoviesList(): ReactElement {
           .map((_, i) => {
             const _keyItem = `${2000 + (i + 22)}`;
             return (
-              <view key={i} className={selectedYear == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
+              <view key={i} className={yearFilter == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
                 <text>{_keyItem}</text>
               </view>
             );
@@ -211,16 +202,16 @@ export function MoviesList(): ReactElement {
   function RenderGenreFilters(): ReactElement {
     return (
       <>
-        <view className={selectedGenre == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
+        <view className={genreFilter == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
           <text>{t('all')}</text>
         </view>
-        <view className={selectedGenre == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
+        <view className={genreFilter == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
           <text>{t('action')}</text>
         </view>
-        <view className={selectedGenre == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
+        <view className={genreFilter == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
           <text>{t('comedy')}</text>
         </view>
-        <view className={selectedGenre == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
+        <view className={genreFilter == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
           <text>{t('drama')}</text>
         </view>
       </>

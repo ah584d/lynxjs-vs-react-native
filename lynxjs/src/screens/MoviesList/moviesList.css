@@ -110,13 +110,13 @@
   background-color: #a0a0a0; /* Your disabled color */
 }
 
-.ButtonText {
+.button-text {
   color: #ffffff;
   font-size: 18px;
   font-weight: bold;
 }
 
-.ButtonTextDisabled {
+.button-text-disabled {
   color: #ffffff9d;
 }
 
