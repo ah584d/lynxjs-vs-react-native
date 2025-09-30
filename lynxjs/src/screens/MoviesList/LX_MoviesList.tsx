@@ -1,16 +1,17 @@
 import { useLynxGlobalEventListener, useState } from '@lynx-js/react';
 import { type ReactElement, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { GENRE_MAP } from '@/common/constants.js';
+import { GENRE_MAP } from '@/common/LX_constants.js';
+import { MoviePicture } from '@/components/atoms/LX_MoviePicture.jsx';
 import { PageView } from '@/components/index.js';
+import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { t } from '@/i18n/i18n.js';
-import { fetchMovies } from '@/services/http.service.js';
-import { getGenreNames, getUniqueMoviesById } from '@/services/utils.js';
-import type { IMovie } from '@/types/common.types.js';
-import './Movies.css';
-import { useMovieStore } from '@/hooks/useMovieStore.js';
+import { fetchMovies } from '@/services/LX_http.service.js';
+import { getGenreNames, getUniqueMoviesById } from '@/services/LX_utils.js';
+import type { IMovie } from '@/types/LX_common.types.js';
+import './moviesList.css';
 
-export function Movies(): ReactElement {
+export function MoviesList(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
   const [filterChanged, setFilterChanged] = useState(false);
 
@@ -64,6 +65,10 @@ export function Movies(): ReactElement {
     setSelectedYear(_year);
   };
 
+  const goToPerformance = () => {
+    navigate('/performance');
+  };
+
   async function handleGetMovies(): Promise<void> {
     setIsOffline(false);
     setFilterChanged(false);
@@ -101,7 +106,12 @@ export function Movies(): ReactElement {
           <view className='Header'>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
               <text className='Title'>Movie With Lynx</text>
-              <text className='Title'>{displayedMovies.length}</text>
+              <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
+                <view className='performance-button' bindtap={goToPerformance}>
+                  <text style='color:white;font-size:16px'>📊</text>
+                </view>
+                <text className='Title'>{displayedMovies.length}</text>
+              </view>
             </view>
             <view className='FilterSection'>
               <text className='FilterLabel'>{`${t('genre')}: ${(selectedGenre && GENRE_MAP?.[selectedGenre]) || t('all')}`}</text>
@@ -142,9 +152,7 @@ export function Movies(): ReactElement {
                       <view style='display:flex;align-items:center;justify-content:flex-end;padding-right:10px;padding-top:10px'>
                         <text className='MovieTitle'># {index}</text>
                       </view>
-                      <view className='PosterContainer'>
-                        <image src={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} className='MoviePoster' />
-                      </view>
+                      <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
                       <view className='MovieInfo'>
                         <text className='MovieTitle'>{movie.title}</text>
                         <text className='MovieRating'>

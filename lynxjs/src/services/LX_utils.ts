@@ -1,5 +1,5 @@
-import { GENRE_MAP } from '@/common/constants.js';
-import type { IMovie } from '@/types/common.types.js';
+import { GENRE_MAP } from '@/common/LX_constants.js';
+import type { IMovie } from '@/types/LX_common.types.js';
 
 export function getUniqueMoviesById(movies: IMovie[]): IMovie[] {
   const seen = new Set<number>();

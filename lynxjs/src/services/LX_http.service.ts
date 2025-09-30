@@ -1,5 +1,5 @@
-import { ALL, API_KEY, TMDB_BASE_URL } from '@/common/constants.js';
-import { type IMovie } from '@/types/common.types.js';
+import { ALL, API_KEY, TMDB_BASE_URL } from '@/common/LX_constants.js';
+import { type IMovie } from '@/types/LX_common.types.js';
 
 export function getUrl(page: number, year?: string, genreId?: number): string {
   let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;

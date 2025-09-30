@@ -1,9 +1,10 @@
-import React, { FC, ReactElement, useState } from 'react';
-import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import React, { ReactElement, useEffect, useRef } from 'react';
+import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
-import { Movie } from '@/types/common.types';
 import { getGenreNames } from '@/services/utils';
+import { Movie } from '@/types/common.types';
+import { MoviePicture } from './atoms/MoviePicture';
 
 interface MovieCardProps {
   movie: Movie;
@@ -19,8 +20,8 @@ export const MovieCard= ({ movie, onPress, customStyle }: MovieCardProps): React
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
       <View style={styles.posterContainer}>
-        <RenderMoviePicture />
       </View>
+        <MoviePicture posterUrl={posterUrl} />
       <View style={styles.details}>
         <Text style={styles.title} numberOfLines={1}>
           {movie.title}
@@ -35,19 +36,6 @@ export const MovieCard= ({ movie, onPress, customStyle }: MovieCardProps): React
       </View>
     </TouchableOpacity>
   );
-
-  function RenderMoviePicture(): ReactElement {
-    // TODO: to extract
-    return imageError ? (
-      <View style={styles.poster}>
-        <Text style={styles.oopsText}>Oops!!</Text>
-        <Icon name='emoji-sad' size={60} color='orange' />
-        <Text style={styles.oopsText}>something went wrong</Text>
-      </View>
-    ) : (
-      <Image source={{ uri: posterUrl }} style={styles.poster} onError={() => setImageError(true)} />
-    );
-  }
 };
 
 export const MovieCardMemo = React.memo(MovieCard);
@@ -66,16 +54,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.light.lightGray2,
   },
   posterContainer: {
-    alignItems: 'center',
-  },
-  poster: {
-    width: 200,
-    height: 290,
-    borderRadius: 4,
-    borderColor: Colors.light.grayBorder,
-    borderWidth: 1,
-    marginBottom: 24,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   details: {
@@ -101,14 +79,6 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 14,
     color: Colors.light.darkGray,
-        marginBottom: 5,
-
-  },
-  oopsText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: Colors.light.purple,
-    padding: 16,
-    textAlign: 'center',
+    marginBottom: 5,
   },
 });

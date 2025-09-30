@@ -129,17 +129,6 @@
 .ListContainer {
   width: 100%;
 }
-.PosterContainer {
-  width: 100%;
-  align-items: center;
-  padding: 20px;
-  justify-content: center;
-}
-
-.MoviePoster {
-  width: 200px;
-  height: 300px;
-}
 
 .MovieInfo {
   padding: 20px;
@@ -184,6 +173,35 @@
 
 .ItemBgOdd {
   background-color: #e5ffed88;
+}
+
+.performance-button {
+  background-color: var(--color-green);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.performance-button:hover {
+  background-color: var(--color-green);
+  opacity: 0.8;
+}
+
+.offline-container {
+  background-color: #fff3cd;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+  text-align: center;
+}
+
+.offline-text {
+  color: #856404;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .offline-container {

@@ -1,4 +1,4 @@
-import './styles.css';
+import './navbar.css';
 
 type NavBarProps = {
   onBack?: () => void;

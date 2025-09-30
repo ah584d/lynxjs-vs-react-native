@@ -62,11 +62,11 @@ export default function HomeScreen() {
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
         />
-        {/* {isLoading && (
+        {isLoading && (
           <View style={styles.centeredOverlay}>
             <ActivityIndicator size='large' color={Colors.light.green} />
           </View>
-        )} */}
+        )}
         {error && (
           <View style={styles.errorContainer}>
             <View style={styles.errorBox}>

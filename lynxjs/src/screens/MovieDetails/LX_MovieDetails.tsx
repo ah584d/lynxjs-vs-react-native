@@ -1,10 +1,10 @@
 import type { ReactElement } from 'react';
 import { useLocation } from 'react-router';
 import { PageView } from '@/components/index.js';
-import '../Movies/Movies.css';
-import styles from './movie.module.scss';
+import '../MoviesList/moviesList.css';
+import styles from './movieDetails.module.scss';
 
-export function Movie(): ReactElement {
+export function MovieDetails(): ReactElement {
   const location = useLocation();
   const movieData = location.state?.movie;
 
