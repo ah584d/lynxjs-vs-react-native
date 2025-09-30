@@ -1,12 +1,11 @@
-import { useState } from '@lynx-js/react';
-import type { ReactNode } from '@lynx-js/react';
+import { useState, type ReactElement } from '@lynx-js/react';
 import './moviePicture.css';
 
 interface MoviePictureProps {
   posterUrl: string;
 }
 
-export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactNode => {
+export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

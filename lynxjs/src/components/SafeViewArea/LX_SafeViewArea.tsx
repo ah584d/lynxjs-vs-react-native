@@ -2,12 +2,12 @@ import type { ReactNode } from '@lynx-js/react';
 import type { CSSProperties } from '@lynx-js/types';
 import './safeViewArea.css';
 
-type Props = {
+interface SafeViewAreaProps {
   children: ReactNode;
   style?: CSSProperties;
-};
+}
 
-function SafeViewArea({ children, style }: Props) {
+function SafeViewArea({ children, style }: SafeViewAreaProps) {
   const isIOS = SystemInfo.platform === 'iOS';
 
   return (

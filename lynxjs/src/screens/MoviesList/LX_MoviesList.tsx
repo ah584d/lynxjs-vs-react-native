@@ -1,7 +1,7 @@
-import { useLynxGlobalEventListener, useState } from '@lynx-js/react';
-import { type ReactElement, useEffect } from 'react';
+import { type ReactElement, useEffect, useLynxGlobalEventListener, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRE_MAP } from '@/common/LX_constants.js';
+import { MovieCard } from '@/components/atoms/LX_MovieCard.jsx';
 import { MoviePicture } from '@/components/atoms/LX_MoviePicture.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
@@ -138,36 +138,9 @@ export function MoviesList(): ReactElement {
               lower-threshold-item-count={1}
               bounces={false}
               bindscrolltolower={addDataToLower}>
-              {displayedMovies.map((movie, index) => {
-                return (
-                  <list-item item-key={`list-item-${index}`} key={`list-item-${index}`} full-span={true} exposure-id={`list-item-${index}`}>
-                    <view
-                      bindtap={() => {
-                        navigate(`/movie/${movie.id}`, {
-                          state: { movie },
-                        });
-                      }}
-                      className={index % 2 === 0 ? 'ItemBgOdd' : ''}
-                      style='width:100%;border-bottom:1px solid #ccc'>
-                      <view style='display:flex;align-items:center;justify-content:flex-end;padding-right:10px;padding-top:10px'>
-                        <text className='MovieTitle'># {index}</text>
-                      </view>
-                      <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
-                      <view className='MovieInfo'>
-                        <text className='MovieTitle'>{movie.title}</text>
-                        <text className='MovieRating'>
-                          ★ {movie.vote_average.toFixed(1)}
-                          /10
-                        </text>
-                        <text className='MovieOverview'>{movie.overview}</text>
-                        <text className='MovieDate'>Release Date: {movie.release_date}</text>
-                        <text className='MovieGenres'>Genres: {getGenreNames(movie.genre_ids)}</text>
-                      </view>
-                    </view>
-                  </list-item>
-                );
-              })}
-
+              {displayedMovies.map((movie, index) => (
+                <MovieCard movie={movie} index={index} />
+              ))}
               {hasMoreData ? (
                 <list-item item-key='loading' key='loading'>
                   <text className='TitleAlign'>{`Load More Data...`}</text>

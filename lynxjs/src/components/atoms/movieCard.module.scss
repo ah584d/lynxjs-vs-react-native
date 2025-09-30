@@ -1,0 +1,40 @@
+.item-movie-card-container {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.item-movie-card-odd {
+  background-color: #e5ffed88;
+}
+
+.item-movie-card-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.item-movie-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.item-movie-card-rating {
+  color: #2563eb;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.item-movie-card-overview {
+  color: #4a4a4a;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.item-movie-card-text {
+  font-size: 16px;
+  line-height: 24px;
+}

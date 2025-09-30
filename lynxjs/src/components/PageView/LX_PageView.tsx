@@ -1,4 +1,4 @@
-import type { ReactNode } from '@lynx-js/react';
+import type { ReactElement } from '@lynx-js/react';
 import type { CSSProperties } from '@lynx-js/types';
 import { useNavigate } from 'react-router';
 import NavBar from '../NavBar/LX_NavBar.jsx';
@@ -6,7 +6,7 @@ import SafeViewArea from '../SafeViewArea/LX_SafeViewArea.jsx';
 import './pageView.css';
 
 interface PageViewProps {
-  children: ReactNode;
+  children: ReactElement;
   title?: string;
   style?: CSSProperties;
   isBack?: boolean;

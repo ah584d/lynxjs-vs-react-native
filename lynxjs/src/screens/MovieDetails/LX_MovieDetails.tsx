@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import type { ReactElement } from '@lynx-js/react';
 import { useLocation } from 'react-router';
 import { PageView } from '@/components/index.js';
 import '../MoviesList/moviesList.css';

@@ -134,24 +134,6 @@
   padding: 20px;
 }
 
-.MovieTitle {
-  font-size: 24px;
-  font-weight: bold;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-}
-
-.MovieRating {
-  color: #2563eb;
-  font-size: 16px;
-  margin-bottom: 16px;
-}
-
-.MovieOverview {
-  color: #4a4a4a;
-  font-size: 16px;
-  line-height: 24px;
-}
 
 .EmptyState {
   padding: 40px 20px;
@@ -171,6 +153,3 @@
   align-self: center;
 }
 
-.ItemBgOdd {
-  background-color: #e5ffed88;
-}
