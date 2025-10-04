@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { GENRES_FILTER, YEARS_FILTER } from '@/common/constants';
@@ -15,6 +15,10 @@ export default function HomeScreen() {
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
   const [dirtyFilter, setDirtyFilter] = useState(false);
+
+  const [scrollVelocity, setScrollVelocity] = useState(0);
+  const lastScrollY = useRef(0);
+  const lastScrollTime = useRef(Date.now());
   const flatListRef = useRef<FlatList<Movie> | null>(null);
 
   const getMovies = useMovieStore(state => state.getMovies);
@@ -39,6 +43,21 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies]);
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const currentTime = Date.now();
+
+    // Calculate velocity
+    const deltaY = currentOffset - lastScrollY.current;
+    const deltaTime = currentTime - lastScrollTime.current;
+    const velocity = deltaTime > 0 ? deltaY / deltaTime : 0;
+
+    setScrollVelocity(Math.min(Math.max(velocity, -5), 5)); // Clamp velocity
+
+    lastScrollY.current = currentOffset;
+    lastScrollTime.current = currentTime;
+  };
+
   console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
 
   return (
@@ -61,6 +80,8 @@ export default function HomeScreen() {
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={resetListAndGetMovies} />}
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
         />
         {isLoading && (
           <View style={styles.centeredOverlay}>

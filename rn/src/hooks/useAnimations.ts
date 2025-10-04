@@ -1,11 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-export function useCardAnimation(scrollVelocity: number) {
+export function useCardAnimation(scrollVelocity: number): Animated.Value {
   const scaleAnimation = useRef(new Animated.Value(1)).current;
 
-  // Check if scrolling is happening
-  const isScrolling = Math.abs(scrollVelocity) > 0.1; // Consider scrolling if velocity > 0.1   // Animate scale based on scroll state
+  const isScrolling = Math.abs(scrollVelocity) > 0.1;
   useEffect(() => {
     if (isScrolling) {
       // Start pulsing animation while scrolling
