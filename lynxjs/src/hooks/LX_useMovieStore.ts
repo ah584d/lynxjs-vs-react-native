@@ -1,10 +1,7 @@
 import { create } from 'zustand';
-import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/LX_constants.js';
+import { ALL, GENRES_FILTER, GENRE_MAP, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
 import { getUrl, movieService } from '@/services/LX_http.service.js';
 import { getMoviesByRating } from '@/services/LX_utils.js';
-// import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
-// import { getUrl, movieService } from '@/services/http.service.js';
-// import { getMoviesByRating } from '@/services/utils';
 import { type Movie } from '@/types/LX_common.types.js';
 
 interface MovieStore {
@@ -30,7 +27,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   getMovies: async (page: number, yearFilter?: number, genreFilter?: number) => {
     set({ isLoading: true, error: null });
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
-    const genre = genreFilter; // && GENRE_MAP[GENRES_FILTER[genreFilter]];
+    const genre = genreFilter && GENRE_MAP_[GENRES_FILTER[genreFilter]];
     try {
       const url = getUrl(page, year, genre);
       const response = await movieService.fetchMovies(url);

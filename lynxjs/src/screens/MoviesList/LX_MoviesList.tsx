@@ -30,7 +30,6 @@ export function MoviesList(): ReactElement {
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
 
-
   // useEffect(() => {
   //   getMovies(currentPage, yearFilter, genreFilter);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,5 @@
-import { ALL, API_KEY, TMDB_BASE_URL } from '@/common/LX_constants.js';
-import { type IMovie } from '@/types/LX_common.types.js';
+import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP_, TMDB_BASE_URL } from '@/common/LX_constants.js';
+import { type Movie } from '@/types/LX_common.types.js';
 
 export function getUrl(page: number, year?: string, genreId?: number): string {
   let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
@@ -25,19 +25,10 @@ export const movieService = {
   },
 };
 
-export async function fetchMovies(page: number, year: string, genreId: number | null): Promise<[IMovie[] | null, unknown | null]> {
+export async function fetchMovies(page: number, year: string, genreId: number | undefined): Promise<[Movie[] | null, unknown | null]> {
   try {
-    let url = `${TMDB_BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
-    if (year !== 'all') {
-      const yearStart = parseInt(year);
-      const yearEnd = yearStart;
-      url += `&primary_release_date.gte=${yearStart}-01-01&primary_release_date.lte=${yearEnd}-12-31`;
-    }
-    if (genreId !== null) {
-      url += `&with_genres=${genreId}`;
-    }
 
-    url += `&page=${page}`;
+    const url = getUrl(page, year, genre);
 
     console.log(`====> DEBUG lynxjs url: `, url);
     const response = await fetch(url);
