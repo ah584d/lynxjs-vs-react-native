@@ -1,6 +1,6 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
-import { GENRES_FILTER, GENRE_MAP } from '@/common/LX_constants.js';
+import { GENRES_FILTER, GENRE_MAP, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
@@ -21,8 +21,8 @@ export function MoviesList(): ReactElement {
   const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [genreFilter, setGenreFilter] = useState<number>(0);
-  const [yearFilter, setYearFilter] = useState('2025');
+  const [genreFilter, setGenreFilter] = useState(0);
+  const [yearFilter, setYearFilter] = useState(3);
   const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
 
@@ -47,11 +47,11 @@ export function MoviesList(): ReactElement {
     setGenreFilter(activeIndex);
   };
 
-  const handleActionYear = (_year: string) => () => {
-    if (_year !== yearFilter) {
+  const handleActionYear = (activeIndex: number) => () => {
+    if (activeIndex !== yearFilter) {
       setFilterChanged(true);
     }
-    setYearFilter(_year);
+    setYearFilter(activeIndex);
   };
 
   const goToPerformance = () => {
@@ -103,16 +103,16 @@ export function MoviesList(): ReactElement {
               </view>
             </view>
             <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('genre')}: ${(genreFilter && GENRE_MAP?.[genreFilter]) || t('all')}`}</text>
+              <text className='FilterLabel'>{`${t('genre')}: ${genreFilter && GENRES_FILTER[genreFilter]}`}</text>
               <view className='FilterOptions'>
-                <RenderGenreFilters />
+                <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={handleActionGenre} />
               </view>
             </view>
 
             <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('year')}: ${yearFilter}`}</text>
+              <text className='FilterLabel'>{`${t('year')}: ${YEARS_FILTER[yearFilter]}`}</text>
               <view className='FilterOptionsYear'>
-                <RenderYearsFilters />
+                <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={handleActionYear} />
               </view>
             </view>
           </view>
@@ -178,42 +178,5 @@ export function MoviesList(): ReactElement {
         setHadMoreData(false);
       }
     }
-  }
-
-  function RenderYearsFilters(): ReactElement {
-    return (
-      <>
-        {Array(4)
-          .fill(0)
-          .map((_, i) => {
-            const _keyItem = `${2000 + (i + 22)}`;
-            return (
-              <view key={i} className={yearFilter == _keyItem ? 'FilterButtonYearActive' : 'FilterButtonYear'} bindtap={handleActionYear(_keyItem)}>
-                <text>{_keyItem}</text>
-              </view>
-            );
-          })}
-      </>
-    );
-  }
-
-  function RenderGenreFilters(): ReactElement {
-    return (
-      <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={handleActionGenre} />
-      // <>
-      //   <view className={genreFilter == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
-      //     <text>{t('all')}</text>
-      //   </view>
-      //   <view className={genreFilter == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
-      //     <text>{t('action')}</text>
-      //   </view>
-      //   <view className={genreFilter == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
-      //     <text>{t('comedy')}</text>
-      //   </view>
-      //   <view className={genreFilter == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
-      //     <text>{t('drama')}</text>
-      //   </view>
-      // </>
-    );
   }
 }

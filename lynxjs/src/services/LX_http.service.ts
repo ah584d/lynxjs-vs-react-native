@@ -1,4 +1,4 @@
-import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP_, TMDB_BASE_URL } from '@/common/LX_constants.js';
+import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP_, TMDB_BASE_URL, YEARS_FILTER } from '@/common/LX_constants.js';
 import { type Movie } from '@/types/LX_common.types.js';
 
 export function getUrl(page: number, year?: string, genreId?: number): string {
@@ -25,9 +25,10 @@ export const movieService = {
   },
 };
 
-export async function fetchMovies(page: number, year: string, genreId: number | undefined): Promise<[Movie[] | null, unknown | null]> {
+export async function fetchMovies(page: number, yearFilter: number, genreFilter?: number): Promise<[Movie[] | null, unknown | null]> {
   try {
-    const genre = genreId && GENRE_MAP_[GENRES_FILTER[genreId]];
+    const genre = genreFilter && GENRE_MAP_[GENRES_FILTER[genreFilter]];
+    const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
 
     const url = getUrl(page, year, genre);
 

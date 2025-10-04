@@ -11,7 +11,7 @@ import { Movie } from '@/types/common.types';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
-  const [yearFilter, setYearFilter] = useState<number | undefined>(3);
+  const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
   const [dirtyFilter, setDirtyFilter] = useState(false);

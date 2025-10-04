@@ -38,18 +38,6 @@
   margin-top: 5px;
 }
 
-.FilterButton {
-  background-color: #e5e7eb;
-  padding: 8px 16px;
-  border-radius: 8px;
-  margin-right: 8px;
-}
-
-.FilterButton text {
-  color: #1a1a1a;
-  font-weight: 400;
-}
-
 .FilterOptionsYear {
   display: flex;
   flex-wrap: wrap;
@@ -57,45 +45,6 @@
   align-items: center;
   justify-content: space-between;
 }
-
-.FilterButtonYear {
-  background-color: #e5e7eb;
-  width: calc((100% - 24px) / 4);
-  display: flex;
-  padding: 8px 0;
-  border-radius: 8px;
-  margin-top: 8px;
-  align-items: center;
-  justify-content: center;
-}
-
-.FilterButtonYearActive {
-  background-color: var(--color-green);
-  width: calc((100% - 24px) / 4);
-  display: flex;
-  padding: 8px 0;
-  border-radius: 8px;
-  margin-top: 8px;
-  align-items: center;
-  justify-content: center;
-}
-
-.FilterButtonYearActive text {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-/* .FilterButtonActive {
-  background-color: green;
-  padding: 8px 16px;
-  border-radius: 8px;
-  margin-right: 8px;
-}
-
-.FilterButtonActive text {
-  color: #ffffff;
-  font-weight: 600;
-} */
 
 .recommend-button {
   background-color: var(--color-green);

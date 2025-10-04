@@ -13,7 +13,7 @@ interface MovieStore {
 }
 
 interface MovieAction {
-  getMovies: (page: number, year?: number, genreId?: number) => Promise<void>;
+  getMovies: (page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
 }
 
@@ -24,7 +24,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   error: null,
   filter: null,
 
-  getMovies: async (page: number, yearFilter?: number, genreFilter?: number) => {
+  getMovies: async (page: number, yearFilter: number, genreFilter?: number) => {
     set({ isLoading: true, error: null });
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
     const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
