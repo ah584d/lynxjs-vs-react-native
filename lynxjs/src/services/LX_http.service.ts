@@ -27,6 +27,7 @@ export const movieService = {
 
 export async function fetchMovies(page: number, year: string, genreId: number | undefined): Promise<[Movie[] | null, unknown | null]> {
   try {
+    const genre = genreId && GENRE_MAP_[GENRES_FILTER[genreId]];
 
     const url = getUrl(page, year, genre);
 

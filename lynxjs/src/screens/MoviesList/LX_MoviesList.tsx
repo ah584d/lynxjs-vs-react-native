@@ -1,6 +1,7 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
-import { GENRE_MAP } from '@/common/LX_constants.js';
+import { GENRES_FILTER, GENRE_MAP } from '@/common/LX_constants.js';
+import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
@@ -20,7 +21,7 @@ export function MoviesList(): ReactElement {
   const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [genreFilter, setGenreFilter] = useState<number | null>(null);
+  const [genreFilter, setGenreFilter] = useState<number>(0);
   const [yearFilter, setYearFilter] = useState('2025');
   const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
@@ -39,13 +40,11 @@ export function MoviesList(): ReactElement {
     handleGetMovies();
   }, []);
 
-
-
-  const handleActionGenre = (_type: number | null) => () => {
-    if (_type !== genreFilter) {
+  const handleActionGenre = (activeIndex: number) => () => {
+    if (activeIndex !== genreFilter) {
       setFilterChanged(true);
     }
-    setGenreFilter(_type);
+    setGenreFilter(activeIndex);
   };
 
   const handleActionYear = (_year: string) => () => {
@@ -200,20 +199,21 @@ export function MoviesList(): ReactElement {
 
   function RenderGenreFilters(): ReactElement {
     return (
-      <>
-        <view className={genreFilter == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
-          <text>{t('all')}</text>
-        </view>
-        <view className={genreFilter == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
-          <text>{t('action')}</text>
-        </view>
-        <view className={genreFilter == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
-          <text>{t('comedy')}</text>
-        </view>
-        <view className={genreFilter == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
-          <text>{t('drama')}</text>
-        </view>
-      </>
+      <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={handleActionGenre} />
+      // <>
+      //   <view className={genreFilter == null ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(null)}>
+      //     <text>{t('all')}</text>
+      //   </view>
+      //   <view className={genreFilter == 28 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(28)}>
+      //     <text>{t('action')}</text>
+      //   </view>
+      //   <view className={genreFilter == 35 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(35)}>
+      //     <text>{t('comedy')}</text>
+      //   </view>
+      //   <view className={genreFilter == 18 ? 'FilterButtonActive' : 'FilterButton'} bindtap={handleActionGenre(18)}>
+      //     <text>{t('drama')}</text>
+      //   </view>
+      // </>
     );
   }
 }
