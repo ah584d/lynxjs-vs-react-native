@@ -5,7 +5,7 @@ import { Button } from '@/components/Button';
 interface FilterProps {
   title: string;
   filters: string[];
-  onFilterChange: (filter: string, index: number) => void;
+  onFilterChange: (index: number) => void;
   currentSelection?: number;
 }
 
@@ -23,7 +23,7 @@ export const Filter = ({ title, filters, onFilterChange, currentSelection }: Fil
             <Button
               key={filter}
               title={filter}
-              onPress={() => onFilterChange(filter, index)}
+              onPress={onFilterChange.bind(null, index)}
               customStyle={[isSelected ? styles.selectedFilterButton : undefined, spacingStyle]}
               customStyleText={isSelected ? styles.selectedFilterButtonText : undefined}
             />

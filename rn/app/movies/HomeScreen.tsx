@@ -128,14 +128,14 @@ export default function HomeScreen() {
     router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
 
-  function onFilterGenreChange(_filter: string, index: number) {
+  function onFilterGenreChange(index: number) {
     if (index !== genreFilter) {
       setDirtyFilter(true);
     }
     setGenreFilter(index);
   }
 
-  function onFilterYearChange(_filter: string, index: number) {
+  function onFilterYearChange(index: number) {
     if (index !== yearFilter) {
       setDirtyFilter(true);
     }
