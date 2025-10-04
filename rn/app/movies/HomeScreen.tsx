@@ -93,7 +93,14 @@ export default function HomeScreen() {
 
   function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
     // let FlatList handle the key via keyExtractor; do not create non-stable keys (e.g. Symbol)
-    return <MovieCardMemo movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} />;
+    return (
+      <MovieCardMemo
+        movie={item}
+        onPress={onMoviePress}
+        customStyle={index % 2 ? styles.cardCustomStyle : undefined}
+        scrollVelocity={scrollVelocity}
+      />
+    );
   }
 
   function onMoviePress(movieId: number): void {

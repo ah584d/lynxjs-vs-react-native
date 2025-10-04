@@ -1,8 +1,9 @@
-import React, { ReactElement, useEffect, useRef } from 'react';
+import React, { ReactElement } from 'react';
 import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
-import { getGenreNames } from '@/services/utils';
+import { useCardAnimation } from '@/hooks/useAnimations';
+import { getGenreNames, getPosterUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
 import { MoviePicture } from './atoms/MoviePicture';
 
@@ -10,18 +11,24 @@ interface MovieCardProps {
   movie: Movie;
   onPress: (movieId: number) => void;
   customStyle?: StyleProp<ViewStyle>;
+  scrollVelocity?: number;
 }
 
-export const MovieCard= ({ movie, onPress, customStyle }: MovieCardProps): ReactElement => {
-  const [imageError, setImageError] = useState(false);
+export const MovieCard = (props: MovieCardProps): ReactElement => {
+  const { movie, onPress, customStyle, scrollVelocity } = props;
+  const posterUrl = getPosterUrl(movie.poster_path);
 
-  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
+  const scaleAnimation = useCardAnimation(scrollVelocity ?? 0);
+
+  const animatedStyle: StyleProp<ViewStyle> = {
+    transform: [{ scale: scaleAnimation }],
+  };
 
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
-      <View style={styles.posterContainer}>
-      </View>
+      <Animated.View style={[styles.posterContainer, animatedStyle]}>
         <MoviePicture posterUrl={posterUrl} />
+      </Animated.View>
       <View style={styles.details}>
         <Text style={styles.title} numberOfLines={1}>
           {movie.title}
