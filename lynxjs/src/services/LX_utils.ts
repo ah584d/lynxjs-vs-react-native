@@ -1,7 +1,7 @@
 import { GENRE_MAP } from '@/common/LX_constants.js';
-import type { IMovie } from '@/types/LX_common.types.js';
+import type { Movie } from '@/types/LX_common.types.js';
 
-export function getUniqueMoviesById(movies: IMovie[]): IMovie[] {
+export function getUniqueMoviesById(movies: Movie[]): Movie[] {
   const seen = new Set<number>();
   const uniqueMovies = movies.filter(movie => {
     if (seen.has(movie.id)) {
@@ -21,6 +21,6 @@ export const getGenreNames = (genreIds: number[]): string => {
   return genreIds.map(id => GENRE_MAP[id] || 'Unknown').join(', ');
 };
 
-export const getMoviesByRating = (moviesList: IMovie[]): IMovie[] => {
+export const getMoviesByRating = (moviesList: Movie[]): Movie[] => {
   return moviesList.sort((a, b) => b.vote_average - a.vote_average);
 };

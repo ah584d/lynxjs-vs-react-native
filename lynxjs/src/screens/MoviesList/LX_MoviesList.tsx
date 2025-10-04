@@ -7,7 +7,7 @@ import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { t } from '@/i18n/i18n.js';
 import { fetchMovies } from '@/services/LX_http.service.js';
 import { getUniqueMoviesById } from '@/services/LX_utils.js';
-import type { IMovie } from '@/types/LX_common.types.js';
+import type { Movie } from '@/types/LX_common.types.js';
 import './moviesList.css';
 
 export function MoviesList(): ReactElement {
@@ -17,7 +17,7 @@ export function MoviesList(): ReactElement {
   const [hasMoreData, setHadMoreData] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [displayedMovies, setDisplayedMovies] = useState<IMovie[]>([]);
+  const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [genreFilter, setGenreFilter] = useState<number | null>(null);

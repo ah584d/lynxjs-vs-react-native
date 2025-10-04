@@ -19,7 +19,7 @@ export function getUrl(page: number, year?: string, genreId?: number): string {
 }
 
 export const movieService = {
-  async fetchMovies(url: string): Promise<IMovie[]> {
+  async fetchMovies(url: string): Promise<Movie[]> {
     const response = await fetch(url);
     return response.json();
   },

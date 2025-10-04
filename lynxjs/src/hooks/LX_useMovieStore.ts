@@ -5,11 +5,11 @@ import { getMoviesByRating } from '@/services/LX_utils.js';
 // import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
 // import { getUrl, movieService } from '@/services/http.service.js';
 // import { getMoviesByRating } from '@/services/utils';
-import { type IMovie } from '@/types/LX_common.types.js';
+import { type Movie } from '@/types/LX_common.types.js';
 
 interface MovieStore {
-  moviesList: IMovie[];
-  searchResults: IMovie[];
+  moviesList: Movie[];
+  searchResults: Movie[];
   isLoading: boolean;
   error: string | null;
   filter: string | null;

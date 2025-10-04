@@ -1,12 +1,12 @@
 import { type ReactElement } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { getGenreNames } from '@/services/LX_utils.js';
-import type { IMovie } from '@/types/LX_common.types.js';
+import type { Movie } from '@/types/LX_common.types.js';
 import { MoviePicture } from '../atoms/LX_MoviePicture.jsx';
 import styles from './movieCard.module.scss';
 
 interface MovieCardProps {
-  movie: IMovie;
+  movie: Movie;
   index: number;
 }
 
