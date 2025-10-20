@@ -8,11 +8,14 @@ import styles from './movieCard.module.scss';
 interface MovieCardProps {
   movie: Movie;
   index: number;
+  isScrolling?: boolean;
 }
 
 export function MovieCard(props: MovieCardProps): ReactElement {
-  const { index, movie } = props;
+  const { index, movie, isScrolling = false } = props;
   const navigate = useNavigate();
+
+  const posterClassName = isScrolling ? `${styles['poster-container']} ${styles['poster-scrolling']}` : styles['poster-container'];
 
   return (
     <list-item item-key={`list-item-${index}`} key={`list-item-${index}`} full-span={true} exposure-id={`list-item-${index}`}>
@@ -26,7 +29,9 @@ export function MovieCard(props: MovieCardProps): ReactElement {
         <view className={styles['item-movie-card-title-wrapper']}>
           <text className={styles['item-movie-card-title']}># {index}</text>
         </view>
-        <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
+        <view className={posterClassName}>
+          <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
+        </view>
         <view className='MovieInfo'>
           <text className={styles['item-movie-card-title']}>{movie.title}</text>
           <text className={styles['item-movie-card-rating']}>

@@ -1,29 +1,23 @@
-import { type ReactElement, useEffect, useState } from '@lynx-js/react';
+import { type ReactElement, useEffect, useRef, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
-import { GENRES_FILTER, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
+import { GENRES_FILTER, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { t } from '@/i18n/i18n.js';
-import { fetchMovies_ } from '@/services/LX_http.service.js';
-import { getUniqueMoviesById } from '@/services/LX_utils.js';
-import type { Movie } from '@/types/LX_common.types.js';
 import './moviesList.css';
 
 export function MoviesList(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
   const [filterChanged, setFilterChanged] = useState(false);
-
   const [hasMoreData, setHadMoreData] = useState(true);
-
-  // const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
-  // const [loading, setLoading] = useState(false);
-
   const [genreFilter, setGenreFilter] = useState(0);
   const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOffline, setIsOffline] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
 
   const getMovies = useMovieStore(state => state.getMovies);
@@ -36,10 +30,6 @@ export function MoviesList(): ReactElement {
     getMovies(currentPage, yearFilter, genreFilter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
-
-  // useEffect(() => {
-  //   handleGetMovies();
-  // }, []);
 
   if (error) {
     setIsOffline(true);
@@ -131,9 +121,10 @@ export function MoviesList(): ReactElement {
               scroll-event-throttle={16}
               lower-threshold-item-count={1}
               bounces={false}
+              bindscroll={handleScroll}
               bindscrolltolower={/*addDataToLower*/ () => increaseCurrentPage()}>
               {moviesList.map((movie, index) => (
-                <MovieCard movie={movie} index={index} />
+                <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
               {hasMoreData ? (
                 <list-item item-key='loading' key='loading'>
@@ -169,6 +160,18 @@ export function MoviesList(): ReactElement {
     } else {
       setCurrentPage(prev => prev + 1);
     }
+  }
+
+  function handleScroll(): void {
+    setIsScrolling(true);
+
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      setIsScrolling(false);
+    }, 50);
   }
   // async function addDataToLower(): Promise<void> {
   //   // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call

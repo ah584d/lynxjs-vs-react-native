@@ -37,26 +37,11 @@ export default function HomeScreen() {
     setCurrentPage(1);
     setForceRefresh(true);
 
-    // request page 1 explicitly after resetting currentPage so we refresh the first page
+    // request page 1 explicitly after resetting currentPage so we refresh to the first page
     await getMovies(1, yearFilter, genreFilter);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies]);
-
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    const currentTime = Date.now();
-
-    // Calculate velocity
-    const deltaY = currentOffset - lastScrollY.current;
-    const deltaTime = currentTime - lastScrollTime.current;
-    const velocity = deltaTime > 0 ? deltaY / deltaTime : 0;
-
-    setScrollVelocity(Math.min(Math.max(velocity, -5), 5)); // Clamp velocity
-
-    lastScrollY.current = currentOffset;
-    lastScrollTime.current = currentTime;
-  };
 
   console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
 
@@ -113,15 +98,7 @@ export default function HomeScreen() {
   );
 
   function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
-    // let FlatList handle the key via keyExtractor; do not create non-stable keys (e.g. Symbol)
-    return (
-      <MovieCardMemo
-        movie={item}
-        onPress={onMoviePress}
-        customStyle={index % 2 ? styles.cardCustomStyle : undefined}
-        scrollVelocity={scrollVelocity}
-      />
-    );
+    return <MovieCardMemo movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} scrollVelocity={scrollVelocity} />;
   }
 
   function onMoviePress(movieId: number): void {
@@ -143,8 +120,23 @@ export default function HomeScreen() {
   }
 
   function resetListAndGetMovies() {
-    resetList();// maybe move this function into fetchCleanList and delete function resetListAndGetMovies and use fetchCleanList directly
+    resetList(); // maybe move this function into fetchCleanList and delete function resetListAndGetMovies and use fetchCleanList directly
     fetchCleanList();
+  }
+
+  function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const currentTime = Date.now();
+
+    // Calculate velocity
+    const deltaY = currentOffset - lastScrollY.current;
+    const deltaTime = currentTime - lastScrollTime.current;
+    const velocity = deltaTime > 0 ? deltaY / deltaTime : 0;
+
+    setScrollVelocity(Math.min(Math.max(velocity, -5), 5)); // Clamp velocity
+
+    lastScrollY.current = currentOffset;
+    lastScrollTime.current = currentTime;
   }
 }
 

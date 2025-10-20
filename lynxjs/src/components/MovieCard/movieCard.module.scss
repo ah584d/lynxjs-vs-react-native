@@ -38,3 +38,26 @@
   font-size: 16px;
   line-height: 24px;
 }
+
+/* Animation classes for scroll-based shake effect */
+@keyframes posterPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.poster-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster-scrolling {
+  animation: posterPulse 0.6s ease-in-out infinite;
+}
