@@ -169,9 +169,10 @@ export function MoviesList(): ReactElement {
       clearTimeout(scrollTimeoutRef.current);
     }
 
+    // Reduced timeout for more responsive scroll detection
     scrollTimeoutRef.current = setTimeout(() => {
       setIsScrolling(false);
-    }, 50);
+    }, 16); // Reduced from 50ms to match scroll-event-throttle
   }
   // async function addDataToLower(): Promise<void> {
   //   // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call

@@ -1,4 +1,4 @@
-import { type ReactElement } from '@lynx-js/react';
+import { type ReactElement, memo } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { getGenreNames } from '@/services/LX_utils.js';
 import type { Movie } from '@/types/LX_common.types.js';
@@ -11,7 +11,7 @@ interface MovieCardProps {
   isScrolling?: boolean;
 }
 
-export function MovieCard(props: MovieCardProps): ReactElement {
+function MovieCardComponent(props: MovieCardProps): ReactElement {
   const { index, movie, isScrolling = false } = props;
   const navigate = useNavigate();
 
@@ -46,3 +46,6 @@ export function MovieCard(props: MovieCardProps): ReactElement {
     </list-item>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders like React Native version
+export const MovieCard = memo(MovieCardComponent);
