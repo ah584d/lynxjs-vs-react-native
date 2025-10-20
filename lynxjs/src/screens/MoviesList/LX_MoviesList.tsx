@@ -1,12 +1,12 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
-import { GENRES_FILTER, GENRE_MAP, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
+import { GENRES_FILTER, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { t } from '@/i18n/i18n.js';
-import { fetchMovies } from '@/services/LX_http.service.js';
+import { fetchMovies_ } from '@/services/LX_http.service.js';
 import { getUniqueMoviesById } from '@/services/LX_utils.js';
 import type { Movie } from '@/types/LX_common.types.js';
 import './moviesList.css';
@@ -16,38 +16,42 @@ export function MoviesList(): ReactElement {
   const [filterChanged, setFilterChanged] = useState(false);
 
   const [hasMoreData, setHadMoreData] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(false);
+  // const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
+  // const [loading, setLoading] = useState(false);
 
   const [genreFilter, setGenreFilter] = useState(0);
   const [yearFilter, setYearFilter] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isOffline, setIsOffline] = useState(false);
   const navigate = useNavigate();
 
   const getMovies = useMovieStore(state => state.getMovies);
+  const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
 
-  // useEffect(() => {
-  //   getMovies(currentPage, yearFilter, genreFilter);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [getMovies, currentPage]);
-
   useEffect(() => {
-    handleGetMovies();
-  }, []);
+    getMovies(currentPage, yearFilter, genreFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getMovies, currentPage]);
 
-  const handleActionGenre = (activeIndex: number) => () => {
+  // useEffect(() => {
+  //   handleGetMovies();
+  // }, []);
+
+  if (error) {
+    setIsOffline(true);
+  }
+  const onFilterGenreChange = (activeIndex: number) => () => {
     if (activeIndex !== genreFilter) {
       setFilterChanged(true);
     }
     setGenreFilter(activeIndex);
   };
 
-  const handleActionYear = (activeIndex: number) => () => {
+  const onFilterYearChange = (activeIndex: number) => () => {
     if (activeIndex !== yearFilter) {
       setFilterChanged(true);
     }
@@ -58,29 +62,30 @@ export function MoviesList(): ReactElement {
     navigate('/performance');
   };
 
-  async function handleGetMovies(): Promise<void> {
-    setIsOffline(false);
+  async function fetchCleanList(): Promise<void> {
     setFilterChanged(false);
+    setIsOffline(false);
     setCurrentPage(1);
 
-    console.log('====> DEBUG handleGetMovies: page: ', currentPage, 'firstLoad:', firstLoad);
+    console.log('====> DEBUG fetchCleanList: page: ', currentPage, 'firstLoad:', firstLoad);
 
-    setLoading(true);
-    const [freshMovies, error] = await fetchMovies(1, yearFilter, genreFilter);
-    setLoading(false);
+    // setLoading(true);
+    // const [freshMovies, error] = await fetchMovies(1, yearFilter, genreFilter);
+    // setLoading(false);
+    await getMovies(1, yearFilter, genreFilter);
 
-    if (error) {
-      setIsOffline(true);
-      return;
-    }
+    // if (error) {
+    //   setIsOffline(true);
+    //   return;
+    // }
 
-    if (freshMovies?.length === 0) {
-      setDisplayedMovies([]);
-      return;
-    }
+    // if (freshMovies?.length === 0) {
+    //   setDisplayedMovies([]);
+    //   return;
+    // }
 
-    const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
-    setDisplayedMovies(uniqueMovies);
+    // const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
+    // setDisplayedMovies(uniqueMovies);
   }
 
   return (
@@ -99,20 +104,20 @@ export function MoviesList(): ReactElement {
                 <view className='performance-button' bindtap={goToPerformance}>
                   <text style='color:white;font-size:16px'>📊</text>
                 </view>
-                <text className='Title'>{displayedMovies.length}</text>
+                <text className='Title'>{moviesList.length}</text>
               </view>
             </view>
             <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('genre')}: ${genreFilter && GENRES_FILTER[genreFilter]}`}</text>
+              <text className='FilterLabel'>{`${t('genre')}: ${genreFilter >= 0 && GENRES_FILTER[genreFilter]}`}</text>
               <view className='FilterOptions'>
-                <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={handleActionGenre} />
+                <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
               </view>
             </view>
 
             <view className='FilterSection'>
               <text className='FilterLabel'>{`${t('year')}: ${YEARS_FILTER[yearFilter]}`}</text>
               <view className='FilterOptionsYear'>
-                <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={handleActionYear} />
+                <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
               </view>
             </view>
           </view>
@@ -126,8 +131,8 @@ export function MoviesList(): ReactElement {
               scroll-event-throttle={16}
               lower-threshold-item-count={1}
               bounces={false}
-              bindscrolltolower={addDataToLower}>
-              {displayedMovies.map((movie, index) => (
+              bindscrolltolower={/*addDataToLower*/ () => increaseCurrentPage()}>
+              {moviesList.map((movie, index) => (
                 <MovieCard movie={movie} index={index} />
               ))}
               {hasMoreData ? (
@@ -146,37 +151,48 @@ export function MoviesList(): ReactElement {
             </view> */}
           </view>
 
-          <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={handleGetMovies}>
-            <text class={`button-text${!filterChanged ? ' button-text-disabled' : ''}`}>{loading ? 'Loading...' : t('get_movies')}</text>
+          <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={fetchCleanList}>
+            <text class={`button-text${!filterChanged ? ' button-text-disabled' : ''}`}>{isLoading ? 'Loading...' : t('get_movies')}</text>
           </view>
         </view>
       </view>
     </PageView>
   );
 
-  async function addDataToLower(): Promise<void> {
-    // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+  function increaseCurrentPage(): void {
+    if (isLoading) {
+      return;
+    }
+    // Note: there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
     if (firstLoad) {
       setFirstLoad(false);
     } else {
       setCurrentPage(prev => prev + 1);
     }
-    console.log('====> DEBUG addDataToLower: page: ', currentPage, 'firstLoad:', firstLoad);
-    setLoading(true);
-    const [freshMovies, error] = await fetchMovies(currentPage + 1, yearFilter, genreFilter);
-    setLoading(false);
-
-    if (error) {
-      setIsOffline(true);
-      return;
-    }
-    if (freshMovies?.length ?? 0 > 0) {
-      const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
-      setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
-
-      if (freshMovies?.length ?? 0 < 20) {
-        setHadMoreData(false);
-      }
-    }
   }
+  // async function addDataToLower(): Promise<void> {
+  //   // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+  //   if (firstLoad) {
+  //     setFirstLoad(false);
+  //   } else {
+  //     setCurrentPage(prev => prev + 1);
+  //   }
+  //   console.log('====> DEBUG addDataToLower: page: ', currentPage, 'firstLoad:', firstLoad);
+  //   setLoading(true);
+  //   const [freshMovies, error] = await fetchMovies(currentPage + 1, yearFilter, genreFilter);
+  //   setLoading(false);
+
+  //   if (error) {
+  //     setIsOffline(true);
+  //     return;
+  //   }
+  //   if (freshMovies?.length ?? 0 > 0) {
+  //     const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
+  //     setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
+
+  //     if (freshMovies?.length ?? 0 < 20) {
+  //       setHadMoreData(false);
+  //     }
+  //   }
+  // }
 }

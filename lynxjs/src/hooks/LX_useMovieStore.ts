@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { ALL, GENRES_FILTER, GENRE_MAP, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
+import { ALL, GENRES_FILTER, GENRE_MAP_, YEARS_FILTER } from '@/common/LX_constants.js';
 import { getUrl, movieService } from '@/services/LX_http.service.js';
 import { getMoviesByRating } from '@/services/LX_utils.js';
 import { type Movie } from '@/types/LX_common.types.js';
@@ -36,6 +36,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       // if this is a next page, we merge new results with existing one
       const existingMovies = get().moviesList;
       const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
+
       set({ moviesList: movies, isLoading: false });
     } catch (e) {
       console.log('Error occurred while fetching movies:', e instanceof Error ? e.message : e);

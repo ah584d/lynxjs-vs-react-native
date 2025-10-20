@@ -1,4 +1,4 @@
-export const GENRE_MAP: Record<number, string> = {
+export const GENRE_MAP_OLD: Record<number, string> = {
   28: 'Action',
   12: 'Adventure',
   16: 'Animation',
@@ -42,6 +42,7 @@ export const GENRE_MAP_: Record<string, number> = {
   Western: 37,
 };
 
+export const GENRE_MAP_INVERTED = Object.fromEntries(Object.entries(GENRE_MAP_).map(a => a.reverse()));
 export const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 export const API_KEY = process.env.TMDB_API_KEY;
 

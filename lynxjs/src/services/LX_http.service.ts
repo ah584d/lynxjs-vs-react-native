@@ -21,11 +21,12 @@ export function getUrl(page: number, year?: string, genreId?: number): string {
 export const movieService = {
   async fetchMovies(url: string): Promise<Movie[]> {
     const response = await fetch(url);
-    return response.json();
+    const { results } = await response.json();
+    return results;
   },
 };
 
-export async function fetchMovies(page: number, yearFilter: number, genreFilter?: number): Promise<[Movie[] | null, unknown | null]> {
+export async function fetchMovies_(page: number, yearFilter: number, genreFilter?: number): Promise<[Movie[] | null, unknown | null]> {
   try {
     const genre = genreFilter && GENRE_MAP_[GENRES_FILTER[genreFilter]];
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;

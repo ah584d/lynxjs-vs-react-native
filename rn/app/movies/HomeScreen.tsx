@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
-  const [dirtyFilter, setDirtyFilter] = useState(false);
+  const [filterChanged, setFilterChanged] = useState(false);
 
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const lastScrollY = useRef(0);
@@ -32,8 +32,8 @@ export default function HomeScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
 
-  const onRefresh = useCallback(async () => {
-    setDirtyFilter(false);
+  const fetchCleanList = useCallback(async () => {
+    setFilterChanged(false);
     setCurrentPage(1);
     setForceRefresh(true);
 
@@ -92,7 +92,7 @@ export default function HomeScreen() {
           <View style={styles.errorContainer}>
             <View style={styles.errorBox}>
               <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
-              <Button title='Retry' onPress={onRefresh} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
+              <Button title='Retry' onPress={fetchCleanList} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
               <View style={styles.errorTextWrapper}>
                 <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
               </View>
@@ -103,10 +103,10 @@ export default function HomeScreen() {
       <View style={styles.footer}>
         <Button
           title={isLoading ? 'Loading...' : 'Refresh list'}
-          onPress={onRefresh}
-          customStyle={[styles.loadButton, (isLoading || !dirtyFilter) && styles.loadButtonDisabled]}
+          onPress={fetchCleanList}
+          customStyle={[styles.loadButton, (isLoading || !filterChanged) && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
-          disabled={isLoading || !dirtyFilter}
+          disabled={isLoading || !filterChanged}
         />
       </View>
     </View>
@@ -128,23 +128,23 @@ export default function HomeScreen() {
     router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
 
-  function onFilterGenreChange(index: number) {
-    if (index !== genreFilter) {
-      setDirtyFilter(true);
+  function onFilterGenreChange(activeIndex: number) {
+    if (activeIndex !== genreFilter) {
+      setFilterChanged(true);
     }
-    setGenreFilter(index);
+    setGenreFilter(activeIndex);
   }
 
-  function onFilterYearChange(index: number) {
-    if (index !== yearFilter) {
-      setDirtyFilter(true);
+  function onFilterYearChange(activeIndex: number) {
+    if (activeIndex !== yearFilter) {
+      setFilterChanged(true);
     }
-    setYearFilter(index);
+    setYearFilter(activeIndex);
   }
 
   function resetListAndGetMovies() {
-    resetList();
-    onRefresh();
+    resetList();// maybe move this function into fetchCleanList and delete function resetListAndGetMovies and use fetchCleanList directly
+    fetchCleanList();
   }
 }
 
