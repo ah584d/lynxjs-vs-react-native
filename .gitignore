@@ -104,3 +104,4 @@ yarn-error.*
 # @end expo-cli
 
 lynxjs/android/app/release/
+lynxjs/android/app/debug/

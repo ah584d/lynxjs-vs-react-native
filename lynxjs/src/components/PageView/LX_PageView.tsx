@@ -26,7 +26,7 @@ function PageView({ children, style, title, isBack }: PageViewProps) {
             }}
           />
         ) : (
-          <></>
+          null
         )}
         {children}
       </view>
