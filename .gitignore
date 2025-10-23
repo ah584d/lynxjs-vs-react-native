@@ -102,3 +102,5 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+
+lynxjs/android/app/release/

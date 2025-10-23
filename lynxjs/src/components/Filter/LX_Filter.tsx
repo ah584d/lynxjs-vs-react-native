@@ -13,7 +13,6 @@ export const Filter = ({ filters, onFilterChange, currentSelection }: FilterProp
     <view className={styles['filter-container']}>
       {filters.map((filter, index) => {
         const isSelected = index === currentSelection;
-        console.log(`====> DEBUG isSelected: `, isSelected);
         return (
           <view className={isSelected ? styles['filter-button-active'] : styles['filter-button']} bindtap={onFilterChange(index)} key={filter || `all-${index}`}>
             <text>{filter}</text>
