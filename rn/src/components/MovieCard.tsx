@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
-import { useCardAnimation } from '@/hooks/useAnimations';
+import { usePulseCardAnimation } from '@/hooks/useAnimations';
 import { getGenreNames, getPosterUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
 import { MoviePicture } from './atoms/MoviePicture';
@@ -18,7 +18,7 @@ export const MovieCard = (props: MovieCardProps): ReactElement => {
   const { movie, onPress, customStyle, scrollVelocity } = props;
   const posterUrl = getPosterUrl(movie.poster_path);
 
-  const scaleAnimation = useCardAnimation(scrollVelocity ?? 0);
+  const scaleAnimation = usePulseCardAnimation(scrollVelocity ?? 0);
 
   const animatedStyle: StyleProp<ViewStyle> = {
     transform: [{ scale: scaleAnimation }],

@@ -47,5 +47,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
   );
 }
 
-// Memoize the component to prevent unnecessary re-renders like React Native version
-export const MovieCard = memo(MovieCardComponent);
+// Memoize the component with custom comparison to ensure isScrolling changes trigger re-renders
+export const MovieCard = memo(MovieCardComponent, (prevProps, nextProps) => {
+  return prevProps.movie.id === nextProps.movie.id && prevProps.index === nextProps.index && prevProps.isScrolling === nextProps.isScrolling;
+});

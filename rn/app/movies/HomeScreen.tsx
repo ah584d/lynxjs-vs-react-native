@@ -49,17 +49,17 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.filter}>
-          <Filter title='Genre' currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
+          <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
         </View>
         <View style={styles.filter}>
-          <Filter title='Year' currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
+          <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
         </View>
       </View>
       <View style={styles.body}>
         <FlatList
           ref={flatListRef}
           data={moviesList}
-          renderItem={renderItem}
+          renderItem={renderMovieItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
           contentContainerStyle={moviesList?.length ? undefined : styles.emptyListContainer}
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={resetListAndGetMovies} />}
@@ -97,7 +97,7 @@ export default function HomeScreen() {
     </View>
   );
 
-  function renderItem({ item, index }: { item: Movie; index: number }): ReactElement {
+  function renderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {
     return <MovieCardMemo movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} scrollVelocity={scrollVelocity} />;
   }
 
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    flex: 0.2,
+    flex: 0.15,
   },
   filter: {
     paddingVertical: 4,
@@ -206,14 +206,14 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   body: {
-    flex: 0.7,
+    flex: 0.75,
   },
   cardCustomStyle: {
     backgroundColor: Colors.light.lightGreen,
   },
   footer: {
     paddingTop: 12,
-    flex: 0.12,
+    flex: 0.11,
     alignItems: 'center',
   },
   loadButton: {

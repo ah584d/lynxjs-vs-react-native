@@ -89,7 +89,7 @@ export function MoviesList(): ReactElement {
         <view className='MainContent'>
           <view className='Header'>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
-              <text className='Title'>Movie With Lynx</text>
+              <text className='Title'>Movie With RN/Lynx</text>
               <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
                 <view className='performance-button' bindtap={goToPerformance}>
                   <text style='color:white;font-size:16px'>📊</text>
@@ -97,15 +97,15 @@ export function MoviesList(): ReactElement {
                 <text className='Title'>{moviesList.length}</text>
               </view>
             </view>
-            <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('genre')}: ${genreFilter >= 0 && GENRES_FILTER[genreFilter]}`}</text>
+            <view className='filter-section'>
+              {/* <text className='FilterLabel'>{`${t('genre')}: ${genreFilter >= 0 && GENRES_FILTER[genreFilter]}`}</text> */}
               <view className='FilterOptions'>
                 <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
               </view>
             </view>
 
-            <view className='FilterSection'>
-              <text className='FilterLabel'>{`${t('year')}: ${YEARS_FILTER[yearFilter]}`}</text>
+            <view className='filter-section'>
+              {/* <text className='FilterLabel'>{`${t('year')}: ${YEARS_FILTER[yearFilter]}`}</text> */}
               <view className='FilterOptionsYear'>
                 <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
               </view>

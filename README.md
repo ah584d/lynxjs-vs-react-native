@@ -37,5 +37,7 @@ adb -s R7ARC1EZJBP install ./lynxjs/android/app/debug/app-debug.apk
 - add back more data in lynx
 -  RN resetList();// maybe move this function into fetchCleanList and delete function resetListAndGetMovies and use fetchCleanList directly
 - add log both in rn and lynx and check that on changing genre or year the internal list is reset
+- reduce background stress
+- remove title lynx js
 
 

@@ -1,7 +1,8 @@
-import { ReactElement, useEffect, useRef, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { Animated, Image, StyleSheet, Text, View } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
+import { useShimmerAnimation } from '@/hooks/useAnimations';
 
 interface MoviePictureProps {
   posterUrl: string;
@@ -10,24 +11,7 @@ interface MoviePictureProps {
 export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const shimmerAnimation = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (isLoading) {
-      startShimmerAnimation();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
-
-  const shimmerTranslateX = shimmerAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-200, 200], // Move from left edge to right edge
-  });
-
-  const shimmerOpacity = shimmerAnimation.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [0, 1, 0],
-  });
+  const [shimmerTranslateX, shimmerOpacity] = useShimmerAnimation(isLoading);
 
   if (imageError) {
     return (
@@ -67,16 +51,6 @@ export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => 
       <Image source={{ uri: posterUrl }} style={[styles.poster, isLoading && styles.hiddenImage]} onLoad={handleImageLoad} onError={handleImageError} />
     </View>
   );
-
-  function startShimmerAnimation() {
-    Animated.loop(
-      Animated.timing(shimmerAnimation, {
-        toValue: 1,
-        duration: 1500,
-        useNativeDriver: true,
-      }),
-    ).start();
-  }
 
   function handleImageLoad() {
     setIsLoading(false);

@@ -3,18 +3,20 @@ import { Colors } from '@/common/colors';
 import { Button } from '@/components/Button';
 
 interface FilterProps {
-  title: string;
   filters: string[];
   onFilterChange: (index: number) => void;
   currentSelection?: number;
+  title?: string;
 }
 
-export const Filter = ({ title, filters, onFilterChange, currentSelection }: FilterProps) => {
+export const Filter = ({ filters, onFilterChange, currentSelection, title }: FilterProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {title}: {getCurrentSelection(currentSelection)}
-      </Text>
+    <View style={[styles.container, { marginVertical: !title ? 12 : 0 }]}>
+      {!!title && (
+        <Text style={styles.title}>
+          {title}: {getCurrentSelection(currentSelection)}
+        </Text>
+      )}
       <View style={styles.filterContainer}>
         {filters.map((filter, index) => {
           const isSelected = index === currentSelection;
