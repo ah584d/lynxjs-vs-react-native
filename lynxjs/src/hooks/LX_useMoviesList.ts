@@ -10,6 +10,7 @@ export function useMoviesList(currentPage: number, yearFilter: number, genreFilt
   const [hasMoreData, setHasMoreData] = useState(true);
 
   console.log('====> DEBUG useMoviesList - currentPage: ', currentPage, 'forceRefresh:', forceRefresh);
+
   useEffect(() => {
     setPreviousMoviesLength(moviesList?.length ?? 0);
     getMovies(currentPage, yearFilter, genreFilter);
@@ -26,6 +27,7 @@ export function useMoviesList(currentPage: number, yearFilter: number, genreFilt
       setHasMoreData(true);
     }
   }, [error, moviesList, previousMoviesLength, currentPage]);
+
   return [!!error, hasMoreData];
 }
 

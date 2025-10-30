@@ -1,4 +1,4 @@
-import { type ReactElement, useState } from '@lynx-js/react';
+import { type ReactElement, useState, useEffect } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
@@ -23,9 +23,18 @@ export function MoviesList(): ReactElement {
   const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, setIsScrolling] = useScrollAnimation();
 
+  useEffect(() => {
+    if (forceRefresh && !isLoading) {
+      setForceRefresh(false);
+    }
+  }, [forceRefresh, isLoading]);
+
   const onFilterGenreChange = (activeIndex: number) => () => {
     if (activeIndex !== genreFilter) {
       setFilterChanged(true);
+      if (forceRefresh) {
+        setForceRefresh(false);
+      }
     }
     setGenreFilter(activeIndex);
   };
@@ -33,6 +42,9 @@ export function MoviesList(): ReactElement {
   const onFilterYearChange = (activeIndex: number) => () => {
     if (activeIndex !== yearFilter) {
       setFilterChanged(true);
+      if (forceRefresh) {
+        setForceRefresh(false);
+      }
     }
     setYearFilter(activeIndex);
   };
@@ -44,13 +56,8 @@ export function MoviesList(): ReactElement {
   function fetchCleanList(): void {
     console.log('====> DEBUG MoviesList - fetchCleanList: page: ', currentPage, 'firstLoad:', firstLoad, 'forceRefresh:', forceRefresh);
     setFilterChanged(false);
-    if (currentPage === 1) {
-      setForceRefresh(true);
-    }
     setCurrentPage(1);
-    setTimeout(() => {
-      setForceRefresh(false);
-    }, 100);
+    setForceRefresh(true);
   }
 
   return (
