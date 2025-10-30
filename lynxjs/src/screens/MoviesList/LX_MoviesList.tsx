@@ -5,6 +5,7 @@ import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
+import { useMoviesList } from '@/hooks/LX_useMoviesList.js';
 import { t } from '@/i18n/i18n.js';
 import './moviesList.css';
 
@@ -25,15 +26,8 @@ export function MoviesList(): ReactElement {
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
+  const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter);
 
-  useEffect(() => {
-    getMovies(currentPage, yearFilter, genreFilter);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getMovies, currentPage]);
-
-  if (error) {
-    setIsOffline(true);
-  }
   const onFilterGenreChange = (activeIndex: number) => () => {
     if (activeIndex !== genreFilter) {
       setFilterChanged(true);
@@ -94,7 +88,7 @@ export function MoviesList(): ReactElement {
                 <view className='performance-button' bindtap={goToPerformance}>
                   <text style='color:white;font-size:16px'>📊</text>
                 </view>
-                <text className='Title'>{moviesList.length}</text>
+                <text className='titleText'>{moviesList.length}</text>
               </view>
             </view>
             <view className='filter-section'>
@@ -122,7 +116,7 @@ export function MoviesList(): ReactElement {
               lower-threshold-item-count={1}
               bounces={false}
               bindscroll={handleScroll}
-              bindscrolltolower={/*addDataToLower*/ () => increaseCurrentPage()}>
+              bindscrolltolower={() => increaseCurrentPage()}>
               {moviesList.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
@@ -169,34 +163,8 @@ export function MoviesList(): ReactElement {
       clearTimeout(scrollTimeoutRef.current);
     }
 
-    // Reduced timeout for more responsive scroll detection
     scrollTimeoutRef.current = setTimeout(() => {
       setIsScrolling(false);
-    }, 16); // Reduced from 50ms to match scroll-event-throttle
+    }, 16);
   }
-  // async function addDataToLower(): Promise<void> {
-  //   // there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
-  //   if (firstLoad) {
-  //     setFirstLoad(false);
-  //   } else {
-  //     setCurrentPage(prev => prev + 1);
-  //   }
-  //   console.log('====> DEBUG addDataToLower: page: ', currentPage, 'firstLoad:', firstLoad);
-  //   setLoading(true);
-  //   const [freshMovies, error] = await fetchMovies(currentPage + 1, yearFilter, genreFilter);
-  //   setLoading(false);
-
-  //   if (error) {
-  //     setIsOffline(true);
-  //     return;
-  //   }
-  //   if (freshMovies?.length ?? 0 > 0) {
-  //     const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
-  //     setDisplayedMovies(prev => [...prev, ...uniqueMovies]);
-
-  //     if (freshMovies?.length ?? 0 < 20) {
-  //       setHadMoreData(false);
-  //     }
-  //   }
-  // }
 }
