@@ -33,6 +33,7 @@ export default function HomeScreen() {
   }, [getMovies, currentPage]);
 
   const fetchCleanList = useCallback(async () => {
+    resetList();
     setFilterChanged(false);
     setCurrentPage(1);
     setForceRefresh(true);
@@ -41,7 +42,7 @@ export default function HomeScreen() {
     await getMovies(1, yearFilter, genreFilter);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
-  }, [yearFilter, genreFilter, getMovies]);
+  }, [yearFilter, genreFilter, getMovies, resetList]);
 
   console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
 
@@ -62,7 +63,7 @@ export default function HomeScreen() {
           renderItem={renderMovieItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
           contentContainerStyle={moviesList?.length ? undefined : styles.emptyListContainer}
-          refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={resetListAndGetMovies} />}
+          refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={fetchCleanList} />}
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
           onScroll={handleScroll}
@@ -117,11 +118,6 @@ export default function HomeScreen() {
       setFilterChanged(true);
     }
     setYearFilter(activeIndex);
-  }
-
-  function resetListAndGetMovies() {
-    resetList(); // maybe move this function into fetchCleanList and delete function resetListAndGetMovies and use fetchCleanList directly
-    fetchCleanList();
   }
 
   function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
