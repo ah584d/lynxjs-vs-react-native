@@ -6,7 +6,6 @@ import { type Movie } from '@/types/LX_common.types.js';
 
 interface MovieStore {
   moviesList: Movie[];
-  searchResults: Movie[];
   isLoading: boolean;
   error: string | null;
   filter: string | null;
@@ -19,7 +18,6 @@ interface MovieAction {
 
 export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   moviesList: [],
-  searchResults: [],
   isLoading: false,
   error: null,
   filter: null,
@@ -33,8 +31,12 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
       const response = await movieService.fetchMovies(url);
       const sortedMovies = getMoviesByRating(response);
 
-      // if this is a next page, we merge new results with existing one
+      // reset list if needed
       const existingMovies = get().moviesList;
+      if (page === 1 && existingMovies.length > 0) {
+        set({ moviesList: [] });
+      }
+      // if this is a next page, we merge new results with existing one
       const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
 
       set({ moviesList: movies, isLoading: false });

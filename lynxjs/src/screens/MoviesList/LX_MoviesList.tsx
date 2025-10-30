@@ -1,32 +1,27 @@
-import { type ReactElement, useEffect, useRef, useState } from '@lynx-js/react';
+import { type ReactElement, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
-import { useMoviesList } from '@/hooks/LX_useMoviesList.js';
+import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
 import { t } from '@/i18n/i18n.js';
 import './moviesList.css';
 
 export function MoviesList(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
   const [filterChanged, setFilterChanged] = useState(false);
-  const [hasMoreData, setHadMoreData] = useState(true);
+  const [forceRefresh, setForceRefresh] = useState(false);
   const [genreFilter, setGenreFilter] = useState(0);
   const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isOffline, setIsOffline] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
 
-  const getMovies = useMovieStore(state => state.getMovies);
-  const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
-  const error = useMovieStore(state => state.error);
-  const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter);
+  const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
+  const [isScrolling, setIsScrolling] = useScrollAnimation();
 
   const onFilterGenreChange = (activeIndex: number) => () => {
     if (activeIndex !== genreFilter) {
@@ -46,30 +41,16 @@ export function MoviesList(): ReactElement {
     navigate('/performance');
   };
 
-  async function fetchCleanList(): Promise<void> {
+  function fetchCleanList(): void {
+    console.log('====> DEBUG MoviesList - fetchCleanList: page: ', currentPage, 'firstLoad:', firstLoad, 'forceRefresh:', forceRefresh);
     setFilterChanged(false);
-    setIsOffline(false);
+    if (currentPage === 1) {
+      setForceRefresh(true);
+    }
     setCurrentPage(1);
-
-    console.log('====> DEBUG fetchCleanList: page: ', currentPage, 'firstLoad:', firstLoad);
-
-    // setLoading(true);
-    // const [freshMovies, error] = await fetchMovies(1, yearFilter, genreFilter);
-    // setLoading(false);
-    await getMovies(1, yearFilter, genreFilter);
-
-    // if (error) {
-    //   setIsOffline(true);
-    //   return;
-    // }
-
-    // if (freshMovies?.length === 0) {
-    //   setDisplayedMovies([]);
-    //   return;
-    // }
-
-    // const uniqueMovies = getUniqueMoviesById(freshMovies ?? []);
-    // setDisplayedMovies(uniqueMovies);
+    setTimeout(() => {
+      setForceRefresh(false);
+    }, 100);
   }
 
   return (
@@ -115,8 +96,8 @@ export function MoviesList(): ReactElement {
               scroll-event-throttle={16}
               lower-threshold-item-count={1}
               bounces={false}
-              bindscroll={handleScroll}
-              bindscrolltolower={() => increaseCurrentPage()}>
+              bindscroll={handleScrollAnimation}
+              bindscrolltolower={() => !isLoading && increaseCurrentPage()}>
               {moviesList.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
@@ -151,20 +132,12 @@ export function MoviesList(): ReactElement {
     // Note: there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
     if (firstLoad) {
       setFirstLoad(false);
-    } else {
-      setCurrentPage(prev => prev + 1);
+      return;
     }
+    setCurrentPage(prev => prev + 1);
   }
 
-  function handleScroll(): void {
+  function handleScrollAnimation(): void {
     setIsScrolling(true);
-
-    if (scrollTimeoutRef.current) {
-      clearTimeout(scrollTimeoutRef.current);
-    }
-
-    scrollTimeoutRef.current = setTimeout(() => {
-      setIsScrolling(false);
-    }, 16);
   }
 }

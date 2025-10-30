@@ -27,7 +27,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
         }}
         className={`${index % 2 === 0 ? styles['item-movie-card-odd'] : ''} ${styles['item-movie-card-container']}`}>
         <view className={styles['item-movie-card-title-wrapper']}>
-          <text className={styles['item-movie-number']}># {index}</text>
+          <text className={styles['item-movie-number']}># {index + 1}</text>
         </view>
         <view className={posterClassName}>
           <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
