@@ -8,6 +8,7 @@ import { Movie } from '@/types/common.types';
 import { MoviePicture } from './atoms/MoviePicture';
 
 interface MovieCardProps {
+  index: number;
   movie: Movie;
   onPress: (movieId: number) => void;
   customStyle?: StyleProp<ViewStyle>;
@@ -15,7 +16,7 @@ interface MovieCardProps {
 }
 
 export const MovieCard = (props: MovieCardProps): ReactElement => {
-  const { movie, onPress, customStyle, scrollVelocity } = props;
+  const { index, movie, onPress, customStyle, scrollVelocity } = props;
   const posterUrl = getPosterUrl(movie.poster_path);
 
   const scaleAnimation = usePulseCardAnimation(scrollVelocity ?? 0);
@@ -26,6 +27,7 @@ export const MovieCard = (props: MovieCardProps): ReactElement => {
 
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
+      <Text style={styles.debugIndex}>#{index}</Text>
       <Animated.View style={[styles.posterContainer, animatedStyle]}>
         <MoviePicture posterUrl={posterUrl} />
       </Animated.View>
@@ -87,5 +89,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.light.darkGray,
     marginBottom: 5,
+  },
+  debugIndex: {
+    fontSize: 12,
+    color: Colors.light.darkGray,
   },
 });
