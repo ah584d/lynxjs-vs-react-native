@@ -27,7 +27,7 @@ export const MovieCard = (props: MovieCardProps): ReactElement => {
 
   return (
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
-      <Text style={styles.debugIndex}>#{index}</Text>
+      <Text style={styles.debugIndex}>#{index + 1}</Text>
       <Animated.View style={[styles.posterContainer, animatedStyle]}>
         <MoviePicture posterUrl={posterUrl} />
       </Animated.View>
