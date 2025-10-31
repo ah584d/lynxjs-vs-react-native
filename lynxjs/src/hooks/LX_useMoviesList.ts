@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@lynx-js/react';
+import { useCallback, useEffect, useRef, useState } from '@lynx-js/react';
 import { IMDB_CHUNK_SIZE } from '@/common/LX_constants.js';
 import { useMovieStore } from './LX_useMovieStore.js';
 
@@ -8,8 +8,6 @@ export function useMoviesList(currentPage: number, yearFilter: number, genreFilt
   const moviesList = useMovieStore(state => state.moviesList);
   const [previousMoviesLength, setPreviousMoviesLength] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
-
-  console.log('====> DEBUG useMoviesList - currentPage: ', currentPage, 'forceRefresh:', forceRefresh);
 
   useEffect(() => {
     setPreviousMoviesLength(moviesList?.length ?? 0);
@@ -31,24 +29,33 @@ export function useMoviesList(currentPage: number, yearFilter: number, genreFilt
   return [!!error, hasMoreData];
 }
 
-export function useScrollAnimation(): [boolean, (value: boolean) => void] {
+export function useScrollAnimation(): [boolean, () => void] {
   const [isScrolling, setIsScrolling] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout | null = null;
-
-    if (isScrolling) {
-      scrollTimeout = setTimeout(() => {
-        setIsScrolling(false);
-      }, 200);
+  const handleScrollStart = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
     }
 
+    if (!isScrolling) {
+      setIsScrolling(true);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setIsScrolling(false);
+      timeoutRef.current = null;
+    }, 150);
+  }, [isScrolling]);
+
+  useEffect(() => {
     return () => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
     };
-  }, [isScrolling, setIsScrolling]);
+  }, []);
 
-  return [isScrolling, setIsScrolling];
+  return [isScrolling, handleScrollStart];
 }
