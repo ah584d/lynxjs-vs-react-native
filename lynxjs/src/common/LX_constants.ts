@@ -29,3 +29,6 @@ export const GENRES_FILTER = ['All', 'Action', 'Comedy', 'Drama'];
 export const ALL = 'all';
 
 export const IMDB_CHUNK_SIZE = 20;
+
+export const IS_ANDROID = SystemInfo.platform === 'Android';
+export const IS_IOS = SystemInfo.platform === 'iOS';

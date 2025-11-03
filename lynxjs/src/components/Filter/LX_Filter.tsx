@@ -1,6 +1,4 @@
 import { type ReactElement } from '@lynx-js/react';
-import { GENRES_FILTER } from '@/common/LX_constants.js';
-import { t } from '@/i18n/i18n.js';
 import styles from './filter.module.scss';
 
 interface FilterProps {

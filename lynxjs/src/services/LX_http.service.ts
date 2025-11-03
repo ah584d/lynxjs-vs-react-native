@@ -26,20 +26,3 @@ export const movieService = {
   },
 };
 
-export async function fetchMovies_(page: number, yearFilter: number, genreFilter?: number): Promise<[Movie[] | null, unknown | null]> {
-  try {
-    const genre = genreFilter && GENRE_MAP_[GENRES_FILTER[genreFilter]];
-    const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
-
-    const url = getUrl(page, year, genre);
-
-    console.log(`====> DEBUG lynxjs url: `, url);
-    const response = await fetch(url);
-    const data = await response.json();
-
-    return [data.results, null];
-  } catch (error) {
-    console.error('Error fetching movies:', error);
-    return [null, error];
-  }
-}

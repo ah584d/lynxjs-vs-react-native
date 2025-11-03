@@ -1,4 +1,4 @@
-import { type ReactElement, useState, useEffect } from '@lynx-js/react';
+import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
@@ -21,7 +21,7 @@ export function MoviesList(): ReactElement {
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
   const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
-  const [isScrolling, setIsScrolling] = useScrollAnimation();
+  const [isScrolling, handleScrollAnimation] = useScrollAnimation();
 
   useEffect(() => {
     if (forceRefresh && !isLoading) {
@@ -54,22 +54,21 @@ export function MoviesList(): ReactElement {
   };
 
   function fetchCleanList(): void {
-    console.log('====> DEBUG MoviesList - fetchCleanList: page: ', currentPage, 'firstLoad:', firstLoad, 'forceRefresh:', forceRefresh);
     setFilterChanged(false);
     setCurrentPage(1);
     setForceRefresh(true);
   }
 
   return (
-    <PageView>
-      <view className='AppContainer'>
+    <PageView >
+      <view className='main-container-layout'>
         {isOffline && (
           <view className='offline-container'>
             <text className='offline-text'>You are offline. Please check your internet connection.</text>
           </view>
         )}
         <view className='MainContent'>
-          <view className='Header'>
+          <view className='header-layout'>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
               <text className='Title'>Movie With RN/Lynx</text>
               <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
@@ -100,7 +99,7 @@ export function MoviesList(): ReactElement {
               span-count={1}
               scroll-orientation='vertical'
               initial-scroll-index={1}
-              scroll-event-throttle={16}
+              scroll-event-throttle={32}
               lower-threshold-item-count={1}
               bounces={false}
               bindscroll={handleScrollAnimation}
@@ -108,7 +107,7 @@ export function MoviesList(): ReactElement {
               {moviesList.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
-              {hasMoreData ? (
+              {/* {hasMoreData ? (
                 <list-item item-key='loading' key='loading'>
                   <text className='TitleAlign'>{`Load More Data...`}</text>
                 </list-item>
@@ -116,7 +115,7 @@ export function MoviesList(): ReactElement {
                 <list-item item-key='no-more' key='no-more'>
                   <text className='TitleAlign'>{`No More Data`}</text>
                 </list-item>
-              )}
+              )} */}
             </list>
             {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
@@ -136,15 +135,11 @@ export function MoviesList(): ReactElement {
     if (isLoading) {
       return;
     }
-    // Note: there is a bug in bindscrolltolower, addDataToLower is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+    // Note: there is a bug in "bindscrolltolower", useMoviesList is called anyway on page loading, so we want to avoid incrementing the counter on the first call
     if (firstLoad) {
       setFirstLoad(false);
       return;
     }
     setCurrentPage(prev => prev + 1);
-  }
-
-  function handleScrollAnimation(): void {
-    setIsScrolling(true);
   }
 }

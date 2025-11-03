@@ -15,8 +15,8 @@ adb -s R7ARC1EZJBP install ./rn/android/app/build/outputs/apk/release/app-releas
 Lynx:
 npm run build:android
 android build signed apk password 123456
-adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 adb -s R7ARC1EZJBP install ./lynxjs/android/app/debug/app-debug.apk
+adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 
 ## open android from terminal in order to make node available [for react native android compilation]
 

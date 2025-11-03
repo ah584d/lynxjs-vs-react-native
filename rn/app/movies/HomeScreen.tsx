@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'r
 import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { GENRES_FILTER, YEARS_FILTER } from '@/common/constants';
+import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
 import { MovieCardMemo } from '@/components/MovieCard';
@@ -44,11 +44,9 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies, resetList]);
 
-  console.log(`\n\n====> DEBUG movies list: `, moviesList?.length);
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
         <View style={styles.filter}>
           <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
         </View>

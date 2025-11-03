@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 export const GENRE_MAP: Record<string, number> = {
   Action: 28,
   Adventure: 12,
@@ -28,3 +30,6 @@ export const YEARS_FILTER = ['2022', '2023', '2024', '2025'];
 export const GENRES_FILTER = ['All', 'Action', 'Comedy', 'Drama'];
 
 export const ALL = 'all';
+
+export const IS_ANDROID = Platform.OS === 'android';
+export const IS_IOS = Platform.OS === 'ios';
