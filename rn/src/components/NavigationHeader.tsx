@@ -3,9 +3,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { useMovieStore } from '@/hooks/useMovieStore';
+import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 
 export const NavigationHeader = () => {
   const moviesList = useMovieStore(state => state.moviesList);
+  const { metrics } = usePerformanceMonitor();
+
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
       <View style={styles.header}>
@@ -13,6 +16,7 @@ export const NavigationHeader = () => {
         <TouchableOpacity style={styles.performanceButton} onPress={goToPerformance}>
           <Text style={styles.performanceButtonText}>📊</Text>
         </TouchableOpacity>
+        <Text style={styles.titleText}>{metrics.fps}</Text>
         <Text style={styles.titleText}>{moviesList.length}</Text>
       </View>
     </SafeAreaView>

@@ -1,0 +1,199 @@
+@import url('../../common/colors.css');
+
+.performance-container {
+  padding: 20px;
+  background-color: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PerformanceTitle {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: var(--color-black);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.ToggleButton {
+  background-color: var(--color-white);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 2px solid var(--color-grayBorder);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ToggleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ToggleButtonActive {
+  background-color: #ffebee;
+  border-color: #f44336;
+}
+
+.ToggleButtonText {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: var(--color-black);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.ToggleButtonTextActive {
+  color: #f44336;
+}
+
+.ToggleDescription {
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  text-align: center;
+  display: block;
+}
+
+.MetricsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.MetricCard {
+  background-color: var(--color-white);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--color-grayBorder);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 1 1 280px;
+  max-width: 320px;
+  min-width: 280px;
+}
+
+.MetricTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-gray);
+  margin-bottom: 8px;
+}
+
+.MetricValue {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-green);
+  margin-bottom: 4px;
+}
+
+.MetricDescription {
+  font-size: 0.9rem;
+  color: var(--color-gray);
+  opacity: 0.8;
+}
+
+.NetworkSection {
+  margin-bottom: 32px;
+}
+
+.SectionTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-black);
+  margin-bottom: 16px;
+}
+
+.NetworkList {
+  background-color: var(--color-white);
+  border-radius: 8px;
+  border: 1px solid var(--color-grayBorder);
+  overflow: hidden;
+}
+
+.NetworkItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-grayBorder);
+}
+
+.NetworkItem:last-child {
+  border-bottom: none;
+}
+
+.NetworkUrl {
+  font-size: 0.9rem;
+  color: var(--color-black);
+  font-weight: 500;
+  flex: 1;
+}
+
+.NetworkDuration {
+  font-size: 0.8rem;
+  color: var(--color-gray);
+  margin-right: 16px;
+}
+
+.NetworkStatus {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.NetworkStatus.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.NetworkStatus.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.NoData {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.TipsSection {
+  background-color: var(--color-lightGreen);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.TipItem {
+  font-size: 0.95rem;
+  color: var(--color-black);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .MetricsGrid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .MetricCard {
+    flex: 1;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .NetworkItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .NetworkDuration {
+    margin-right: 0;
+  }
+}

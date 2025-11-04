@@ -6,6 +6,7 @@ import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
+import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { t } from '@/i18n/i18n.js';
 import './moviesList.css';
 
@@ -22,6 +23,7 @@ export function MoviesList(): ReactElement {
   const isLoading = useMovieStore(state => state.isLoading);
   const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, handleScrollAnimation] = useScrollAnimation();
+  const { metrics } = usePerformanceMonitor();
 
   useEffect(() => {
     if (forceRefresh && !isLoading) {
@@ -60,7 +62,7 @@ export function MoviesList(): ReactElement {
   }
 
   return (
-    <PageView >
+    <PageView>
       <view className='main-container-layout'>
         {isOffline && (
           <view className='offline-container'>
@@ -75,18 +77,17 @@ export function MoviesList(): ReactElement {
                 <view className='performance-button' bindtap={goToPerformance}>
                   <text style='color:white;font-size:16px'>📊</text>
                 </view>
+                <text className='titleText'>{metrics.fps}</text>
                 <text className='titleText'>{moviesList.length}</text>
               </view>
             </view>
             <view className='filter-section'>
-              {/* <text className='FilterLabel'>{`${t('genre')}: ${genreFilter >= 0 && GENRES_FILTER[genreFilter]}`}</text> */}
               <view className='FilterOptions'>
                 <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
               </view>
             </view>
 
             <view className='filter-section'>
-              {/* <text className='FilterLabel'>{`${t('year')}: ${YEARS_FILTER[yearFilter]}`}</text> */}
               <view className='FilterOptionsYear'>
                 <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
               </view>
