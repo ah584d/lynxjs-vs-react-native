@@ -7,7 +7,6 @@ export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
   const isScrolling = Math.abs(scrollVelocity) > 0.1;
   useEffect(() => {
     if (isScrolling) {
-      // Start pulsing animation while scrolling
       const pulseAnimation = Animated.loop(
         Animated.sequence([
           Animated.timing(scaleAnimation, {
@@ -25,7 +24,6 @@ export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
       pulseAnimation.start();
       return () => pulseAnimation.stop();
     } else {
-      // Stop animation and return to 100% when not scrolling
       Animated.timing(scaleAnimation, {
         toValue: 1.0,
         duration: 200,
@@ -43,7 +41,6 @@ export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInter
 
   useEffect(() => {
     if (isLoading) {
-      // Start shimmer animation
       animationRef.current = Animated.loop(
         Animated.timing(shimmerAnimation, {
           toValue: 1,
@@ -53,7 +50,6 @@ export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInter
       );
       animationRef.current.start();
     } else {
-      // Stop animation and reset
       if (animationRef.current) {
         animationRef.current.stop();
         animationRef.current = null;
@@ -71,7 +67,7 @@ export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInter
 
   const shimmerTranslateX = shimmerAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-200, 200], // Move from left edge to right edge
+    outputRange: [-200, 200],
   });
 
   const shimmerOpacity = shimmerAnimation.interpolate({
