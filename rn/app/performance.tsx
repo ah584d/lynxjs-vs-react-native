@@ -36,29 +36,6 @@ export default function PerformanceScreen() {
         <MetricCard title='🎨 Render Time' value={formatTime(metrics.renderTime)} description='Last component render' />
         <MetricCard title='📦 Bundle Size' value={metrics.bundleSize} description='App bundle size' />
       </View>
-
-      <View style={styles.networkSection}>
-        <Text style={styles.sectionTitle}>🌐 Recent Network Requests</Text>
-        <View style={styles.networkList}>
-          {metrics.networkRequests.length > 0 ? (
-            metrics.networkRequests.map((request, index) => (
-              <View key={index} style={styles.networkItem}>
-                <Text style={styles.networkUrl} numberOfLines={1}>
-                  {request.url.split('/').pop()}
-                </Text>
-                <Text style={styles.networkDuration}>{formatTime(request.duration)}</Text>
-                <View style={[styles.networkStatus, request.status >= 200 && request.status < 300 ? styles.statusSuccess : styles.statusError]}>
-                  <Text style={[styles.networkStatusText, request.status >= 200 && request.status < 300 ? styles.statusSuccessText : styles.statusErrorText]}>
-                    {request.status}
-                  </Text>
-                </View>
-              </View>
-            ))
-          ) : (
-            <Text style={styles.noData}>No network requests tracked yet</Text>
-          )}
-        </View>
-      </View>
     </ScrollView>
   );
 }

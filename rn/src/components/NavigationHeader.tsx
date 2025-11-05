@@ -16,8 +16,10 @@ export const NavigationHeader = () => {
         <TouchableOpacity style={styles.performanceButton} onPress={goToPerformance}>
           <Text style={styles.performanceButtonText}>📊</Text>
         </TouchableOpacity>
-        <Text style={styles.titleText}>{metrics.fps}</Text>
-        <Text style={styles.titleText}>{moviesList.length}</Text>
+        <Text style={styles.titleText}>{metrics.fps} fps</Text>
+      </View>
+      <View style={styles.moviesCountFloating}>
+        <Text style={styles.moviesCountValue}>{moviesList.length}</Text>
       </View>
     </SafeAreaView>
   );
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontSize: 26,
+    fontSize: 20,
     color: Colors.light.text,
     fontWeight: 'bold',
   },
@@ -56,5 +58,37 @@ const styles = StyleSheet.create({
   performanceButtonText: {
     fontSize: 18,
     color: Colors.light.white,
+  },
+  moviesCountFloating: {
+    position: 'absolute',
+    top: 130,
+    right: 16,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: Colors.light.green,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: Colors.light.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 1000,
+  },
+  moviesCountLabel: {
+    fontSize: 14,
+    color: Colors.light.text,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  moviesCountValue: {
+    fontSize: 14,
+    color: Colors.light.white,
+    fontWeight: 'bold',
+    fontVariant: ['tabular-nums'],
   },
 });

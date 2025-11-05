@@ -47,12 +47,8 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
-        <View style={styles.filter}>
-          <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
-        </View>
-        <View style={styles.filter}>
-          <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
-        </View>
+        <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
+        <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
       </View>
       <View style={styles.body}>
         <FlatList
@@ -182,7 +178,7 @@ const styles = StyleSheet.create({
     flex: 0.15,
   },
   filter: {
-    paddingVertical: 4,
+    paddingVertical: 0,
   },
   emptyListContainer: {
     flex: 1,

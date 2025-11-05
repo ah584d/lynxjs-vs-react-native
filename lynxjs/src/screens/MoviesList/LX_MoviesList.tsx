@@ -70,7 +70,7 @@ export function MoviesList(): ReactElement {
           </view>
         )}
         <view className='MainContent'>
-          <view className='header-layout'>
+          <view>
             <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
               <text className='Title'>Movie With RN/Lynx</text>
               <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
@@ -86,7 +86,6 @@ export function MoviesList(): ReactElement {
                 <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
               </view>
             </view>
-
             <view className='filter-section'>
               <view className='FilterOptionsYear'>
                 <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
@@ -108,15 +107,6 @@ export function MoviesList(): ReactElement {
               {moviesList.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
-              {/* {hasMoreData ? (
-                <list-item item-key='loading' key='loading'>
-                  <text className='TitleAlign'>{`Load More Data...`}</text>
-                </list-item>
-              ) : (
-                <list-item item-key='no-more' key='no-more'>
-                  <text className='TitleAlign'>{`No More Data`}</text>
-                </list-item>
-              )} */}
             </list>
             {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
