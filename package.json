@@ -1,0 +1,25 @@
+{
+  "name": "lynxjs-vs-react-native-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "build": "pnpm run --filter='./libs/*' build && pnpm run --filter='./apps/*' build",
+    "dev:lynxjs": "pnpm run --filter=@repo/lynxjs-app dev",
+    "dev:rn": "pnpm run --filter=@repo/react-native-app dev",
+    "dev:expo": "pnpm run --filter=@repo/expo-app dev",
+    "lint": "pnpm run -r lint",
+    "clean": "pnpm run -r clean && rm -rf node_modules",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "prettier": "^3.6.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
