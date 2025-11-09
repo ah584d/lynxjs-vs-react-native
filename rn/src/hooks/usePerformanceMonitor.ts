@@ -43,24 +43,21 @@ export function usePerformanceMonitor() {
     return () => clearInterval(memoryInterval);
   }, []);
 
-  // Advanced: Use Animated.Value to measure REAL native animation FPS
   const measureNativeAnimationFPS = () => {
     const animatedValue = new Animated.Value(0);
     let frameCount = 0;
     let startTime = Date.now();
     let listenerId: string;
 
-    // Create a continuous native animation to measure actual UI thread performance
     const animation = Animated.loop(
       Animated.timing(animatedValue, {
         toValue: 1,
         duration: 1000,
         easing: Easing.linear,
-        useNativeDriver: true, // This runs on UI thread!
+        useNativeDriver: true,
       }),
     );
 
-    // Listen to animation frame updates (these happen on UI thread)
     listenerId = animatedValue.addListener(({ value }: { value: number }) => {
       frameCount++;
 
@@ -73,7 +70,7 @@ export function usePerformanceMonitor() {
         setMetrics(prev => ({
           ...prev,
           fps: nativeFPS,
-          renderTime: frameCount, // Raw frame count
+          renderTime: frameCount,
         }));
 
         frameCount = 0;
@@ -89,11 +86,8 @@ export function usePerformanceMonitor() {
     };
   };
 
-  // Add method to enable REAL UI FPS monitoring
   const enableRealUIFPSMonitor = () => {
-    // Enable React Native's built-in performance monitor that shows REAL UI FPS
     if (NativeModules.DevSettings) {
-      // This shows actual UI thread FPS vs JS thread FPS
       NativeModules.DevSettings.addMenuItem('Show REAL FPS Monitor', () => {
         NativeModules.DevSettings.showPerformanceMonitor();
       });
@@ -101,7 +95,6 @@ export function usePerformanceMonitor() {
   };
 
   useEffect(() => {
-    // Use REAL native animation FPS measurement instead of requestAnimationFrame
     const cleanup = measureNativeAnimationFPS();
     return cleanup;
   }, []);
@@ -111,7 +104,6 @@ export function usePerformanceMonitor() {
     setMetrics(prev => ({ ...prev, renderTime }));
   };
 
-  // Enable React Native's built-in performance monitor
   const enableRNPerformanceMonitor = () => {
     if (NativeModules.DevSettings) {
       NativeModules.DevSettings.addMenuItem('Show Perf Monitor', () => {
@@ -124,8 +116,7 @@ export function usePerformanceMonitor() {
     metrics,
     measureRenderTime,
     enableRNPerformanceMonitor,
-    enableRealUIFPSMonitor, // Enable React Native's built-in REAL FPS monitor
-    // Helper to understand FPS readings
+    enableRealUIFPSMonitor,
     getFPSStatus: () => {
       const fps = metrics.fps;
       return {
@@ -134,7 +125,6 @@ export function usePerformanceMonitor() {
         performance: fps >= 55 ? 'Excellent' : fps >= 45 ? 'Good' : fps >= 30 ? 'Acceptable' : 'Poor',
       };
     },
-    // Get explanation of what FPS means
     getFPSExplanation: () => ({
       nativeAnimationFPS: metrics.fps,
       explanation: `✅ This measures REAL UI thread performance using native animations (${metrics.fps} FPS)`,

@@ -1,6 +1,7 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
+import { runOnBackground, useMainThreadRef } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
-import { GENRES_FILTER, YEARS_FILTER } from '@/common/LX_constants.js';
+import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
@@ -77,9 +78,11 @@ export function MoviesList(): ReactElement {
                 <view className='performance-button' bindtap={goToPerformance}>
                   <text style='color:white;font-size:16px'>📊</text>
                 </view>
-                <text className='titleText'>{metrics.fps}</text>
-                <text className='titleText'>{moviesList.length}</text>
+                <text className='titleText'>{metrics.fps} fps</text>
               </view>
+            </view>
+            <view class={`movies-count-floating ${IS_ANDROID ? 'movies-count-floating-android' : ''}`}>
+              <text className='movies-count-value'>{Math.abs(moviesList.length).toLocaleString()}</text>
             </view>
             <view className='filter-section'>
               <view className='FilterOptions'>
