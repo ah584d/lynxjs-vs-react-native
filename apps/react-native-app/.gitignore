@@ -1,26 +1,13 @@
-# OSX
-#
-.DS_Store
-
-# Xcode
-#
-
-# vs-code
-#
-*/.vscode/*
-
-# node.js
-#
-*/node_modules/
-*/dist/
-
-#
-*/.env
-
-
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+# dependencies
+node_modules/
 
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
 
 # Native
 .kotlin/
@@ -59,7 +46,11 @@ app-example
 # dependencies
 node_modules/
 
-
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
 
 # Native
 *.orig.*
@@ -88,17 +79,3 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
-
-
-
-# Expo
-apps/expo-app/.expo/
-apps/expo-app/dist/
-apps/expo-app/web-build/
-apps/expo-app/expo-env.d.ts
-# lynsjs
-apps/lynxjs-app/android/app/release/
-apps/lynxjs-app/android/app/debug/
-lynxjs/android/app/release/
-lynxjs/android/app/debug/
-
