@@ -7,7 +7,7 @@
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios --device 'iPhone 16 Pro'",
-    "dev": "concurrently 'npm run compile -- -w' 'npm run bundle'",
+    "dev": "concurrently 'pnpm run compile -- -w' 'pnpm run bundle'",
     "bundle": "expo start -c",
     "web": "expo start --web",
     "lint": "expo lint",
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@react-native-community/cli": "^20.0.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/react": "~19.0.10",
     "@types/react-native-vector-icons": "^6.4.18",

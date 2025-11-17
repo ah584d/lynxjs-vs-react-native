@@ -7,7 +7,7 @@
 
 # vs-code
 #
-*/.vscode/*
+.vscode/*
 
 # node.js
 #

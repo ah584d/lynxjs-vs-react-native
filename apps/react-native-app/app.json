@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "rn",
-    "slug": "rn",
+    "name": "react-native-app",
+    "slug": "react-native-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "rn",
+    "scheme": "react-native-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
