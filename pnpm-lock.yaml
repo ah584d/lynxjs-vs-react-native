@@ -122,7 +122,7 @@ importers:
         version: 0.105.2(@lynx-js/types@3.5.11)(@types/react@18.3.26)
       i18next:
         specifier: ^24.2.3
-        version: 24.2.3(typescript@5.7.3)
+        version: 24.2.3(typescript@5.8.3)
       json:
         specifier: ^11.0.0
         version: 11.0.0
@@ -141,7 +141,7 @@ importers:
         version: 0.10.14(@lynx-js/react@0.105.2(@lynx-js/types@3.5.11)(@types/react@18.3.26))(webpack@5.102.1)
       '@lynx-js/rspeedy':
         specifier: ^0.9.11
-        version: 0.9.11(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3)(webpack@5.102.1)
+        version: 0.9.11(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3)(webpack@5.102.1)
       '@lynx-js/types':
         specifier: ^3.2.0
         version: 3.5.11
@@ -150,13 +150,10 @@ importers:
         version: 1.4.0(@rsbuild/core@1.3.21)
       '@rsbuild/plugin-type-check':
         specifier: ^1.2.4
-        version: 1.3.0(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3)
+        version: 1.3.0(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3)
       '@rsdoctor/rspack-plugin':
         specifier: ^1.1.11
         version: 1.3.8(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.2
-        version: 5.2.2(prettier@3.6.2)
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.26
@@ -166,9 +163,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      typescript:
-        specifier: ~5.7.3
-        version: 5.7.3
 
   apps/react-native-app:
     dependencies:
@@ -227,9 +221,6 @@ importers:
       '@react-native-community/cli':
         specifier: ^20.0.2
         version: 20.0.2(typescript@5.8.3)
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.2
-        version: 5.2.2(prettier@3.6.2)
       '@types/react':
         specifier: ~19.0.10
         version: 19.0.14
@@ -257,9 +248,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      typescript:
-        specifier: ~5.8.3
-        version: 5.8.3
 
   libs/components:
     dependencies:
@@ -5710,11 +5698,6 @@ packages:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
 
-  typescript@5.7.3:
-    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
@@ -7269,7 +7252,7 @@ snapshots:
     optionalDependencies:
       '@lynx-js/types': 3.5.11
 
-  '@lynx-js/rspeedy@0.9.11(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3)(webpack@5.102.1)':
+  '@lynx-js/rspeedy@0.9.11(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3)(webpack@5.102.1)':
     dependencies:
       '@lynx-js/chunk-loading-webpack-plugin': 0.3.3
       '@lynx-js/webpack-dev-transport': 0.1.3
@@ -7278,7 +7261,7 @@ snapshots:
       '@rsbuild/plugin-css-minimizer': 1.0.2(@rsbuild/core@1.3.21)(webpack@5.102.1)
       '@rsdoctor/rspack-plugin': 1.1.4(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(webpack@5.102.1)
     optionalDependencies:
-      typescript: 5.7.3
+      typescript: 5.8.3
     transitivePeerDependencies:
       - '@parcel/css'
       - '@rspack/core'
@@ -7850,12 +7833,12 @@ snapshots:
       reduce-configs: 1.1.1
       sass-embedded: 1.93.3
 
-  '@rsbuild/plugin-type-check@1.3.0(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3)':
+  '@rsbuild/plugin-type-check@1.3.0(@rsbuild/core@1.3.21)(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3)':
     dependencies:
       deepmerge: 4.3.1
       json5: 2.2.3
       reduce-configs: 1.1.1
-      ts-checker-rspack-plugin: 1.2.0(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3)
+      ts-checker-rspack-plugin: 1.2.0(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3)
     optionalDependencies:
       '@rsbuild/core': 1.3.21
     transitivePeerDependencies:
@@ -10327,11 +10310,11 @@ snapshots:
 
   hyphenate-style-name@1.1.0: {}
 
-  i18next@24.2.3(typescript@5.7.3):
+  i18next@24.2.3(typescript@5.8.3):
     dependencies:
       '@babel/runtime': 7.28.4
     optionalDependencies:
-      typescript: 5.7.3
+      typescript: 5.8.3
 
   iconv-lite@0.4.24:
     dependencies:
@@ -12555,7 +12538,7 @@ snapshots:
     dependencies:
       typescript: 5.8.3
 
-  ts-checker-rspack-plugin@1.2.0(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.7.3):
+  ts-checker-rspack-plugin@1.2.0(@rspack/core@1.3.11(@swc/helpers@0.5.17))(typescript@5.8.3):
     dependencies:
       '@babel/code-frame': 7.27.1
       '@rspack/lite-tapable': 1.1.0
@@ -12564,7 +12547,7 @@ snapshots:
       memfs: 4.51.0
       minimatch: 9.0.5
       picocolors: 1.1.1
-      typescript: 5.7.3
+      typescript: 5.8.3
     optionalDependencies:
       '@rspack/core': 1.3.11(@swc/helpers@0.5.17)
 
@@ -12628,8 +12611,6 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
-
-  typescript@5.7.3: {}
 
   typescript@5.8.3: {}
 
