@@ -13,10 +13,11 @@ adb devices
    pnpm add expo-modules-core --filter ./apps/react-native-app
 
 #RN:
-install on ios simulator: npm run ios
-clean android build:
-   - cd android
-   - ./gradlew clean
+- install on ios simulator: npm run ios
+- clean android build:
+    - cd android
+    - ./gradlew clean --info
+- install apk on device:
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
  signed: adb -s R7ARC1EZJBP install ./rn/android/app/release/app-release.apk
@@ -27,7 +28,7 @@ android build signed apk password 123456
 adb -s R7ARC1EZJBP install ./lynxjs/android/app/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 
-## open android from terminal in order to make node available [for react native android compilation]
+## Open android from terminal in order to make node available [for react native android compilation]
 
 - open -a /Applications/Android\ Studio.app
 

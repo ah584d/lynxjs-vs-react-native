@@ -8,7 +8,7 @@
     "android": "expo run:android",
     "android:clean": "cd android && ./gradlew clean --info && cd ..",
     "android:clean_cache": "rm -rf android/build android/app/build android/.gradle ~/.gradle/caches && npx expo install --fix",
-    "fix_linking": "npx expo install --fix",
+    "android:build_native": "npx expo run:android",
     "android:build": "npx react-native run-android",
     "android:build_debug": "cd android && ./gradlew assembleDebug && cd ..",
     "ios": "expo run:ios --device 'iPhone 16 Pro'",
