@@ -8,7 +8,11 @@ Comparing a new mobile framework with a stable mobile framework - all about js
 ## copy apk for debug in android device
 adb devices
 
-RN:
+#Mono-repo:
+ - add a specific package to a specific project:
+   pnpm add expo-modules-core --filter ./apps/react-native-app
+
+#RN:
 install on ios simulator: npm run ios
 clean android build:
    - cd android
@@ -17,7 +21,7 @@ adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
  signed: adb -s R7ARC1EZJBP install ./rn/android/app/release/app-release.apk
 
-Lynx:
+#Lynx:
 npm run build:android
 android build signed apk password 123456
 adb -s R7ARC1EZJBP install ./lynxjs/android/app/debug/app-debug.apk
@@ -47,3 +51,7 @@ adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 - build android
 
 
+# Issues
+ apps/react-native-app/android/app/build/generated/autolinking/src/main/java/com/facebook/react/PackageList.java:14: error: cannot find symbol
+import expo.core.ExpoModulesPackage;
+ - https://github.com/expo/eas-cli/issues/2789
