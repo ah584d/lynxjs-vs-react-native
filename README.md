@@ -49,7 +49,7 @@ adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 - OK - add log both in rn and lynx and check that on changing genre or year the internal list is reset
 - OK - reduce background stress
 - OK - remove title lynx js
-- build android
+- android change icon
 
 
 # Issues
