@@ -96,9 +96,14 @@ apps/expo-app/.expo/
 apps/expo-app/dist/
 apps/expo-app/web-build/
 apps/expo-app/expo-env.d.ts
-# lynsjs
+
+# lynxjs
 apps/lynxjs-app/android/app/release/
 apps/lynxjs-app/android/app/debug/
 lynxjs/android/app/release/
 lynxjs/android/app/debug/
 
+
+#react-native-app
+apps/react-native-app/android/app/release/
+apps/react-native-app/android/app/debug/
