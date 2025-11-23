@@ -108,3 +108,4 @@ lynxjs/android/.idea/
 #react-native-app
 apps/react-native-app/android/app/release/
 apps/react-native-app/android/app/debug/
+apps/react-native-app/.idea/
