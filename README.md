@@ -29,7 +29,6 @@ adb -s R7ARC1EZJBP install ./lynxjs/android/app/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 
 ## Open android from terminal in order to make node available [for react native android compilation]
-
 - open -a /Applications/Android\ Studio.app
 
 ## Tutorial to build android application with lynxjs
@@ -38,6 +37,11 @@ adb -s R7ARC1EZJBP install ./lynxjs/android/app/release/app-release.apk
 ## Debug with lynx-devtool
 [https://github.com/lynx-family/lynx-devtool]
 
+## Generate app logo (Android + iOS)
+[https://easyappicon.com]
+
+## RN splash screen generator
+[https://utilitytoolshub.com/splash-screen-generator/?utm_source=chatgpt.com]
 
 ## To do
 - OK - zustand

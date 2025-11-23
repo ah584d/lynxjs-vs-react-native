@@ -102,6 +102,7 @@ apps/lynxjs-app/android/app/release/
 apps/lynxjs-app/android/app/debug/
 lynxjs/android/app/release/
 lynxjs/android/app/debug/
+lynxjs/android/.idea/
 
 
 #react-native-app
