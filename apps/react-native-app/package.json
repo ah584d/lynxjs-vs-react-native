@@ -5,11 +5,9 @@
   "scripts": {
     "start": "expo start --dev-client",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo run:android",
     "android:clean_build": "cd android && ./gradlew clean --info && cd ..",
     "android:clean_cache": "rm -rf android/build android/app/build android/.gradle ~/.gradle/caches",
     "android:build_native": "npx expo run:android",
-    "android:build": "npx react-native run-android",
     "android:build_debug_apk": "cd android && ./gradlew assembleDebug && cd ..",
     "ios": "expo run:ios --device 'iPhone 16 Pro'",
     "dev": "concurrently 'pnpm run compile -w' 'pnpm run bundle'",
