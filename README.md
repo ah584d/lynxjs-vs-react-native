@@ -13,11 +13,11 @@ adb devices
    pnpm add expo-modules-core --filter ./apps/react-native-app
 
 #RN:
-- install on ios simulator: npm run ios
-- clean android build:
+✅ install on ios simulator: npm run ios
+✅ clean android build:
     - cd android
     - ./gradlew clean --info
-- install apk on device:
+✅ install apk on device:
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
  signed: adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk

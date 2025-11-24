@@ -25,9 +25,7 @@
     "@rsbuild/plugin-sass": "^1.4.0",
     "@rsbuild/plugin-type-check": "^1.2.4",
     "@rsdoctor/rspack-plugin": "^1.1.11",
-    "@types/react": "^18.3.18",
-    "dotenv": "^16.4.7",
-    "prettier": "^3.6.2"
+    "@types/react": "^18.3.18"
   },
   "engines": {
     "node": ">=18"

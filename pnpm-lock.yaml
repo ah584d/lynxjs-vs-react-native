@@ -11,6 +11,9 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.2
         version: 5.2.2(prettier@3.6.2)
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -157,12 +160,6 @@ importers:
       '@types/react':
         specifier: ^18.3.18
         version: 18.3.27
-      dotenv:
-        specifier: ^16.4.7
-        version: 16.6.1
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
 
   apps/react-native-app:
     dependencies:
@@ -251,9 +248,6 @@ importers:
       metro-react-native-babel-preset:
         specifier: ^0.77.0
         version: 0.77.0(@babel/core@7.28.5)
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
 
   libs/components:
     dependencies:
@@ -2852,10 +2846,6 @@ packages:
 
   dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
-    engines: {node: '>=12'}
-
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -9446,8 +9436,6 @@ snapshots:
       dotenv: 16.4.7
 
   dotenv@16.4.7: {}
-
-  dotenv@16.6.1: {}
 
   dunder-proto@1.0.1:
     dependencies:
