@@ -28,6 +28,7 @@ node_modules/
 # Build outputs
 dist/
 */dist/
+**/dist/**
 build/
 
 # =============================
@@ -138,6 +139,7 @@ xcuserdata
 project.xcworkspace
 .xcode.env.local
 
+
 # CocoaPods
 **/ios/Pods/
 
@@ -168,3 +170,4 @@ apps/lynxjs-app/dist/.rspeedy/*
 # =============================
 
 app-example
+**/*.js.map
