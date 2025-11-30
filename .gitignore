@@ -159,7 +159,9 @@ project.xcworkspace
 # =============================
 
 # LynxJS specific
-main.lynx.bundle
+apps/lynxjs-app/dist
+apps/lynxjs-app/dist/.rspeedy/*
+
 
 # =============================
 # EXAMPLES / TEMPORARY
