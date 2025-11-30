@@ -1,0 +1,114 @@
+import { useEffect, useState } from '@lynx-js/react';
+import { runOnBackground, useMainThreadRef } from '@lynx-js/react';
+import { useNavigate } from 'react-router';
+import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
+import { Filter } from '@/components/Filter/LX_Filter.jsx';
+import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
+import { PageView } from '@/components/index.js';
+import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
+import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
+import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
+import { t } from '@/i18n/i18n.js';
+import './moviesList.css';
+export function MoviesList() {
+    const [firstLoad, setFirstLoad] = useState(true);
+    const [filterChanged, setFilterChanged] = useState(false);
+    const [forceRefresh, setForceRefresh] = useState(false);
+    const [genreFilter, setGenreFilter] = useState(0);
+    const [yearFilter, setYearFilter] = useState(3);
+    const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
+    const moviesList = useMovieStore(state => state.moviesList);
+    const isLoading = useMovieStore(state => state.isLoading);
+    const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
+    const [isScrolling, handleScrollAnimation] = useScrollAnimation();
+    const { metrics } = usePerformanceMonitor();
+    useEffect(() => {
+        if (forceRefresh && !isLoading) {
+            setForceRefresh(false);
+        }
+    }, [forceRefresh, isLoading]);
+    const onFilterGenreChange = (activeIndex) => () => {
+        if (activeIndex !== genreFilter) {
+            setFilterChanged(true);
+            if (forceRefresh) {
+                setForceRefresh(false);
+            }
+        }
+        setGenreFilter(activeIndex);
+    };
+    const onFilterYearChange = (activeIndex) => () => {
+        if (activeIndex !== yearFilter) {
+            setFilterChanged(true);
+            if (forceRefresh) {
+                setForceRefresh(false);
+            }
+        }
+        setYearFilter(activeIndex);
+    };
+    const goToPerformance = () => {
+        navigate('/performance');
+    };
+    function fetchCleanList() {
+        setFilterChanged(false);
+        setCurrentPage(1);
+        setForceRefresh(true);
+    }
+    return (<PageView>
+      <view className='main-container-layout'>
+        {isOffline && (<view className='offline-container'>
+            <text className='offline-text'>You are offline. Please check your internet connection.</text>
+          </view>)}
+        <view className='MainContent'>
+          <view>
+            <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
+              <text className='Title'>Movie With RN/Lynx</text>
+              <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
+                <view className='performance-button' bindtap={goToPerformance}>
+                  <text style='color:white;font-size:16px'>📊</text>
+                </view>
+                <text className='titleText'>{metrics.fps} fps</text>
+              </view>
+            </view>
+            <view class={`movies-count-floating ${IS_ANDROID ? 'movies-count-floating-android' : ''}`}>
+              <text className='movies-count-value'>{Math.abs(moviesList.length).toLocaleString()}</text>
+            </view>
+            <view className='filter-section'>
+              <view className='FilterOptions'>
+                <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange}/>
+              </view>
+            </view>
+            <view className='filter-section'>
+              <view className='FilterOptionsYear'>
+                <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange}/>
+              </view>
+            </view>
+          </view>
+          <view className='MovieList'>
+            <list style='display:flex;flex:1;padding-bottom:52px' list-type='single' span-count={1} scroll-orientation='vertical' initial-scroll-index={1} scroll-event-throttle={32} lower-threshold-item-count={1} bounces={false} bindscroll={handleScrollAnimation} bindscrolltolower={() => !isLoading && increaseCurrentPage()}>
+              {moviesList.map((movie, index) => (<MovieCard movie={movie} index={index} isScrolling={isScrolling}/>))}
+            </list>
+            {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
+          <text>Exposed nodes:</text>
+          <text style={{ color: 'red' }}>{eventLog}</text>
+        </view> */}
+          </view>
+
+          <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={fetchCleanList}>
+            <text class={`button-text${!filterChanged ? ' button-text-disabled' : ''}`}>{isLoading ? 'Loading...' : t('get_movies')}</text>
+          </view>
+        </view>
+      </view>
+    </PageView>);
+    function increaseCurrentPage() {
+        if (isLoading) {
+            return;
+        }
+        // Note: there is a bug in "bindscrolltolower", useMoviesList is called anyway on page loading, so we want to avoid incrementing the counter on the first call
+        if (firstLoad) {
+            setFirstLoad(false);
+            return;
+        }
+        setCurrentPage(prev => prev + 1);
+    }
+}

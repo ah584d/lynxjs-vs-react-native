@@ -1,0 +1,24 @@
+/* Generic color definitions using CSS custom properties */
+:root {
+  --color-black: #000;
+  --color-text: #11181c;
+  --color-background: #fff;
+  --color-tint: #0a7ea4;
+  --color-icon: #687076;
+  --color-tab-icon-default: #687076;
+  --color-tab-icon-selected: #0a7ea4;
+  --color-gray-border: gray;
+  --color-green: green;
+  --color-white: white;
+  --color-gray: gray;
+  --color-dark-gray: #000;
+  --color-light-gray: #9e9b9b4d;
+  --color-light-gray2: #d0cbcb4d;
+  --color-light-gray3: #ffffff9d;
+  --color-movie-card-background: #f5f5f5;
+  --color-blue: #2e47e7ff;
+  --color-light-green: #eaf5eaff;
+  --color-purple: #9f44e0ff;
+  --color-yellow: #ffd700;
+  --color-orange: #ff7f50;
+}

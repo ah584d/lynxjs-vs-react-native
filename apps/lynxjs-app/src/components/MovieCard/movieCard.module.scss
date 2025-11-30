@@ -1,0 +1,74 @@
+.item-movie-card-container {
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+
+.item-movie-card-odd {
+  background-color: #e5ffed88;
+}
+
+.item-movie-card-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.item-movie-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+.item-movie-number {
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.item-movie-card-rating {
+  color: #2563eb;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.item-movie-card-overview {
+  color: #4a4a4a;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.item-movie-card-text {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@keyframes posterPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8) rotate(5deg);
+    opacity: 0.5;
+  }
+  75% {
+    transform: scale(0.9) rotate(-5deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.poster-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster-scrolling {
+  animation: posterPulse 0.8s ease-in-out infinite;
+}
