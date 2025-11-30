@@ -1,23 +1,151 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# =============================
+# GENERAL
+# =============================
+
 # OSX/macOS
 .DS_Store
 *.pem
 
-# Xcode
-#
-
-# vs-code
+# VS Code
 .vscode/*
 
-# node.js
+# Logs
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# =============================
+# NODE.JS / PACKAGE MANAGERS
+# =============================
+
+# Dependencies
 node_modules/
 */node_modules/
+
+# Build outputs
+dist/
 */dist/
+build/
+
+# =============================
+# ENVIRONMENT & CONFIG
+# =============================
 
 # Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .env*.local
 */**/.env
 
-# Native
+# Package manager files
+pnpm-debug.log*
+
+# =============================
+# TYPESCRIPT
+# =============================
+
+*.tsbuildinfo
+
+# =============================
+# EXPO APP
+# =============================
+
+# Expo
+apps/expo-app/.expo/
+apps/expo-app/dist/
+apps/expo-app/web-build/
+apps/expo-app/expo-env.d.ts
+
+# =============================
+# REACT NATIVE APP
+# =============================
+
+# Metro
+.metro-health-check*
+
+# React Native / Expo generated files
+apps/react-native-app/.expo/
+apps/react-native-app/dist/
+apps/react-native-app/web-build/
+apps/react-native-app/expo-env.d.ts
+
+# Bundle artifacts
+*.jsbundle
+
+# =============================
+# ANDROID (All apps)
+# =============================
+
+# Android Studio / IntelliJ
+.idea/
+.idea/*
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+*.iml
+.gradle
+.cxx/
+.cxx
+.externalNativeBuild
+
+# Android build files
+**/android/build/
+**/android/app/build/
+**/android/captures/
+**/android/local.properties
+**/android/.gradle/
+local.properties
+
+# Specific app releases/debug
+apps/lynxjs-app/android/app/release/
+apps/lynxjs-app/android/app/debug/
+apps/react-native-app/android/app/release/
+apps/react-native-app/android/app/debug/
+
+# Android profiling
+*.hprof
+
+# =============================
+# IOS (React Native app)
+# =============================
+
+# Xcode
+**/ios/build/
+**/ios/DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+.xcode.env.local
+
+# CocoaPods
+**/ios/Pods/
+
+# =============================
+# NATIVE / MOBILE CERTIFICATES
+# =============================
+
+# Native certificates and keys
 .kotlin/
 *.orig.*
 *.jks
@@ -26,35 +154,15 @@ node_modules/
 *.key
 *.mobileprovision
 
-# Metro
-.metro-health-check*
+# =============================
+# LYNXJS APP
+# =============================
 
-# Debug files
-npm-debug.*
-yarn-debug.*
-yarn-error.*
+# LynxJS specific
+main.lynx.bundle
 
-# TypeScript
-*.tsbuildinfo
+# =============================
+# EXAMPLES / TEMPORARY
+# =============================
 
-# Other
-*.log
-
-# Expo
-apps/expo-app/.expo/
-apps/expo-app/dist/
-apps/expo-app/web-build/
-apps/expo-app/expo-env.d.ts
-
-# lynxjs
-apps/lynxjs-app/android/app/release/
-apps/lynxjs-app/android/app/debug/
-lynxjs/android/app/release/
-lynxjs/android/app/debug/
-lynxjs/android/.idea/
-
-
-#react-native-app
-apps/react-native-app/android/app/release/
-apps/react-native-app/android/app/debug/
-apps/react-native-app/.idea/
+app-example
