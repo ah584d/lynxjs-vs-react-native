@@ -19,7 +19,6 @@
     "<THIRD_PARTY_MODULES>",
     "^@movies/(.*)$",
     "^@navigation/(.*)$",
-    "^@app/.*$",
     "^@/.*$",
     "^[../]",
     "^[./]"

@@ -5,8 +5,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@app/*": ["./app/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@repo/constants": ["../../libs/constants/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "dist"],

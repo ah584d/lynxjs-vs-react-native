@@ -1,4 +1,4 @@
-import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP_, TMDB_BASE_URL, YEARS_FILTER } from '@/common/LX_constants.js';
+import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP, TMDB_BASE_URL, YEARS_FILTER } from '@/common/LX_constants.js';
 import { type Movie } from '@/types/LX_common.types.js';
 
 export function getUrl(page: number, year?: string, genreId?: number): string {
@@ -25,4 +25,3 @@ export const movieService = {
     return results;
   },
 };
-

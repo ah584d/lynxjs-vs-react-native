@@ -14,8 +14,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./src/*"],
+      "@repo/constants": ["../../libs/constants/src/index.ts"]}
   },
   "exclude": ["dist/"]
 }
