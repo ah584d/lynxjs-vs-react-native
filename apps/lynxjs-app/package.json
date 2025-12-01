@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@lynx-js/react": "^0.105.1",
+    "@repo/constants": "workspace:*",
     "i18next": "^24.2.3",
     "json": "^11.0.0",
     "react-router": "6",

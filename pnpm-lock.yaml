@@ -126,6 +126,9 @@ importers:
       '@lynx-js/react':
         specifier: ^0.105.1
         version: 0.105.2(@lynx-js/types@3.2.0)(@types/react@18.3.27)
+      '@repo/constants':
+        specifier: workspace:*
+        version: link:../../libs/constants
       i18next:
         specifier: ^24.2.3
         version: 24.2.3(typescript@5.8.3)
@@ -169,6 +172,9 @@ importers:
       '@react-navigation/native':
         specifier: ^7.1.6
         version: 7.1.20(react-native@0.79.5(@babel/core@7.28.5)(@react-native-community/cli@20.0.2(typescript@5.8.3))(@types/react@18.3.27)(react@19.0.0))(react@19.0.0)
+      '@repo/constants':
+        specifier: workspace:*
+        version: link:../../libs/constants
       axios:
         specifier: ^1.10.0
         version: 1.13.2
