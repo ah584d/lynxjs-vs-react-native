@@ -71,10 +71,10 @@ apps/expo-app/expo-env.d.ts
 .metro-health-check*
 
 # React Native / Expo generated files
-apps/react-native-app/.expo/
-apps/react-native-app/dist/
-apps/react-native-app/web-build/
-apps/react-native-app/expo-env.d.ts
+rn/.expo/
+rn/dist/
+rn/web-build/
+rn/expo-env.d.ts
 
 # Bundle artifacts
 *.jsbundle
@@ -109,8 +109,8 @@ local.properties
 # Specific app releases/debug
 apps/lynxjs-app/android/app/release/
 apps/lynxjs-app/android/app/debug/
-apps/react-native-app/android/app/release/
-apps/react-native-app/android/app/debug/
+rn/android/app/release/
+rn/android/app/debug/
 
 # Android profiling
 *.hprof
