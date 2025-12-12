@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/LX_constants.js';
 import { getUrl, movieService } from '@/services/LX_http.service.js';
 import { getMoviesByRating } from '@/services/LX_utils.js';
-import { type Movie } from '@/types/LX_common.types.js';
+import { type Movie } from '@repo/types';
 
 interface MovieStore {
   moviesList: Movie[];

@@ -15,7 +15,9 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@repo/constants": ["../../libs/constants/src/index.ts"]}
+      "@repo/constants": ["../../libs/constants/src/index.ts"],
+      "@repo/types": ["../../libs/types/src/index.ts"]
+    }
   },
   "exclude": ["dist/"]
 }
