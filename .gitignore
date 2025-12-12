@@ -76,6 +76,11 @@ rn/dist/
 rn/web-build/
 rn/expo-env.d.ts
 
+apps/react-native-app/.expo/
+apps/react-native-app/dist/
+apps/react-native-app/web-build/
+apps/react-native-app/expo-env.d.ts
+
 # Bundle artifacts
 *.jsbundle
 

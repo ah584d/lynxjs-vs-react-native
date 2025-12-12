@@ -16,8 +16,7 @@
     "lint": "pnpm run -r lint",
     "clean": "pnpm run --filter='./libs/*' clean",
     "clean:modules": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
-    "ci": "pnpm run clean:modules && pnpm install",
-    "install:all": "pnpm install"
+    "ci": "pnpm run clean:modules && pnpm install"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
