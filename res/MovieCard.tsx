@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Suspense } from 'react';
 import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
 import { usePulseCardAnimation } from '@/hooks/useAnimations';
 import { getGenreNames, getPosterUrl } from '@/services/utils';
 import { Movie } from '@/types/common.types';
-import { MoviePicture } from './atoms/MoviePicture';
+import { MoviePicture, MoviePictureLoading } from './atoms/MoviePicture' ;
 
 interface MovieCardProps {
   index: number;
   movie: Movie;
   onPress: (movieId: number) => void;
-  customStyle?: StyleProp<ViewStyle>;
+  customStyle?: StyleProp<ViewStyle> ;
   scrollVelocity?: number;
 }
 
@@ -29,7 +29,9 @@ export const MovieCard = (props: MovieCardProps): ReactElement => {
     <TouchableOpacity style={[styles.container, customStyle]} onPress={() => onPress(movie.id)}>
       <Text style={styles.debugIndex}>#{index + 1}</Text>
       <Animated.View style={[styles.posterContainer, animatedStyle]}>
-        <MoviePicture posterUrl={posterUrl} />
+        <Suspense fallback={<MoviePictureLoading />}>
+          <MoviePicture posterUrl={posterUrl} />
+        </Suspense>
       </Animated.View>
       <View style={styles.details}>
         <Text style={styles.title} numberOfLines={1}>

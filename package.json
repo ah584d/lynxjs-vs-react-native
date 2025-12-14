@@ -11,7 +11,6 @@
     "build": "pnpm run --filter='./libs/*' build && pnpm run --filter='./apps/*' build",
     "build:libs": "pnpm run --filter='./libs/*' build",
     "dev:lynxjs": "pnpm run build:libs && pnpm run --filter=@repo/lynxjs-app dev",
-    "dev:rn": "pnpm run build:libs && pnpm run --filter=@repo/react-native-app dev",
     "dev:expo": "pnpm run build:libs && pnpm run --filter=@repo/expo-app dev",
     "lint": "pnpm run -r lint",
     "clean": "pnpm run --filter='./libs/*' clean",
