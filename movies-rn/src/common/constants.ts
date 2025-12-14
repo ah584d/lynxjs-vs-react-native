@@ -34,7 +34,7 @@ export const GENRE_MAP: Record<string, number> = {
 export const GENRE_MAP_INVERTED = Object.fromEntries(Object.entries(GENRE_MAP).map(a => a.reverse()));
 export const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-export const YEARS_FILTER = ['2022', '2023', '2024', '2025'];
+export const YEARS_FILTER = Array.from({ length: 4 }, (_, i) => (new Date().getFullYear() - i).toString()).reverse();
 export const GENRES_FILTER = ['All', 'Action', 'Comedy', 'Drama'];
 
 export const ALL = 'all';
