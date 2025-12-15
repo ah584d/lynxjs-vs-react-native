@@ -11,7 +11,7 @@
     "android:build_debug_apk": "cd android && ./gradlew assembleDebug && cd ..",
     "ios": "expo run:ios --device 'iPhone 16 Pro'",
     "dev": "concurrently 'npm run compile -w' 'npm run bundle'",
-    "bundle": "expo start -c",
+    "bundle": "expo start -clear",
     "web": "expo start --web",
     "lint": "expo lint",
     "compile": "tsc --noEmit"
