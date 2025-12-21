@@ -9,7 +9,7 @@ export function MovieDetails(): ReactElement {
   const movieData = location.state?.movie;
 
   return (
-    <PageView isBack title='Movie Detail'>
+    <PageView isBack title='Movie Details'>
       <view class='display:flex;flex-direction:column;'>
         <scroll-view style={{ width: 'calc(100% - 10px)', height: '85vh' }} scroll-orientation='vertical'>
           <image src={`https://image.tmdb.org/t/p/w342${movieData.poster_path || movieData.poster_path}`} className={styles['picture']} />

@@ -21,7 +21,7 @@ export const RootNavigator = () => {
       <Stack.Screen
         name='movies/movie/[id]'
         options={{
-          headerTitle: 'Movie Detail',
+          headerTitle: 'Movie Details',
           headerBackButtonDisplayMode: 'minimal',
         }}
       />
