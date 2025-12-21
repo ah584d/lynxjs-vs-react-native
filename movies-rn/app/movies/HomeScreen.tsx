@@ -63,11 +63,15 @@ export default function HomeScreen() {
           onScroll={handleScroll}
           scrollEventThrottle={16}
         />
+
+        {/* TODO :use suspense here */}
         {isLoading && (
           <View style={styles.centeredOverlay}>
             <ActivityIndicator size='large' color={Colors.light.green} />
           </View>
         )}
+        {/* TODO :use suspense here */}
+
         {error && (
           <View style={styles.errorContainer}>
             <View style={styles.errorBox}>

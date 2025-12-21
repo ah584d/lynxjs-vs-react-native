@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
 import { useMovieStore } from '@/hooks/useMovieStore';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
+import { Menu } from './Menu';
 
 export const NavigationHeader = () => {
   const moviesList = useMovieStore(state => state.moviesList);
@@ -17,6 +18,7 @@ export const NavigationHeader = () => {
           <Text style={styles.performanceButtonText}>📊</Text>
         </TouchableOpacity>
         <Text style={styles.titleText}>{metrics.fps} fps</Text>
+        <Menu />
       </View>
       <View style={styles.moviesCountFloating}>
         <Text style={styles.moviesCountValue}>{moviesList.length}</Text>

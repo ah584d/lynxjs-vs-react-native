@@ -5,20 +5,20 @@
 }
 
 .filter-button {
-  background-color: #e5e7eb;
+  background-color: var(--color-background-light);
   padding: 8px 16px;
   border-radius: 8px;
   margin-right: 6px;
 }
 
 .filter-button-active {
-  background-color: green;
+  background-color: var(--color-green);
   padding: 8px 16px;
   border-radius: 8px;
   margin-right: 6px;
 }
 
 .filter-button-active text {
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: 600;
 }

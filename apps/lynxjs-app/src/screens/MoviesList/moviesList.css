@@ -17,12 +17,12 @@
 .Title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #1a1a1a;
+  color: var(--color-text);
 }
 
 .titleText {
   font-size: 1rem;
-  color: #1a1a1a;
+  color: var(--color-text);
 }
 
 .filter-section {
@@ -61,11 +61,11 @@
 }
 
 .recommend-button-disabled {
-  background-color: #a0a0a0; /* Your disabled color */
+  background-color: var(--color-background-disabled); /* Your disabled color */
 }
 
 .button-text {
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 18px;
   font-weight: bold;
 }
@@ -94,7 +94,7 @@
 }
 
 .EmptyText {
-  color: #666666;
+  color: var(--color-text-light);
   font-size: 16px;
   text-align: center;
 }
@@ -122,7 +122,7 @@
 }
 
 .offline-container {
-  background-color: #fff3cd;
+  background-color: var(--color-warning-background);
   padding: 16px;
   border-radius: 8px;
   margin: 12px 0;
@@ -130,7 +130,7 @@
 }
 
 .offline-text {
-  color: #856404;
+  color: var(--color-warning-text);
   font-size: 16px;
   font-weight: bold;
 }

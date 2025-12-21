@@ -11,7 +11,7 @@
     "android:build_debug_apk": "cd android && ./gradlew assembleDebug && cd ..",
     "ios": "expo run:ios --device 'iPhone 16 Pro'",
     "dev": "concurrently 'npm run compile -w' 'npm run bundle'",
-    "bundle": "expo start -clear",
+    "bundle": "expo start --clear",
     "web": "expo start --web",
     "lint": "expo lint",
     "compile": "tsc --noEmit"
@@ -41,15 +41,20 @@
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
+    "react-native-vector-icons": "^10.3.0",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.5.1",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/react": "~19.1.0",
+    "@types/react-native-vector-icons": "^6.4.18",
     "concurrently": "^9.2.1",
+    "dotenv": "^16.4.7",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
+    "prettier": "^3.6.2",
     "typescript": "~5.9.2"
   },
   "private": true

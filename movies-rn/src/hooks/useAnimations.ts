@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
+import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
   const scaleAnimation = useRef(new Animated.Value(1)).current;
@@ -76,4 +77,51 @@ export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInter
   });
 
   return [shimmerTranslateX, shimmerOpacity];
+}
+
+export function useMenuAnimation() {
+  const topBarRotation = useSharedValue(0);
+  const bottomBarRotation = useSharedValue(0);
+  const topBarTranslateY = useSharedValue(0);
+  const bottomBarTranslateY = useSharedValue(0);
+  const middleBarOpacity = useSharedValue(1);
+
+  const toggleMenu = (targetState: boolean) => {
+    const duration = 300;
+
+    if (targetState) {
+      // Transform to X shape
+      topBarRotation.value = withTiming(45, { duration });
+      bottomBarRotation.value = withTiming(-45, { duration });
+      topBarTranslateY.value = withTiming(5, { duration });
+      bottomBarTranslateY.value = withTiming(-5, { duration });
+      middleBarOpacity.value = withTiming(0, { duration });
+    } else {
+      // Transform back to hamburger
+      topBarRotation.value = withTiming(0, { duration });
+      bottomBarRotation.value = withTiming(0, { duration });
+      topBarTranslateY.value = withTiming(0, { duration });
+      bottomBarTranslateY.value = withTiming(0, { duration });
+      middleBarOpacity.value = withTiming(1, { duration });
+    }
+  };
+
+  const topBarAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: topBarTranslateY.value }, { rotate: `${topBarRotation.value}deg` }],
+  }));
+
+  const bottomBarAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: bottomBarTranslateY.value }, { rotate: `${bottomBarRotation.value}deg` }],
+  }));
+
+  const middleBarAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: middleBarOpacity.value,
+  }));
+
+  return {
+    toggleMenu,
+    topBarAnimatedStyle,
+    bottomBarAnimatedStyle,
+    middleBarAnimatedStyle,
+  };
 }

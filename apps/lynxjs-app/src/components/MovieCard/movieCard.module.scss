@@ -1,10 +1,10 @@
 .item-movie-card-container {
   width: 100%;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--color-light-border);
 }
 
 .item-movie-card-odd {
-  background-color: #e5ffed88;
+  background-color: var(--color-background-green-tint);
 }
 
 .item-movie-card-title-wrapper {
@@ -18,23 +18,23 @@
 .item-movie-card-title {
   font-size: 24px;
   font-weight: bold;
-  color: #1a1a1a;
+  color: var(--color-text);
   margin-bottom: 8px;
 }
 .item-movie-number {
   font-size: 1rem;
-  color: #1a1a1a;
+  color: var(--color-text);
   margin-bottom: 8px;
 }
 
 .item-movie-card-rating {
-  color: #2563eb;
+  color: var(--color-blue);
   font-size: 16px;
   margin-bottom: 16px;
 }
 
 .item-movie-card-overview {
-  color: #4a4a4a;
+  color: var(--color-text-medium);
   font-size: 16px;
   line-height: 24px;
 }
