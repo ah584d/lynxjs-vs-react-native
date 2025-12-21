@@ -39,7 +39,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
             /10
           </text>
           <text className={styles['item-movie-card-overview']}>{movie.overview}</text>
-          <text className={styles['item-movie-card-text']}>Release Date: {movie.release_date}</text>
+          <text className={styles['item-movie-card-text']}>Release Date3333: {movie.release_date}</text>
           <text className={styles['item-movie-card-text']}>Genres: {getGenreNames(movie.genre_ids)}</text>
         </view>
       </view>
