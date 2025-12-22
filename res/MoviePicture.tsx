@@ -62,7 +62,7 @@ const MoviePictureError = (): ReactElement => {
   return (
     <View style={styles.poster}>
       <Text style={styles.oopsText}>Oops!!</Text>
-      <EntypoIcon name='emoji-sad' size={60} color='orange' />
+      <EntypoIcon name='emoji-sad' size={60} color={Colors.light.yellow} />
       <Text style={styles.oopsText}>something went wrong</Text>
     </View>
   );
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: Colors.light.lightGray2,
   },
 
   shimmerOverlay: {
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     left: -100,
     width: 100,
     height: '100%',
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#E0E0E0',
+    backgroundColor: Colors.light.white,
+    shadowColor: Colors.light.lightGray,
     shadowOffset: {
       width: 0,
       height: 0,
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
     left: -60,
     width: 60,
     height: '100%',
-    backgroundColor: '#F8F8F8',
-    shadowColor: '#DDDDDD',
+    backgroundColor: Colors.light.lightGray3,
+    shadowColor: Colors.light.lightGray,
     shadowOffset: {
       width: 10,
       height: 0,

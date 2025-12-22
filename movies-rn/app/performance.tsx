@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toggleButtonActive: {
-    backgroundColor: '#ffebee',
-    borderColor: '#f44336',
+    backgroundColor: Colors.light.lightGreen,
+    borderColor: Colors.light.green,
   },
   toggleButtonText: {
     fontSize: 18,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   toggleButtonTextActive: {
-    color: '#f44336',
+    color: Colors.light.green,
   },
   toggleDescription: {
     fontSize: 12,
@@ -165,16 +165,16 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   statusSuccess: {
-    backgroundColor: '#d4edda',
+    backgroundColor: Colors.light.lightGreen,
   },
   statusSuccessText: {
-    color: '#155724',
+    color: Colors.light.green,
   },
   statusError: {
-    backgroundColor: '#f8d7da',
+    backgroundColor: Colors.light.lightGray,
   },
   statusErrorText: {
-    color: '#721c24',
+    color: Colors.light.purple,
   },
   noData: {
     padding: 20,

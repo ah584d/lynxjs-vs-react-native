@@ -48,7 +48,7 @@ export default function MovieDetailsScreen() {
         <View style={styles.metaContainer}>
           <View style={styles.ratingContainer}>
             <Text style={styles.text}>Rating:</Text>
-            <Icon name='star' size={20} color='#FFD700' />
+            <Icon name='star' size={20} color={Colors.light.yellow} />
             <Text style={styles.text}>{movie.vote_average.toFixed(1)}/10</Text>
           </View>
           <Text style={styles.text}>Release date: {movie.release_date}</Text>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   errorText: {
-    color: 'red',
+    color: Colors.light.purple,
     textAlign: 'center',
     marginTop: 20,
   },
