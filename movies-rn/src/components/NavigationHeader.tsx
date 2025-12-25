@@ -13,12 +13,12 @@ export const NavigationHeader = () => {
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
       <View style={styles.header}>
+        <Menu />
         <Text style={styles.title}>Movie with RN/Lynx</Text>
         <TouchableOpacity style={styles.performanceButton} onPress={goToPerformance}>
           <Text style={styles.performanceButtonText}>📊</Text>
         </TouchableOpacity>
         <Text style={styles.titleText}>{metrics.fps} fps</Text>
-        <Menu />
       </View>
       <View style={styles.moviesCountFloating}>
         <Text style={styles.moviesCountValue}>{moviesList.length}</Text>

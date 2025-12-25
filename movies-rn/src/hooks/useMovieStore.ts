@@ -10,11 +10,13 @@ interface MovieStore {
   isLoading: boolean;
   error: string | null;
   filter: string | null;
+  menuOpened: boolean;
 }
 
 interface MovieAction {
   getMovies: (page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
+  setOpenMenu: (state: boolean) => Promise<void>;
 }
 
 export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
@@ -23,6 +25,9 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
   isLoading: false,
   error: null,
   filter: null,
+  menuOpened: false,
+
+  setOpenMenu: async (state: boolean) => set({ menuOpened: state }),
 
   getMovies: async (page: number, yearFilter: number, genreFilter?: number) => {
     set({ isLoading: true, error: null });

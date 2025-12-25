@@ -5,7 +5,9 @@ import { Colors } from '@/common/colors';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
+import { MenuPage } from '@/components/MenuPage';
 import { MovieCardMemo } from '@/components/MovieCard';
+import { useMenuPageAnimation } from '@/hooks/useAnimations';
 import { useMovieStore } from '@/hooks/useMovieStore';
 import { Movie } from '@/types/common.types';
 
@@ -26,6 +28,7 @@ export default function HomeScreen() {
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
+  const setOpenMenu = useMovieStore(state => state.setOpenMenu);
 
   useEffect(() => {
     getMovies(currentPage, yearFilter, genreFilter);
@@ -46,6 +49,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <MenuPage />
       <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
         <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
         <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
@@ -101,6 +105,7 @@ export default function HomeScreen() {
   }
 
   function onMoviePress(movieId: number): void {
+    setOpenMenu(false);
     router.push({ pathname: '/movies/movie/[id]', params: { id: movieId } });
   }
 

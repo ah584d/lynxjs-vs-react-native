@@ -1,18 +1,19 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Colors } from '@/common/colors';
 import { useMenuAnimation } from '@/hooks/useAnimations';
+import { useMovieStore } from '@/hooks/useMovieStore';
 
 export const Menu = (): ReactElement => {
-  const [isToggled, setIsToggled] = useState(false);
-  const { toggleMenu, topBarAnimatedStyle, bottomBarAnimatedStyle, middleBarAnimatedStyle } = useMenuAnimation();
+  const setOpenMenu = useMovieStore(state => state.setOpenMenu);
+  const menuOpened = useMovieStore(state => state.menuOpened);
 
-  const onMenuPress = () => {
-    const newState = !isToggled;
-    setIsToggled(newState);
-    toggleMenu(newState);
-  };
+  const { toggleMenuAnimation, topBarAnimatedStyle, bottomBarAnimatedStyle, middleBarAnimatedStyle } = useMenuAnimation();
+
+  useEffect(() => {
+    toggleMenuAnimation(menuOpened);
+  }, [menuOpened, toggleMenuAnimation]);
 
   return (
     <View style={styles.container}>
@@ -23,6 +24,11 @@ export const Menu = (): ReactElement => {
       </Pressable>
     </View>
   );
+
+  function onMenuPress() {
+    setOpenMenu(!menuOpened);
+    toggleMenuAnimation(!menuOpened);
+  }
 };
 
 const styles = StyleSheet.create({

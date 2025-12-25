@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
-import { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
   const scaleAnimation = useRef(new Animated.Value(1)).current;
@@ -86,18 +86,18 @@ export function useMenuAnimation() {
   const bottomBarTranslateY = useSharedValue(0);
   const middleBarOpacity = useSharedValue(1);
 
-  const toggleMenu = (targetState: boolean) => {
+  const toggleMenuAnimation = (targetState: boolean) => {
     const duration = 300;
 
     if (targetState) {
-      // Transform to X shape
+      // Transform to X shape - when menu opens
       topBarRotation.value = withTiming(45, { duration });
       bottomBarRotation.value = withTiming(-45, { duration });
       topBarTranslateY.value = withTiming(5, { duration });
       bottomBarTranslateY.value = withTiming(-5, { duration });
       middleBarOpacity.value = withTiming(0, { duration });
     } else {
-      // Transform back to hamburger
+      // Transform back to hamburger - when menu closes
       topBarRotation.value = withTiming(0, { duration });
       bottomBarRotation.value = withTiming(0, { duration });
       topBarTranslateY.value = withTiming(0, { duration });
@@ -119,9 +119,37 @@ export function useMenuAnimation() {
   }));
 
   return {
-    toggleMenu,
+    toggleMenuAnimation,
     topBarAnimatedStyle,
     bottomBarAnimatedStyle,
     middleBarAnimatedStyle,
+  };
+}
+
+export function useMenuPageAnimation() {
+  const translateX = useSharedValue(-100); // Start hidden (off-screen to the left)
+
+  const slideIn = () => {
+    translateX.value = withTiming(0, {
+      duration: 900,
+      easing: Easing.out(Easing.cubic), // Start fast, finish slowly
+    });
+  };
+
+  const slideOut = () => {
+    translateX.value = withTiming(-100, {
+      duration: 500,
+      easing: Easing.in(Easing.cubic), // Start slow, then accelerate
+    });
+  };
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: `${translateX.value}%` }],
+  }));
+
+  return {
+    slideIn,
+    slideOut,
+    animatedStyle,
   };
 }
