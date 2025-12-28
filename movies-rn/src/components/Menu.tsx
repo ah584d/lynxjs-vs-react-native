@@ -16,13 +16,11 @@ export const Menu = (): ReactElement => {
   }, [menuOpened, toggleMenuAnimation]);
 
   return (
-    <View style={styles.container}>
-      <Pressable style={({ pressed }) => [styles.menuButton, { opacity: pressed ? 1 : 1 }]} onPress={onMenuPress}>
-        <Animated.View style={[styles.bar, topBarAnimatedStyle]} />
-        <Animated.View style={[styles.bar, middleBarAnimatedStyle]} />
-        <Animated.View style={[styles.bar, bottomBarAnimatedStyle]} />
-      </Pressable>
-    </View>
+    <Pressable style={({ pressed }) => [styles.menuButton, { opacity: pressed ? 1 : 1 }]} onPress={onMenuPress}>
+      <Animated.View style={[styles.bar, topBarAnimatedStyle]} />
+      <Animated.View style={[styles.bar, middleBarAnimatedStyle]} />
+      <Animated.View style={[styles.bar, bottomBarAnimatedStyle]} />
+    </Pressable>
   );
 
   function onMenuPress() {
@@ -32,7 +30,6 @@ export const Menu = (): ReactElement => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
   menuButton: {
     width: 35,
     height: 35,
