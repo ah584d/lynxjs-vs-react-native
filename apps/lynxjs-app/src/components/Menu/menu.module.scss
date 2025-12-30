@@ -14,4 +14,30 @@
   width: 22px;
   height: 2px;
   background-color: var(--color-gray);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.topBar {
+  transform: translateY(0) rotate(0deg);
+}
+
+.middleBar {
+  opacity: 1;
+}
+
+.bottomBar {
+  transform: translateY(0) rotate(0deg);
+}
+
+.topBarOpen {
+  transform: translateY(6.2px) rotate(45deg);
+}
+
+.middleBarOpen {
+  opacity: 0;
+}
+
+.bottomBarOpen {
+  transform: translateY(-6.2px) rotate(-45deg);
 }
