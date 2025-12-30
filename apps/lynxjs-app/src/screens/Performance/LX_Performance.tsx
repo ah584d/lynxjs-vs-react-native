@@ -2,7 +2,7 @@ import { type ReactElement } from '@lynx-js/react';
 import { PageView } from '@/components/index.js';
 import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { usePerformanceStore } from '@/hooks/LX_usePerformanceStore.js';
-import './Performance.css';
+import styles from './performance.module.scss';
 
 export function Performance(): ReactElement {
   const { metrics } = usePerformanceMonitor();
@@ -13,55 +13,55 @@ export function Performance(): ReactElement {
 
   return (
     <PageView isBack title='Performance Dashboard'>
-      <view className='performance-container'>
-        <view className={`ToggleButton ${isHeavyComputationActive ? 'ToggleButtonActive' : ''}`} bindtap={toggleHeavyComputation}>
-          <text className={`ToggleButtonText ${isHeavyComputationActive ? 'ToggleButtonTextActive' : ''}`}>
+      <view className={styles['performance-container']}>
+        <view className={`${styles['toggle-button']} ${isHeavyComputationActive ? styles['toggle-button-active'] : ''}`} bindtap={toggleHeavyComputation}>
+          <text className={`${styles['toggle-button-text']} ${isHeavyComputationActive ? styles['toggle-button-text-active'] : ''}`}>
             {isHeavyComputationActive ? '🔥 Heavy Computation ON' : '💤 Heavy Computation OFF'}
           </text>
-          <text className='ToggleDescription'>{isHeavyComputationActive ? 'Tap to stop UI slowdown' : 'Tap to start 1M element loop'}</text>
+          <text className={styles['toggle-description']}>{isHeavyComputationActive ? 'Tap to stop UI slowdown' : 'Tap to start 1M element loop'}</text>
         </view>
 
-        <view className='MetricsGrid'>
+        <view className={styles['metrics-grid']}>
           {/* Startup Performance */}
-          <view className='MetricCard'>
-            <text className='MetricTitle'>⚡ Startup Time</text>
-            <text className='MetricValue'>{formatTime(metrics.startupTime)}</text>
-            <text className='MetricDescription'>Time to first render</text>
+          <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>⚡ Startup Time</text>
+            <text className={styles['metric-value']}>{formatTime(metrics.startupTime)}</text>
+            <text className={styles['metric-description']}>Time to first render</text>
           </view>
 
           {/* Memory Usage */}
-          <view className='MetricCard'>
-            <text className='MetricTitle'>🧠 Memory Usage</text>
-            <text className='MetricValue'>{formatMemory(metrics.memoryUsage)}</text>
-            <text className='MetricDescription'>Estimated RAM usage</text>
+          <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>🧠 Memory Usage</text>
+            <text className={styles['metric-value']}>{formatMemory(metrics.memoryUsage)}</text>
+            <text className={styles['metric-description']}>Estimated RAM usage</text>
           </view>
 
           {/* FPS */}
-          <view className='MetricCard'>
-            <text className='MetricTitle'>📊 Frame Rate</text>
-            <text className='MetricValue'>{metrics.fps} FPS</text>
-            <text className='MetricDescription'>Current animation frames</text>
+          <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>📊 Frame Rate</text>
+            <text className={styles['metric-value']}>{metrics.fps} FPS</text>
+            <text className={styles['metric-description']}>Current animation frames</text>
           </view>
 
           {/* Render Time */}
-          <view className='MetricCard'>
-            <text className='MetricTitle'>🎨 Render Time</text>
-            <text className='MetricValue'>{formatTime(metrics.renderTime)}</text>
-            <text className='MetricDescription'>Last component render</text>
+          <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>🎨 Render Time</text>
+            <text className={styles['metric-value']}>{formatTime(metrics.renderTime)}</text>
+            <text className={styles['metric-description']}>Last component render</text>
           </view>
 
           {/* Bundle Size */}
-          <view className='MetricCard'>
-            <text className='MetricTitle'>📦 Bundle Size</text>
-            <text className='MetricValue'>{metrics.bundleSize}</text>
-            <text className='MetricDescription'>App bundle size</text>
+          <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>📦 Bundle Size</text>
+            <text className={styles['metric-value']}>{metrics.bundleSize}</text>
+            <text className={styles['metric-description']}>App bundle size</text>
           </view>
 
           {/* Platform Info */}
-          {/* <view className='MetricCard'>
-            <text className='MetricTitle'>🏗️ Platform</text>
-            <text className='MetricValue'>LynxJS</text>
-            <text className='MetricDescription'>Framework type</text>
+          {/* <view className={styles['metric-card']}>
+            <text className={styles['metric-title']}>🏗️ Platform</text>
+            <text className={styles['metric-value']}>LynxJS</text>
+            <text className={styles['metric-description']}>Framework type</text>
           </view> */}
         </view>
       </view>

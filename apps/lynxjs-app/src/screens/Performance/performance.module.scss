@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.PerformanceTitle {
+.performance-title {
   font-size: 2.4rem;
   font-weight: bold;
   color: var(--color-black);
@@ -16,7 +16,7 @@
   text-align: center;
 }
 
-.ToggleButton {
+.toggle-button {
   background-color: var(--color-white);
   border-radius: 12px;
   padding: 16px;
@@ -27,17 +27,17 @@
   transition: all 0.3s ease;
 }
 
-.ToggleButton:hover {
+.toggle-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.ToggleButtonActive {
+.toggle-button-active {
   background-color: var(--color-error-light);
   border-color: var(--color-error);
 }
 
-.ToggleButtonText {
+.toggle-button-text {
   font-size: 1.125rem;
   font-weight: bold;
   color: var(--color-black);
@@ -45,25 +45,25 @@
   display: block;
 }
 
-.ToggleButtonTextActive {
+.toggle-button-text-active {
   color: var(--color-error);
 }
 
-.ToggleDescription {
+.toggle-description {
   font-size: 0.75rem;
   color: var(--color-gray);
   text-align: center;
   display: block;
 }
 
-.MetricsGrid {
+.metrics-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   justify-content: center;
 }
 
-.MetricCard {
+.metric-card {
   background-color: var(--color-white);
   border-radius: 12px;
   padding: 20px;
@@ -74,45 +74,45 @@
   min-width: 280px;
 }
 
-.MetricTitle {
+.metric-title {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--color-gray);
   margin-bottom: 8px;
 }
 
-.MetricValue {
+.metric-value {
   font-size: 2rem;
   font-weight: bold;
   color: var(--color-green);
   margin-bottom: 4px;
 }
 
-.MetricDescription {
+.metric-description {
   font-size: 0.9rem;
   color: var(--color-gray);
   opacity: 0.8;
 }
 
-.NetworkSection {
+.network-section {
   margin-bottom: 32px;
 }
 
-.SectionTitle {
+.section-title {
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--color-black);
   margin-bottom: 16px;
 }
 
-.NetworkList {
+.network-list {
   background-color: var(--color-white);
   border-radius: 8px;
   border: 1px solid var(--color-gray-border);
   overflow: hidden;
 }
 
-.NetworkItem {
+.network-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -120,54 +120,54 @@
   border-bottom: 1px solid var(--color-gray-border);
 }
 
-.NetworkItem:last-child {
+.network-item:last-child {
   border-bottom: none;
 }
 
-.NetworkUrl {
+.network-url {
   font-size: 0.9rem;
   color: var(--color-black);
   font-weight: 500;
   flex: 1;
 }
 
-.NetworkDuration {
+.network-duration {
   font-size: 0.8rem;
   color: var(--color-gray);
   margin-right: 16px;
 }
 
-.NetworkStatus {
+.network-status {
   font-size: 0.8rem;
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 4px;
 }
 
-.NetworkStatus.success {
+.network-status.success {
   background-color: var(--color-success-background);
   color: var(--color-success-text);
 }
 
-.NetworkStatus.error {
+.network-status.error {
   background-color: var(--color-error-background);
   color: var(--color-error-text);
 }
 
-.NoData {
+.no-data {
   padding: 20px;
   text-align: center;
   color: var(--color-gray);
   font-style: italic;
 }
 
-.TipsSection {
+.tips-section {
   background-color: var(--color-light-green);
   border-radius: 8px;
   padding: 20px;
 }
 
-.TipItem {
+.tip-item {
   font-size: 0.95rem;
   color: var(--color-black);
   margin-bottom: 8px;
@@ -176,24 +176,24 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .MetricsGrid {
+  .metrics-grid {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .MetricCard {
+  .metric-card {
     flex: 1;
     max-width: none;
     min-width: auto;
   }
 
-  .NetworkItem {
+  .network-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
   }
 
-  .NetworkDuration {
+  .network-duration {
     margin-right: 0;
   }
 }

@@ -1,15 +1,15 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
-import { runOnBackground, useMainThreadRef } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
+import { Menu } from '@/components/Menu/LX_Menu.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
 import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { t } from '@/i18n/i18n.js';
-import './moviesList.css';
+import styles from './moviesList.module.scss';
 
 export function MoviesList(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
@@ -64,40 +64,41 @@ export function MoviesList(): ReactElement {
 
   return (
     <PageView>
-      <view className='main-container-layout'>
+      <view className={styles['main-container-layout']}>
         {isOffline && (
-          <view className='offline-container'>
-            <text className='offline-text'>You are offline. Please check your internet connection.</text>
+          <view className={styles['offline-container']}>
+            <text className={styles['offline-text']}>You are offline. Please check your internet connection.</text>
           </view>
         )}
-        <view className='MainContent'>
+        <view className={styles['main-content']}>
           <view>
-            <view style='display:flex;flex-direction:row;align-items:center;justify-content:space-between'>
-              <text className='Title'>Movie With RN/Lynx</text>
-              <view style='display:flex;flex-direction:row;align-items:center;gap:16px'>
-                <view className='performance-button' bindtap={goToPerformance}>
-                  <text style='color:white;font-size:16px'>📊</text>
+            <view className={styles['header-row']}>
+              <Menu />
+              <text className={styles['title']}>Movie With RN/Lynx</text>
+              <view className={styles['actions-container']}>
+                <view className={styles['performance-button']} bindtap={goToPerformance}>
+                  <text className={styles['emoji-text']}>📊</text>
                 </view>
-                <text className='titleText'>{metrics.fps} fps</text>
+                <text className={styles['title-text']}>{metrics.fps} fps</text>
               </view>
             </view>
             <view class={`movies-count-floating ${IS_ANDROID ? 'movies-count-floating-android' : ''}`}>
-              <text className='movies-count-value'>{Math.abs(moviesList.length).toLocaleString()}</text>
+              <text className={styles['movies-count-value']}>{Math.abs(moviesList.length).toLocaleString()}</text>
             </view>
-            <view className='filter-section'>
-              <view className='FilterOptions'>
+            <view className={styles['filter-section']}>
+              <view className={styles['filter-options']}>
                 <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
               </view>
             </view>
-            <view className='filter-section'>
-              <view className='FilterOptionsYear'>
+            <view className={styles['filter-section']}>
+              <view className={styles['filter-options-year']}>
                 <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
               </view>
             </view>
           </view>
-          <view className='MovieList'>
+          <view className={styles['movie-list']}>
             <list
-              style='display:flex;flex:1;padding-bottom:52px'
+              className={styles['list-container-style']}
               list-type='single'
               span-count={1}
               scroll-orientation='vertical'
@@ -117,8 +118,8 @@ export function MoviesList(): ReactElement {
             </view> */}
           </view>
 
-          <view class={`recommend-button${!filterChanged ? ' recommend-button-disabled' : ''}`} bindtap={fetchCleanList}>
-            <text class={`button-text${!filterChanged ? ' button-text-disabled' : ''}`}>{isLoading ? 'Loading...' : t('get_movies')}</text>
+          <view className={`${styles['recommend-button']} ${!filterChanged ? `${styles['recommend-button-disabled']}` : ''}`} bindtap={fetchCleanList}>
+            <text className={`${styles['button-text']} ${!filterChanged ? `${styles['button-text-disabled']}` : ''}`}>{isLoading ? 'Loading...' : t('get_movies')}</text>
           </view>
         </view>
       </view>

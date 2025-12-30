@@ -1,7 +1,6 @@
 import type { ReactElement } from '@lynx-js/react';
 import { useLocation } from 'react-router';
 import { PageView } from '@/components/index.js';
-import '../MoviesList/moviesList.css';
 import styles from './movieDetails.module.scss';
 
 export function MovieDetails(): ReactElement {
@@ -10,18 +9,20 @@ export function MovieDetails(): ReactElement {
 
   return (
     <PageView isBack title='Movie Details'>
-      <view class='display:flex;flex-direction:column;'>
-        <scroll-view style={{ width: 'calc(100% - 10px)', height: '85vh' }} scroll-orientation='vertical'>
+      <view className={styles['body']}>
+        <scroll-view className={styles['scroll-container']} scroll-orientation='vertical'>
           <image src={`https://image.tmdb.org/t/p/w342${movieData.poster_path || movieData.poster_path}`} className={styles['picture']} />
-          <view style='padding:20px'>
-            <text className='Title'>{movieData.title}</text>
+          <view className={styles['content-padding']}>
+            <text className={styles['title']}>{movieData.title}</text>
             <text className={styles['sub-title']}>{movieData.description}</text>
-            <text className={styles['sub-title']}>Rating: ★ {movieData.vote_average.toFixed(1)}/10</text>
-            <text className={styles['sub-title']}>Release Date: {movieData.release_date}</text>
-            <text className={styles['sub-title']}>
-              Overview:
-              {movieData.overview}
+            <text className={styles['rating-container']}>
+              <text className={styles['sub-title']}>Rating:</text>
+              <text className={styles['sub-title-yellow']}> ★</text>
+              <text className={styles['sub-title']}> {movieData.vote_average.toFixed(1)}/10</text>
             </text>
+            <text className={styles['sub-title']}>Release Date: {movieData.release_date}</text>
+            <text className={styles['sub-title']}>Overview:</text>
+            <text className={styles['description']}>{movieData.overview}</text>
           </view>
         </scroll-view>
       </view>

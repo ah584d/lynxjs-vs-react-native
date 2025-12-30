@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-.MainContent {
+.main-content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -14,13 +14,13 @@
   padding: 0 20px 12px 20px;
 }
 
-.Title {
+.title {
   font-size: 1.25rem;
   font-weight: bold;
   color: var(--color-text);
 }
 
-.titleText {
+.title-text {
   font-size: 1rem;
   color: var(--color-text);
 }
@@ -29,21 +29,21 @@
   margin: 12px 0;
 }
 
-.FilterLabel {
+.filter-label {
   margin: 5px 0;
 }
 
-.FilterLabel {
+.filter-label {
   margin-bottom: 5px;
 }
 
-.FilterOptions {
+.filter-options {
   display: flex;
   flex-direction: row;
   margin-top: 5px;
 }
 
-.FilterOptionsYear {
+.filter-options-year {
   display: flex;
   flex-wrap: wrap;
   margin-top: 5px;
@@ -74,36 +74,61 @@
   color: #ffffff9d;
 }
 
-.MovieList {
+.movie-list {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.ListContainer {
+.list-container {
   width: 100%;
 }
 
-.MovieInfo {
+.movie-info {
   padding: 20px;
 }
 
-.EmptyState {
+.empty-state {
   padding: 40px 20px;
   align-items: center;
 }
 
-.EmptyText {
+.empty-text {
   color: var(--color-text-light);
   font-size: 16px;
   text-align: center;
 }
 
-.TitleAlign {
+.title-align {
   font-size: 20px;
   margin-left: 10px;
   color: white;
   align-self: center;
+}
+
+.header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.emoji-text {
+  color: white;
+  font-size: 16px;
+}
+
+.list-container-style {
+  display: flex;
+  flex: 1;
+  padding-bottom: 52px;
 }
 
 .performance-button {
