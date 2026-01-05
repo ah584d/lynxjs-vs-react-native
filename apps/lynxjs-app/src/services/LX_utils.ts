@@ -1,6 +1,5 @@
-// import { GENRE_MAP } from '@/common/LX_constants.js';
 import { GENRE_MAP_INVERTED } from '@/common/LX_constants.js';
-import type { Movie } from '@/types/LX_common.types.js';
+import type { Movie } from '@fennex-sand/types';
 
 export function getUniqueMoviesById(movies: Movie[]): Movie[] {
   const seen = new Set<number>();

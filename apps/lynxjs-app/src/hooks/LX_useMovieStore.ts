@@ -1,8 +1,8 @@
+import { getUrl, movieService } from '@fennex-sand/services';
+import { type Movie } from '@fennex-sand/types';
 import { create } from 'zustand';
-import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/LX_constants.js';
-import { getUrl, movieService } from '@/services/LX_http.service.js';
+import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/LX_constants.js';
 import { getMoviesByRating } from '@/services/LX_utils.js';
-import { type Movie } from '@/types/LX_common.types.js';
 
 interface MovieStore {
   moviesList: Movie[];
@@ -27,7 +27,7 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
     const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
     try {
-      const url = getUrl(page, year, genre);
+      const url = getUrl(API_KEY, page, year, genre);
       const response = await movieService.fetchMovies(url);
       const sortedMovies = getMoviesByRating(response);
 

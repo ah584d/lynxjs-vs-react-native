@@ -97,11 +97,11 @@ export default function HomeScreen() {
           disabled={isLoading || !filterChanged}
         />
       </View>
-    </View>
+  </View>
   );
 
   function renderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {
-    return <MovieCardMemo index={index} movie={item} onPress={onMoviePress} customStyle={index % 2 ? styles.cardCustomStyle : undefined} scrollVelocity={scrollVelocity} />;
+    return <MovieCardMemo index={index} movie={item} onPress={onMoviePress} customStyle={index % 2 ? undefined : styles.cardCustomStyle} scrollVelocity={scrollVelocity} />;
   }
 
   function onMoviePress(movieId: number): void {

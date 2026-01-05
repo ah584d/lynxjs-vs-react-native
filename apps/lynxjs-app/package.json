@@ -11,6 +11,9 @@
     "preview": "rspeedy preview"
   },
   "dependencies": {
+    "@fennex-sand/constants": "^1.0.16",
+    "@fennex-sand/services": "^1.0.1",
+    "@fennex-sand/types": "^1.0.0",
     "@lynx-js/react": "^0.105.1",
     "i18next": "^24.2.3",
     "json": "^11.0.0",

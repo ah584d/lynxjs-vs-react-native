@@ -1,18 +1,24 @@
 {
-  "name": "@repo/services",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@fennex-sand/services",
+  "version": "1.0.1",
+  "description": "Shared services for lynxjs projects",
+  "author": "Avraham Hamu",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "deliver": "npm version patch && npm publish --access public"
   },
   "dependencies": {
-    "@repo/types": "workspace:*",
-    "@repo/constants": "workspace:*"
+    "@fennex-sand/types": "^1.0.0",
+    "@fennex-sand/constants": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "~5.8.3"

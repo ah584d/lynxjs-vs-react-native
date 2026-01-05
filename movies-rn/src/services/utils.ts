@@ -1,5 +1,5 @@
 import { GENRE_MAP_INVERTED } from '@/common/constants';
-import { Movie } from '@/types/common.types';
+import { Movie } from '@fennex-sand/types';
 
 export const getGenreNames = (genreIds: number[]): string => {
   if (!genreIds || genreIds.length === 0) {

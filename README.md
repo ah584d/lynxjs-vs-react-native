@@ -9,15 +9,10 @@ Comparing a new mobile framework with a stable mobile framework - all about js
 # Utils
 
 ## copy apk for debug in android device
-
 adb devices
 
-#Mono-repo:
 
-- add a specific package to a specific project:
-  pnpm add expo-modules-core --filter ./apps/react-native-app
-
-#RN:
+# RN:
 ✅ install on ios simulator: npm run ios
 ✅ clean android build:
     - cd android
@@ -27,7 +22,7 @@ adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
 signed: adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
-#Lynx:
+# Lynx:
 pnpm run build:android
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release-unsigned.apk
 android build signed apk password key0/123456
@@ -53,6 +48,13 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 ## RN splash screen generator
 
 [https://utilitytoolshub.com/splash-screen-generator/?utm_source=chatgpt.com]
+
+## libs
+- npm login
+- npm run build:libs
+- cd  ./libs/constants
+- npm publish --access public
+- or npm run deliver if you wish to increment the version
 
 ## To do
 

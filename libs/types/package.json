@@ -1,14 +1,20 @@
 {
-  "name": "@repo/types",
+  "name": "@fennex-sand/types",
   "version": "1.0.0",
-  "private": true,
+  "description": "Shared types for lynxjs projects",
+  "author": "Avraham Hamu",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "deliver": "npm version patch && npm publish --access public"
   },
   "devDependencies": {
     "typescript": "~5.8.3"
