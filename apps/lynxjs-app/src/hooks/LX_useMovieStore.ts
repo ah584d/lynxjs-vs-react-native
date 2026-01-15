@@ -1,8 +1,8 @@
 import { getUrl, movieService } from '@fennex-sand/services';
+import { getMoviesByRating } from '@fennex-sand/services';
 import { type Movie } from '@fennex-sand/types';
 import { create } from 'zustand';
 import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/LX_constants.js';
-import { getMoviesByRating } from '@/services/LX_utils.js';
 
 interface MovieStore {
   moviesList: Movie[];

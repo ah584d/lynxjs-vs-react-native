@@ -1,7 +1,7 @@
 import { type ReactElement, memo } from '@lynx-js/react';
+import { getGenreNames } from '@fennex-sand/services';
 import type { Movie } from '@fennex-sand/types';
 import { useNavigate } from 'react-router';
-import { getGenreNames } from '@/services/LX_utils.js';
 import { MoviePicture } from '../atoms/LX_MoviePicture.jsx';
 import styles from './movieCard.module.scss';
 
