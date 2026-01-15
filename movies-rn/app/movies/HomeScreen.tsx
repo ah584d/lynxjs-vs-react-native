@@ -1,15 +1,14 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { useMovieStore } from '@fennex-sand/hooks';
+import { Movie } from '@fennex-sand/types';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
+import { API_KEY, GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
 import { MenuPage } from '@/components/MenuPage';
 import { MovieCardMemo } from '@/components/MovieCard';
-import { useMenuPageAnimation } from '@/hooks/useAnimations';
-import { useMovieStore } from '@/hooks/useMovieStore';
-import { Movie } from '@/types/common.types';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
@@ -31,7 +30,7 @@ export default function HomeScreen() {
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);
 
   useEffect(() => {
-    getMovies(currentPage, yearFilter, genreFilter);
+    getMovies(API_KEY, currentPage, yearFilter, genreFilter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getMovies, currentPage]);
 
@@ -42,7 +41,7 @@ export default function HomeScreen() {
     setForceRefresh(true);
 
     // request page 1 explicitly after resetting currentPage so we refresh to the first page
-    await getMovies(1, yearFilter, genreFilter);
+    await getMovies(API_KEY, 1, yearFilter, genreFilter);
     setForceRefresh(false);
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies, resetList]);
@@ -97,7 +96,7 @@ export default function HomeScreen() {
           disabled={isLoading || !filterChanged}
         />
       </View>
-  </View>
+    </View>
   );
 
   function renderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {

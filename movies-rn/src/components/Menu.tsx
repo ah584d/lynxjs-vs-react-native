@@ -1,9 +1,9 @@
 import { ReactElement, useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { useMovieStore } from '@fennex-sand/hooks';
 import { Colors } from '@/common/colors';
 import { useMenuAnimation } from '@/hooks/useAnimations';
-import { useMovieStore } from '@/hooks/useMovieStore';
 
 export const Menu = (): ReactElement => {
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);

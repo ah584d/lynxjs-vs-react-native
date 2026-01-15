@@ -1,7 +1,7 @@
 {
-  "name": "@fennex-sand/services",
-  "version": "1.0.3",
-  "description": "Shared services for lynxjs projects",
+  "name": "@fennex-sand/hooks",
+  "version": "1.0.2",
+  "description": "Shared hooks for lynxjs projects",
   "author": "Avraham Hamu",
   "license": "MIT",
   "type": "module",
@@ -17,11 +17,15 @@
     "publish-package": "npm publish --access public",
     "publish-increment": "npm version patch && npm run publish-package"
   },
-  "dependencies": {
-    "@fennex-sand/types": "^1.0.0",
-    "@fennex-sand/constants": "^1.0.0"
+  "peerDependencies": {
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "typescript": "~5.8.3"
+  },
+  "dependencies": {
+    "@fennex-sand/constants": "^1.0.16",
+    "@fennex-sand/services": "^1.0.3",
+    "@fennex-sand/types": "^1.0.0"
   }
 }

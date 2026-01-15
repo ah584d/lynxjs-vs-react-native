@@ -53,8 +53,8 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - npm login
 - npm run build:libs
 - cd  ./libs/constants
-- npm publish --access public
-- or npm run deliver if you wish to increment the version
+- publish without increment version: npm run publish-package
+- publish with increment version: npm run publish-increment
 
 ## To do
 

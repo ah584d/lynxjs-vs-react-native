@@ -13,7 +13,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "publish-package": "npm publish --access public",
+    "publish-increment": "npm version patch && npm run publish-package"
   },
   "dependencies": {
     "@fennex/types": "^1.0.0"

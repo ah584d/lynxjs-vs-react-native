@@ -1,4 +1,4 @@
-import { ALL, TMDB_BASE_URL } from '@fennex-sand/constants';
+import { ALL, GENRE_MAP_INVERTED, TMDB_BASE_URL } from '@fennex-sand/constants';
 import { type Movie } from '@fennex-sand/types';
 
 export function getUrl(apiKey: string, page: number, year?: string, genreId?: number): string {
@@ -25,3 +25,19 @@ export const movieService = {
     return results;
   },
 };
+
+export function getMoviesByRating(moviesList: Movie[]): Movie[] {
+  return moviesList?.sort((a, b) => b.vote_average - a.vote_average);
+}
+
+export function getGenreNames(genreIds: number[]): string {
+  if (!genreIds || genreIds.length === 0) {
+    return 'Unknown';
+  }
+
+  return genreIds.map(id => GENRE_MAP_INVERTED[id] || 'Unknown').join(', ');
+}
+
+export function getPosterUrl(posterPath: string): string {
+  return posterPath ? `https://image.tmdb.org/t/p/w500${posterPath}` : 'https://via.placeholder.com/500x750?text=No+Poster';
+}

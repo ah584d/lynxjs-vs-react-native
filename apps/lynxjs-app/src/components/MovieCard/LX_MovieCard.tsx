@@ -30,7 +30,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
           <text className={styles['item-movie-number']}># {index + 1}</text>
         </view>
         <view className={posterClassName}>
-          <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path || movie.poster_path}`} />
+          <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path}`} />
         </view>
         <view className='MovieInfo'>
           <text className={styles['item-movie-card-title']}>{movie.title}</text>

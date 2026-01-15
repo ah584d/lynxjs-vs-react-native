@@ -1,8 +1,7 @@
-import { getUrl, movieService } from '@fennex-sand/services';
+import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@fennex-sand/constants';
+import { getMoviesByRating, getUrl, movieService } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { create } from 'zustand';
-import { ALL, API_KEY, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@/common/constants';
-import { getMoviesByRating } from '@/services/utils';
 
 interface MovieStore {
   moviesList: Movie[];
@@ -14,7 +13,7 @@ interface MovieStore {
 }
 
 interface MovieAction {
-  getMovies: (page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
+  getMovies: (apiKey: string, page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
   setOpenMenu: (state: boolean) => Promise<void>;
 }
@@ -29,12 +28,12 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
 
   setOpenMenu: async (state: boolean) => set({ menuOpened: state }),
 
-  getMovies: async (page: number, yearFilter: number, genreFilter?: number) => {
+  getMovies: async (apiKey: string, page: number, yearFilter: number, genreFilter?: number) => {
     set({ isLoading: true, error: null });
     const year = yearFilter !== undefined ? YEARS_FILTER[yearFilter] : ALL;
     const genre = genreFilter && GENRE_MAP[GENRES_FILTER[genreFilter]];
     try {
-      const url = getUrl(API_KEY, page, year, genre);
+      const url = getUrl(apiKey, page, year, genre);
       const response = await movieService.fetchMovies(url);
       const sortedMovies = getMoviesByRating(response);
 

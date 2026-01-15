@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Colors } from '@/common/colors';
-import { useMovieStore } from '@/hooks/useMovieStore';
+import { useMovieStore } from '@fennex-sand/hooks';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { Menu } from './Menu';
 

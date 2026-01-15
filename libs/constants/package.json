@@ -14,7 +14,8 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
-    "deliver": "npm version patch && npm publish --access public"
+    "publish-package": "npm publish --access public",
+    "publish-increment": "npm version patch && npm run publish-package"
   },
   "devDependencies": {
     "typescript": "~5.8.3"

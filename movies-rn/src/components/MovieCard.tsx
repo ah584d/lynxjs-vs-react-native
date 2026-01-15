@@ -3,8 +3,8 @@ import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyl
 import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@/common/colors';
 import { usePulseCardAnimation } from '@/hooks/useAnimations';
-import { getGenreNames, getPosterUrl } from '@/services/utils';
-import { Movie } from '@/types/common.types';
+import { getGenreNames, getPosterUrl } from '@fennex-sand/services';
+import { Movie } from '@fennex-sand/types';
 import { MoviePicture, MoviePictureLoading } from './atoms/MoviePicture' ;
 
 interface MovieCardProps {

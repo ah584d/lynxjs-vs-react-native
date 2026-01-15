@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Colors } from '@/common/colors';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
-import { usePerformanceStore } from '@/hooks/usePerformanceStore';
+import { usePerformanceStore } from '@fennex-sand/hooks';
 
 export default function PerformanceScreen() {
   const { metrics } = usePerformanceMonitor();

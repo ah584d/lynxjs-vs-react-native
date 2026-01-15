@@ -2,9 +2,9 @@ import { ReactElement, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
+import { useMovieStore } from '@fennex-sand/hooks';
 import { Colors } from '@/common/colors';
 import { useMenuPageAnimation } from '@/hooks/useAnimations';
-import { useMovieStore } from '@/hooks/useMovieStore';
 import { Menu } from './Menu';
 
 export function MenuPage(): ReactElement {
@@ -33,11 +33,11 @@ export function MenuPage(): ReactElement {
   return (
     // <GestureHandlerRootView style={styles.container}>
     //   <GestureDetector gesture={panGesture}>
-        <Animated.View style={[styles.container, animatedStyle]}>
-          <View style={styles.menuButton}>
-            <Menu />
-          </View>
-        </Animated.View>
+    <Animated.View style={[styles.container, animatedStyle]}>
+      <View style={styles.menuButton}>
+        <Menu />
+      </View>
+    </Animated.View>
     //   </GestureDetector>
     // </GestureHandlerRootView>
   );
