@@ -1,7 +1,7 @@
 import { ReactElement, use, useMemo } from 'react';
 import { Animated, Image, StyleSheet, Text, View } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import { Colors } from '@/common/colors';
+import { Colors } from '@fennex-sand/constants';
 import { useShimmerAnimation } from '@/hooks/useAnimations';
 
 interface MoviePictureProps {

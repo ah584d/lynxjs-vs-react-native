@@ -1,19 +1,27 @@
 {
   "name": "@fennex-sand/constants",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Shared constants for lynxjs projects",
   "author": "Avraham Hamu",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./colors.css": "./dist/colors.css"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && npm run generate:css",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
+    "generate:css": "node scripts/generate-css.mjs",
     "publish-package": "npm publish --access public",
     "publish-increment": "npm version patch && npm run publish-package"
   },

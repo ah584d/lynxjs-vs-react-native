@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { Movie } from '@fennex-sand/types';
 import { useLocalSearchParams } from 'expo-router';
-import { Colors } from '@/common/colors';
 
 export default function MovieDetailsScreen() {
   const { id: movieId } = useLocalSearchParams<{ id: string }>();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Colors } from '@/common/colors';
+import { Colors } from '@fennex-sand/constants';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { usePerformanceStore } from '@fennex-sand/hooks';
 

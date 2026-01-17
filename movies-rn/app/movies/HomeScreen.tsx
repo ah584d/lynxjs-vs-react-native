@@ -1,9 +1,9 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { Movie } from '@fennex-sand/types';
 import { router } from 'expo-router';
-import { Colors } from '@/common/colors';
 import { API_KEY, GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';

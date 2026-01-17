@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
-import { Colors } from '@/common/colors';
+import { Colors } from '@fennex-sand/constants';
 
 interface ButtonProps {
   title: string;

@@ -27,3 +27,6 @@ export const YEARS_FILTER = Array.from({ length: 4 }, (_, i) => (new Date().getU
 export const GENRES_FILTER = ['All', 'Action', 'Comedy', 'Drama'];
 
 export const ALL = 'all';
+
+// Export colors
+export * from './colors';

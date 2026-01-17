@@ -50,11 +50,13 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 [https://utilitytoolshub.com/splash-screen-generator/?utm_source=chatgpt.com]
 
 ## libs
+- from root folder:
 - npm login
+- open camera app and click on link and follow steps
 - npm run build:libs
 - cd  ./libs/constants
-- publish without increment version: npm run publish-package
-- publish with increment version: npm run publish-increment
+- publish without increment version: ```npm run publish-package```
+- publish with increment version: ```npm run publish-increment```
 
 ## To do
 

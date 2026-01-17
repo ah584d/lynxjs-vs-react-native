@@ -1,8 +1,8 @@
 import React, { ReactElement, Suspense } from 'react';
 import { Animated, StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import { Colors } from '@fennex-sand/constants';
 import { Movie } from '@fennex-sand/types';
-import { Colors } from '@/common/colors';
 import { usePulseCardAnimation } from '@/hooks/useAnimations';
 import { getGenreNames, getPosterUrl } from '@/services/utils';
 import { MoviePicture, MoviePictureLoading } from './atoms/MoviePicture';

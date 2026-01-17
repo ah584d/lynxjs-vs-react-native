@@ -2,8 +2,8 @@ import { ReactElement, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
+import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { Colors } from '@/common/colors';
 import { useMenuPageAnimation } from '@/hooks/useAnimations';
 import { Menu } from './Menu';
 

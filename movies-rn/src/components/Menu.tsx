@@ -1,8 +1,8 @@
 import { ReactElement, useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { Colors } from '@/common/colors';
 import { useMenuAnimation } from '@/hooks/useAnimations';
 
 export const Menu = (): ReactElement => {

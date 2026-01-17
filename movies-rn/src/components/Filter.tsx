@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from '@/common/colors';
+import { Colors } from '@fennex-sand/constants';
 import { Button } from '@/components/Button';
 
 interface FilterProps {
