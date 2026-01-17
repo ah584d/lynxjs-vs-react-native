@@ -2,6 +2,7 @@ import { type ReactElement, memo } from '@lynx-js/react';
 import { getGenreNames } from '@fennex-sand/services';
 import type { Movie } from '@fennex-sand/types';
 import { useNavigate } from 'react-router';
+import appStyles from '../../app.module.scss';
 import { MoviePicture } from '../atoms/LX_MoviePicture.jsx';
 import styles from './movieCard.module.scss';
 
@@ -32,11 +33,14 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
         <view className={posterClassName}>
           <MoviePicture posterUrl={`https://image.tmdb.org/t/p/w342${movie.poster_path}`} />
         </view>
-        <view className='MovieInfo'>
+        <view className={appStyles['movie-info']}>
           <text className={styles['item-movie-card-title']}>{movie.title}</text>
-          <text className={styles['item-movie-card-rating']}>
-            ★ {movie.vote_average.toFixed(1)}
-            /10
+          <text>
+            <text className={styles['item-movie-card-rating-star']}>★ </text>
+            <text className={styles['item-movie-card-rating']}>
+              {movie.vote_average.toFixed(1)}
+              /10
+            </text>
           </text>
           <text className={styles['item-movie-card-overview']}>{movie.overview}</text>
           <text className={styles['item-movie-card-text']}>Release Date: {movie.release_date}</text>
