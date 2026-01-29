@@ -1,6 +1,6 @@
 import type { ReactNode } from '@lynx-js/react';
 import type { CSSProperties } from '@lynx-js/types';
-import './safeViewArea.css';
+import styles from './safeViewArea.module.scss';
 
 interface SafeViewAreaProps {
   children: ReactNode;
@@ -11,7 +11,7 @@ function SafeViewArea({ children, style }: SafeViewAreaProps) {
   const isIOS = SystemInfo.platform === 'iOS';
 
   return (
-    <view class={`safe-area ${isIOS ? 'ios' : 'android'}`} style={style}>
+    <view class={`${styles['safe-area']} ${isIOS ? styles['ios'] : styles['android']}`} style={style}>
       {children}
     </view>
   );

@@ -1,5 +1,5 @@
-import { useState, type ReactElement } from '@lynx-js/react';
-import './moviePicture.css';
+import { type ReactElement, useState } from '@lynx-js/react';
+import styles from './moviePicture.module.scss';
 
 interface MoviePictureProps {
   posterUrl: string;
@@ -11,24 +11,24 @@ export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => 
 
   if (imageError) {
     return (
-      <view className='movie-picture-container'>
-        <view className='error-container'>
-          <text className='error-text'>Oops!!</text>
-          <text className='error-icon'>😢</text>
-          <text className='error-text'>something went wrong</text>
+      <view className={styles['movie-picture-container']}>
+        <view className={styles['error-container']}>
+          <text className={styles['error-text']}>Oops!!</text>
+          <text className={styles['error-icon']}>😢</text>
+          <text className={styles['error-text']}>something went wrong</text>
         </view>
       </view>
     );
   }
 
   return (
-    <view className='movie-picture-container'>
-      <view className={`shimmer-container${!isLoading ? ' hidden' : ''}`}>
-        <view className='shimmer-base' />
-        <view className='shimmer-overlay' />
-        <view className='shimmer-glow' />
+    <view className={styles['movie-picture-container']}>
+      <view className={`${styles['shimmer-container']}${!isLoading ? ' ' + styles['hidden'] : ''}`}>
+        <view className={styles['shimmer-base']} />
+        <view className={styles['shimmer-overlay']} />
+        <view className={styles['shimmer-glow']} />
       </view>
-      <image src={posterUrl} className={`movie-poster${isLoading ? ' loading' : ''}`} bindload={handleImageLoad} binderror={handleImageError} />
+      <image src={posterUrl} className={`${styles['movie-poster']}${isLoading ? ' ' + styles['loading'] : ''}`} bindload={handleImageLoad} binderror={handleImageError} />
     </view>
   );
 

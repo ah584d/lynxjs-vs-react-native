@@ -1,4 +1,4 @@
-import './navbar.css';
+import styles from './navBar.module.scss';
 
 interface NavBarProps {
   onBack?: () => void;
@@ -8,11 +8,11 @@ interface NavBarProps {
 
 export default function NavBar({ onBack, title }: NavBarProps) {
   return (
-    <view className='nav-bar'>
-      <text bindtap={onBack} className='nav-back'>
+    <view className={styles['nav-bar']}>
+      <text bindtap={onBack} className={styles['nav-back']}>
         ⬅️
       </text>
-      <text className='nav-title'>{title}</text>
+      <text className={styles['nav-title']}>{title}</text>
     </view>
   );
 }
