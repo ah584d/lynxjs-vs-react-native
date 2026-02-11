@@ -1,13 +1,14 @@
 import { ReactElement, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { useMenuPageAnimation } from '@/hooks/useAnimations';
-import { Menu } from './Menu';
+import { Hamburger } from './Hamburger';
+import { PerformanceMetrics } from './PerformanceMetrics';
 
-export function MenuPage(): ReactElement {
+export function MenuCurtain(): ReactElement {
   const menuOpened = useMovieStore(state => state.menuOpened);
 
   const { slideIn, slideOut, animatedStyle } = useMenuPageAnimation();
@@ -35,7 +36,8 @@ export function MenuPage(): ReactElement {
     //   <GestureDetector gesture={panGesture}>
     <Animated.View style={[styles.container, animatedStyle]}>
       <View style={styles.menuButton}>
-        <Menu />
+        <Hamburger />
+        <PerformanceMetrics style={styles.performanceMetrics} />
       </View>
     </Animated.View>
     //   </GestureDetector>
@@ -69,5 +71,9 @@ const styles = StyleSheet.create({
     marginTop: 70,
     marginRight: 16,
     alignItems: 'flex-end',
+  },
+  performanceMetrics: {
+    marginTop: 20,
+    marginHorizontal: 16,
   },
 });

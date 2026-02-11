@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import { API_KEY, GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { Filter } from '@/components/Filter';
-import { MenuPage } from '@/components/MenuPage';
+import { MenuCurtain } from '@/components/MenuCurtain';
 import { MovieCardMemo } from '@/components/MovieCard';
 
 export default function HomeScreen() {
@@ -48,7 +48,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <MenuPage />
+      <MenuCurtain />
       <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
         <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
         <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />

@@ -1,7 +1,7 @@
 import { type ReactElement, useState } from '@lynx-js/react';
-import styles from './menu.module.scss';
+import styles from './hamburger.module.scss';
 
-export function Menu(): ReactElement {
+export function Hamburger(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMenuClick = () => {

@@ -5,7 +5,7 @@ import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { useMenuAnimation } from '@/hooks/useAnimations';
 
-export const Menu = (): ReactElement => {
+export const Hamburger = (): ReactElement => {
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);
   const menuOpened = useMovieStore(state => state.menuOpened);
 

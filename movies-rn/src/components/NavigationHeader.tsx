@@ -1,10 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { router } from 'expo-router';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
-import { Menu } from './Menu';
+import { Hamburger } from './Hamburger';
 
 export const NavigationHeader = () => {
   const moviesList = useMovieStore(state => state.moviesList);
@@ -13,11 +12,9 @@ export const NavigationHeader = () => {
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
       <View style={styles.header}>
-        <Menu />
+        <Hamburger />
         <Text style={styles.title}>Movie with RN/Lynx</Text>
-        <TouchableOpacity style={styles.performanceButton} onPress={goToPerformance}>
-          <Text style={styles.performanceButtonText}>📊</Text>
-        </TouchableOpacity>
+
         <Text style={styles.titleText}>{metrics.fps} fps</Text>
       </View>
       <View style={styles.moviesCountFloating}>
@@ -25,10 +22,6 @@ export const NavigationHeader = () => {
       </View>
     </SafeAreaView>
   );
-
-  function goToPerformance() {
-    router.push({ pathname: '/performance' });
-  }
 };
 
 const styles = StyleSheet.create({
@@ -51,15 +44,6 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 16,
     color: Colors.light.text,
-  },
-  performanceButton: {
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: Colors.light.green,
-  },
-  performanceButtonText: {
-    fontSize: 18,
-    color: Colors.light.white,
   },
   moviesCountFloating: {
     position: 'absolute',

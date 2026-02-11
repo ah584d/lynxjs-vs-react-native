@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
-import { Menu } from '@/components/Menu/LX_Menu.jsx';
+import { Hamburger } from '@/components/Hamburger/LX_Hamburger.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
 import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
@@ -73,7 +73,7 @@ export function MoviesList(): ReactElement {
         <view className={styles['main-content']}>
           <view>
             <view className={styles['header-row']}>
-              <Menu />
+              <Hamburger />
               <text className={styles['title']}>Movie With RN/Lynx</text>
               <view className={styles['actions-container']}>
                 <view className={styles['performance-button']} bindtap={goToPerformance}>

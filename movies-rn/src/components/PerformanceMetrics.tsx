@@ -1,10 +1,14 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Colors } from '@fennex-sand/constants';
-import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { usePerformanceStore } from '@fennex-sand/hooks';
+import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 
-export default function PerformanceScreen() {
+interface PerformanceMetricsProps {
+  style?: ViewStyle;
+}
+
+export function PerformanceMetrics({ style }: PerformanceMetricsProps) {
   const { metrics } = usePerformanceMonitor();
   const { isHeavyComputationActive, toggleHeavyComputation } = usePerformanceStore();
 
@@ -20,8 +24,7 @@ export default function PerformanceScreen() {
   );
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text style={styles.title}>Performance Dashboard</Text>
+    <View style={[styles.container, style]}>
       <TouchableOpacity style={[styles.toggleButton, isHeavyComputationActive && styles.toggleButtonActive]} onPress={toggleHeavyComputation}>
         <Text style={[styles.toggleButtonText, isHeavyComputationActive && styles.toggleButtonTextActive]}>
           {isHeavyComputationActive ? '🔥 Heavy Computation ON' : '💤 Heavy Computation OFF'}
@@ -36,33 +39,23 @@ export default function PerformanceScreen() {
         <MetricCard title='🎨 Render Time' value={formatTime(metrics.renderTime)} description='Last component render' />
         <MetricCard title='📦 Bundle Size' value={metrics.bundleSize} description='App bundle size' />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
-  },
-  contentContainer: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: Colors.light.black,
-    marginBottom: 24,
-    textAlign: 'center',
   },
   toggleButton: {
     backgroundColor: Colors.light.white,
     borderRadius: 12,
-    padding: 16,
     marginBottom: 24,
     borderWidth: 2,
     borderColor: Colors.light.grayBorder,
     alignItems: 'center',
+    height: 80,
+    justifyContent: 'center',
   },
   toggleButtonActive: {
     backgroundColor: Colors.light.lightGreen,
@@ -72,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: Colors.light.black,
-    marginBottom: 4,
+    marginVertical: 6,
   },
   toggleButtonTextActive: {
     color: Colors.light.green,
@@ -118,68 +111,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.light.darkGray,
     opacity: 0.8,
-  },
-  networkSection: {
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.light.black,
-    marginBottom: 16,
-  },
-  networkList: {
-    backgroundColor: Colors.light.white,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: Colors.light.grayBorder,
-    overflow: 'hidden',
-  },
-  networkItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.light.grayBorder,
-  },
-  networkUrl: {
-    fontSize: 14,
-    color: Colors.light.black,
-    fontWeight: '500',
-    flex: 1,
-    marginRight: 8,
-  },
-  networkDuration: {
-    fontSize: 12,
-    color: Colors.light.darkGray,
-    marginRight: 8,
-  },
-  networkStatus: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-  },
-  networkStatusText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  statusSuccess: {
-    backgroundColor: Colors.light.lightGreen,
-  },
-  statusSuccessText: {
-    color: Colors.light.green,
-  },
-  statusError: {
-    backgroundColor: Colors.light.lightGray,
-  },
-  statusErrorText: {
-    color: Colors.light.purple,
-  },
-  noData: {
-    padding: 20,
-    textAlign: 'center',
-    color: Colors.light.darkGray,
-    fontStyle: 'italic',
   },
 });

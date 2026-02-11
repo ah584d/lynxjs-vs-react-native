@@ -9,10 +9,11 @@ Comparing a new mobile framework with a stable mobile framework - all about js
 # Utils
 
 ## copy apk for debug in android device
+
 adb devices
 
-
 # RN:
+
 ✅ install on ios simulator: npm run ios
 ✅ clean android build:
     - cd android
@@ -23,6 +24,7 @@ adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.a
 signed: adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 # Lynx:
+
 pnpm run build:android
 adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release-unsigned.apk
 android build signed apk password key0/123456
@@ -50,6 +52,7 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 [https://utilitytoolshub.com/splash-screen-generator/?utm_source=chatgpt.com]
 
 ## libs
+
 - from root folder:
 - npm login
 - open camera app and click on link and follow steps
@@ -58,7 +61,7 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - publish without increment version: ```npm run publish-package```
 - publish with increment version: ```npm run publish-increment```
 
-## To do
+## To do / backlog
 
 - OK - zustand
 - OK - add animation in lynx
@@ -70,6 +73,10 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - OK - reduce background stress
 - OK - remove title lynx js
 - android change icon
+- move rn to apps back since we don't use anymore mono repo
+- dark mode
+- lynx js swipe down to refresh
+- lynx js main thread
 
 # Issues
 
@@ -78,10 +85,3 @@ import expo.core.ExpoModulesPackage;
 
 - https://github.com/expo/eas-cli/issues/2789
 
-# backlog
-
-- calculate last 4 years instead of displaying hard coded list
-- unify colors code
-- dark mode
-- lynx js swipe down to refresh
-- lynx js main thread
