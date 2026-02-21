@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from '@lynx-js/react';
-import { IMDB_CHUNK_SIZE } from '@/common/LX_constants.js';
-import { useMovieStore } from './LX_useMovieStore.js';
+import { useMovieStore } from '@fennex-sand/hooks';
+import { API_KEY, IMDB_CHUNK_SIZE } from '@/common/LX_constants.js';
 
 export function useMoviesList(currentPage: number, yearFilter: number, genreFilter: number, forceRefresh: boolean): [boolean, boolean] {
   const getMovies = useMovieStore(state => state.getMovies);
@@ -11,7 +11,7 @@ export function useMoviesList(currentPage: number, yearFilter: number, genreFilt
 
   useEffect(() => {
     setPreviousMoviesLength(moviesList?.length ?? 0);
-    getMovies(currentPage, yearFilter, genreFilter);
+    getMovies(API_KEY, currentPage, yearFilter, genreFilter);
   }, [getMovies, currentPage, forceRefresh]);
 
   useEffect(() => {

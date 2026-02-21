@@ -11,13 +11,13 @@ export const RootNavigator = () => {
           header: () => <NavigationHeader />,
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name='performance'
         options={{
           headerTitle: 'Performance Dashboard',
           headerBackButtonDisplayMode: 'minimal',
         }}
-      />
+      /> */}
       <Stack.Screen
         name='movies/movie/[id]'
         options={{

@@ -3,7 +3,7 @@ import { getMoviesByRating, getUrl, movieService } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { create } from 'zustand';
 
-interface MovieStore {
+export interface MovieStore {
   moviesList: Movie[];
   searchResults: Movie[];
   isLoading: boolean;
@@ -12,13 +12,15 @@ interface MovieStore {
   menuOpened: boolean;
 }
 
-interface MovieAction {
+export interface MovieAction {
   getMovies: (apiKey: string, page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
   setOpenMenu: (state: boolean) => Promise<void>;
 }
 
-export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
+export interface MovieStoreState extends MovieStore, MovieAction {}
+
+export const useMovieStore = create<MovieStoreState>((set, get) => ({
   moviesList: [],
   searchResults: [],
   isLoading: false,
@@ -39,6 +41,12 @@ export const useMovieStore = create<MovieStore & MovieAction>((set, get) => ({
 
       // if this is a next page, we merge new results with existing one
       const existingMovies = get().moviesList;
+
+      // reset list if needed does this case relevant??
+      if (page === 1 && existingMovies.length > 0) {
+        set({ moviesList: [] });
+      }
+
       const movies = page > 1 ? [...existingMovies, ...sortedMovies] : sortedMovies;
       set({ moviesList: movies, isLoading: false });
     } catch (e) {

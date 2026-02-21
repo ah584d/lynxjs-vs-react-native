@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fennex-sand/constants": "^1.0.16",
+    "@fennex-sand/hooks": "^1.0.3",
     "@fennex-sand/services": "^1.0.3",
     "@fennex-sand/types": "^1.0.0",
     "@lynx-js/react": "^0.105.1",

@@ -5,7 +5,7 @@ import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger.jsx';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
-import { useMovieStore } from '@/hooks/LX_useMovieStore.js';
+import { useMovieStore } from '@fennex-sand/hooks';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
 import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { t } from '@/i18n/i18n.js';
@@ -22,7 +22,7 @@ export function MoviesList(): ReactElement {
 
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
-  const [isOffline, hasMoreData] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
+  const [isOffline] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, handleScrollAnimation] = useScrollAnimation();
   const { metrics } = usePerformanceMonitor();
 
