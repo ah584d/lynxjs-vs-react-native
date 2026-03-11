@@ -8,12 +8,12 @@ interface FilterProps {
   currentSelection?: number;
 }
 export const Filter = ({ filters, onFilterChange, currentSelection }: FilterProps): ReactElement => {
-  const handleFilterClickMainThread = (index: number) => () => {
+  const handleFilterClick = (filterIndex: number) => {
     'main thread';
     runOnBackground(() => {
-      const backgroundHandler = onFilterChange(index);
+      const backgroundHandler = onFilterChange(filterIndex);
       backgroundHandler();
-    })();
+    });
   };
 
   return (
@@ -23,7 +23,7 @@ export const Filter = ({ filters, onFilterChange, currentSelection }: FilterProp
         return (
           <view
             className={isSelected ? styles['filter-button-active'] : styles['filter-button']}
-            main-thread:bindtap={handleFilterClickMainThread(index)}
+            main-thread:bindtap={handleFilterClick.bind(null, index)}
             key={filter || `all-${index}`}>
             <text>{filter}</text>
           </view>
