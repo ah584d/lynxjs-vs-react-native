@@ -8,23 +8,18 @@ interface FilterProps {
   currentSelection?: number;
 }
 export const Filter = ({ filters, onFilterChange, currentSelection }: FilterProps): ReactElement => {
-  const handleFilterClick = (filterIndex: number) => {
-    'main thread';
-    runOnBackground(() => {
-      const backgroundHandler = onFilterChange(filterIndex);
-      backgroundHandler();
-    });
-  };
-
   return (
     <view className={styles['filter-container']}>
       {filters.map((filter, index) => {
         const isSelected = index === currentSelection;
+
+        const handleClick = () => {
+          const backgroundHandler = onFilterChange(index);
+          backgroundHandler();
+        };
+
         return (
-          <view
-            className={isSelected ? styles['filter-button-active'] : styles['filter-button']}
-            main-thread:bindtap={handleFilterClick.bind(null, index)}
-            key={filter || `all-${index}`}>
+          <view className={isSelected ? styles['filter-button-active'] : styles['filter-button']} bindtap={handleClick} key={filter || `all-${index}`}>
             <text>{filter}</text>
           </view>
         );
