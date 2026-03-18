@@ -1,4 +1,5 @@
 import { type ReactElement, useState } from '@lynx-js/react';
+import classNames from 'classnames';
 import styles from './hamburger.module.scss';
 
 export function Hamburger(): ReactElement {
@@ -9,10 +10,10 @@ export function Hamburger(): ReactElement {
   };
 
   return (
-    <view className={`${styles.container} ${isOpen ? styles.open : ''}`} bindtap={handleMenuClick}>
-      <view className={`${styles.line} ${styles.topBar} ${isOpen ? styles.topBarOpen : ''}`} />
-      <view className={`${styles.line} ${styles.middleBar} ${isOpen ? styles.middleBarOpen : ''}`} />
-      <view className={`${styles.line} ${styles.bottomBar} ${isOpen ? styles.bottomBarOpen : ''}`} />
+    <view className={classNames(styles.container, { [styles.open]: isOpen })} bindtap={handleMenuClick}>
+      <view className={classNames(styles.line, styles.topBar, { [styles.topBarOpen]: isOpen })} />
+      <view className={classNames(styles.line, styles.middleBar, { [styles.middleBarOpen]: isOpen })} />
+      <view className={classNames(styles.line, styles.bottomBar, { [styles.bottomBarOpen]: isOpen })} />
     </view>
   );
 }

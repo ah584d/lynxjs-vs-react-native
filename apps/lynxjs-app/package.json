@@ -16,6 +16,7 @@
     "@fennex-sand/services": "^1.0.3",
     "@fennex-sand/types": "^1.0.0",
     "@lynx-js/react": "^0.116.4",
+    "classnames": "^2.5.1",
     "i18next": "^24.2.3",
     "json": "^11.0.0",
     "react-router": "6",

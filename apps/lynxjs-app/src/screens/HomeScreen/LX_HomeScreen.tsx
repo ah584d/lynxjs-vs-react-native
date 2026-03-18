@@ -1,17 +1,18 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
+import { useMovieStore } from '@fennex-sand/hooks';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger.jsx';
+import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
-import { useMovieStore } from '@fennex-sand/hooks';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
 import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { t } from '@/i18n/i18n.js';
-import styles from './moviesList.module.scss';
+import styles from './homeScreen.module.scss';
 
-export function MoviesList(): ReactElement {
+export function HomeScreen(): ReactElement {
   const [firstLoad, setFirstLoad] = useState(true);
   const [filterChanged, setFilterChanged] = useState(false);
   const [forceRefresh, setForceRefresh] = useState(false);
@@ -74,6 +75,8 @@ export function MoviesList(): ReactElement {
           <view>
             <view className={styles['header-row']}>
               <Hamburger />
+              <MenuCurtain />
+
               <text className={styles['title']}>Movie With RN/Lynx</text>
               <view className={styles['actions-container']}>
                 <view className={styles['performance-button']} bindtap={goToPerformance}>
