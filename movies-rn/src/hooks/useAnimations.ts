@@ -79,7 +79,7 @@ export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInter
   return [shimmerTranslateX, shimmerOpacity];
 }
 
-export function useMenuAnimation() {
+export function useHamburgerAnimation() {
   const topBarRotation = useSharedValue(0);
   const bottomBarRotation = useSharedValue(0);
   const topBarTranslateY = useSharedValue(0);
@@ -126,7 +126,7 @@ export function useMenuAnimation() {
   };
 }
 
-export function useMenuPageAnimation() {
+export function useCurtainAnimation() {
   const translateX = useSharedValue(-100); // Start hidden (off-screen to the left)
 
   const slideIn = () => {

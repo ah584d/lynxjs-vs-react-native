@@ -3,7 +3,7 @@ import { useMovieStore } from '@fennex-sand/hooks';
 import { useNavigate } from 'react-router';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
-import { Hamburger } from '@/components/Hamburger/LX_Hamburger.jsx';
+import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
 import { PageView } from '@/components/index.js';
@@ -76,7 +76,6 @@ export function HomeScreen(): ReactElement {
             <view className={styles['header-row']}>
               <Hamburger />
               <MenuCurtain />
-
               <text className={styles['title']}>Movie With RN/Lynx</text>
               <view className={styles['actions-container']}>
                 <view className={styles['performance-button']} bindtap={goToPerformance}>

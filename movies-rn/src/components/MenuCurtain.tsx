@@ -4,14 +4,14 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-g
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { useMenuPageAnimation } from '@/hooks/useAnimations';
+import { useCurtainAnimation } from '@/hooks/useAnimations';
 import { Hamburger } from './Hamburger';
 import { PerformanceMetrics } from './PerformanceMetrics';
 
 export function MenuCurtain(): ReactElement {
   const menuOpened = useMovieStore(state => state.menuOpened);
 
-  const { slideIn, slideOut, animatedStyle } = useMenuPageAnimation();
+  const { slideIn, slideOut, animatedStyle } = useCurtainAnimation();
 
   useEffect(() => {
     if (menuOpened) {
@@ -35,7 +35,7 @@ export function MenuCurtain(): ReactElement {
     // <GestureHandlerRootView style={styles.container}>
     //   <GestureDetector gesture={panGesture}>
     <Animated.View style={[styles.container, animatedStyle]}>
-      <View style={styles.menuButton}>
+      <View style={styles.hamburger}>
         <Hamburger />
         <PerformanceMetrics style={styles.performanceMetrics} />
       </View>
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  menuButton: {
-    marginTop: 70,
+  hamburger: {
+    marginTop: 66,
     marginRight: 16,
     alignItems: 'flex-end',
   },

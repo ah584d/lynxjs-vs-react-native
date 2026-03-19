@@ -3,20 +3,20 @@ import { Pressable, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { useMenuAnimation } from '@/hooks/useAnimations';
+import { useHamburgerAnimation } from '@/hooks/useAnimations';
 
 export const Hamburger = (): ReactElement => {
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);
   const menuOpened = useMovieStore(state => state.menuOpened);
 
-  const { toggleMenuAnimation, topBarAnimatedStyle, bottomBarAnimatedStyle, middleBarAnimatedStyle } = useMenuAnimation();
+  const { toggleMenuAnimation, topBarAnimatedStyle, bottomBarAnimatedStyle, middleBarAnimatedStyle } = useHamburgerAnimation();
 
   useEffect(() => {
     toggleMenuAnimation(menuOpened);
   }, [menuOpened, toggleMenuAnimation]);
 
   return (
-    <Pressable style={({ pressed }) => [styles.menuButton, { opacity: pressed ? 1 : 1 }]} onPress={onMenuPress}>
+    <Pressable style={() => [styles.menuButton, { opacity: 1 }]} onPress={onMenuPress}>
       <Animated.View style={[styles.bar, topBarAnimatedStyle]} />
       <Animated.View style={[styles.bar, middleBarAnimatedStyle]} />
       <Animated.View style={[styles.bar, bottomBarAnimatedStyle]} />
