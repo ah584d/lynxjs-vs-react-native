@@ -120,30 +120,10 @@
   gap: 16px;
 }
 
-.emoji-text {
-  color: white;
-  font-size: 16px;
-}
-
 .list-container-style {
   display: flex;
   flex: 1;
   padding-bottom: 52px;
-}
-
-.performance-button {
-  background-color: var(--color-green);
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.performance-button:hover {
-  background-color: var(--color-green);
-  opacity: 0.8;
 }
 
 .offline-container {

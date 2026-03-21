@@ -53,10 +53,6 @@ export function HomeScreen(): ReactElement {
     setYearFilter(activeIndex);
   };
 
-  const goToPerformance = () => {
-    navigate('/performance');
-  };
-
   function fetchCleanList(): void {
     setFilterChanged(false);
     setCurrentPage(1);
@@ -76,11 +72,8 @@ export function HomeScreen(): ReactElement {
             <view className={styles['header-row']}>
               <Hamburger />
               <MenuCurtain />
-              <text className={styles['title']}>Movie With RN/Lynx</text>
+              <text className={styles['title']}>Movie with RN/Lynx</text>
               <view className={styles['actions-container']}>
-                <view className={styles['performance-button']} bindtap={goToPerformance}>
-                  <text className={styles['emoji-text']}>📊</text>
-                </view>
                 <text className={styles['title-text']}>{metrics.fps} fps</text>
               </view>
             </view>

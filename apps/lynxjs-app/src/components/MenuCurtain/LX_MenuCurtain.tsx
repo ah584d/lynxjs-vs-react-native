@@ -1,6 +1,7 @@
 import { type ReactElement } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { Hamburger } from '../Hamburger/LX_Hamburger';
+import { Performance } from '../PerformanceMetrics/LX_PerformanceMetrics';
 import styles from './menuCurtain.module.scss';
 
 export function MenuCurtain(): ReactElement {
@@ -13,6 +14,7 @@ export function MenuCurtain(): ReactElement {
           <view className={styles.hamburger}>
             <Hamburger />
           </view>
+          <Performance />
         </view>
       )}
     </>

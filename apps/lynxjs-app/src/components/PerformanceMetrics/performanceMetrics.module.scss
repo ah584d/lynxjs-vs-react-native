@@ -1,18 +1,18 @@
 @import url('@fennex-sand/constants/colors.css');
 
 .performance-container {
-  padding: 20px;
-  background-color: var(--color-background);
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 12px;
 }
 
 .performance-title {
+  margin-bottom: 24px;
   font-size: 2.4rem;
   font-weight: bold;
   color: var(--color-black);
-  margin-bottom: 24px;
   text-align: center;
 }
 
@@ -22,9 +22,9 @@
   padding: 16px;
   margin-bottom: 24px;
   border: 2px solid var(--color-gray-border);
-  text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .toggle-button:hover {
@@ -38,11 +38,11 @@
 }
 
 .toggle-button-text {
+  text-align: center;
   font-size: 1.125rem;
   font-weight: bold;
   color: var(--color-black);
   margin-bottom: 4px;
-  display: block;
 }
 
 .toggle-button-text-active {
@@ -50,7 +50,7 @@
 }
 
 .toggle-description {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--color-gray);
   text-align: center;
   display: block;
@@ -59,19 +59,18 @@
 .metrics-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
+  gap: 8px;
+  justify-content: space-between;
 }
 
 .metric-card {
   background-color: var(--color-white);
   border-radius: 12px;
   padding: 20px;
+  margin-bottom: 8px;
   border: 1px solid var(--color-gray-border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  flex: 1 1 280px;
-  max-width: 320px;
-  min-width: 280px;
+  min-width: 50%;
 }
 
 .metric-title {
@@ -82,7 +81,7 @@
 }
 
 .metric-value {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: var(--color-green);
   margin-bottom: 4px;
@@ -182,9 +181,8 @@
   }
 
   .metric-card {
-    flex: 1;
-    max-width: none;
-    min-width: auto;
+    width: 100%;
+    margin-bottom: 12px;
   }
 
   .network-item {
