@@ -1,5 +1,6 @@
 import type { ReactElement } from '@lynx-js/react';
 import type { CSSProperties } from '@lynx-js/types';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 import { IS_IOS } from '@/common/LX_constants.js';
 import NavBar from '../NavBar/LX_NavBar.jsx';
@@ -18,7 +19,7 @@ function PageView({ children, style, title, isBack }: PageViewProps) {
 
   return (
     <SafeViewArea style={style}>
-      <view class={`${styles['page-view-container']} ${IS_IOS ? styles['page-view-container-ios'] : ''}`}>
+      <view class={classNames(styles['page-view-container'], { [styles['page-view-container-ios']]: IS_IOS })}>
         {isBack ? (
           <NavBar
             title={title}

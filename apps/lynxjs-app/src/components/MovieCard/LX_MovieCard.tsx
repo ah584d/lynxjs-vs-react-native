@@ -1,6 +1,7 @@
 import { type ReactElement, memo } from '@lynx-js/react';
 import { getGenreNames } from '@fennex-sand/services';
 import type { Movie } from '@fennex-sand/types';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 import appStyles from '../../app.module.scss';
 import { MoviePicture } from '../atoms/LX_MoviePicture.jsx';
@@ -16,7 +17,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
   const { index, movie, isScrolling = false } = props;
   const navigate = useNavigate();
 
-  const posterClassName = isScrolling ? `${styles['poster-container']} ${styles['poster-scrolling']}` : styles['poster-container'];
+  const posterClassName = classNames(styles['poster-container'], { [styles['poster-scrolling']]: isScrolling });
 
   return (
     <list-item item-key={`list-item-${index}`} key={`list-item-${index}`} full-span={true} exposure-id={`list-item-${index}`}>
@@ -26,7 +27,7 @@ function MovieCardComponent(props: MovieCardProps): ReactElement {
             state: { movie },
           });
         }}
-        className={`${index % 2 === 0 ? styles['item-movie-card-odd'] : ''} ${styles['item-movie-card-container']}`}>
+        className={classNames(styles['item-movie-card-container'], { [styles['item-movie-card-odd']]: index % 2 === 0 })}>
         <view className={styles['item-movie-card-title-wrapper']}>
           <text className={styles['item-movie-number']}># {index + 1}</text>
         </view>

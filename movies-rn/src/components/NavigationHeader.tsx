@@ -14,7 +14,6 @@ export const NavigationHeader = () => {
       <View style={styles.header}>
         <Hamburger />
         <Text style={styles.title}>Movie with RN/Lynx</Text>
-
         <Text style={styles.titleText}>{metrics.fps} fps</Text>
       </View>
       <View style={styles.moviesCountFloating}>
