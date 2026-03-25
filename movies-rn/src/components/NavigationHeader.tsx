@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { Hamburger } from './Hamburger';
+import { SearchBar } from './search/SearchBar';
 
 export const NavigationHeader = () => {
   const moviesList = useMovieStore(state => state.moviesList);
   const { metrics } = usePerformanceMonitor();
+  const [searchText, setSearchText] = useState('');
 
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
@@ -18,6 +21,9 @@ export const NavigationHeader = () => {
       </View>
       <View style={styles.moviesCountFloating}>
         <Text style={styles.moviesCountValue}>{moviesList.length}</Text>
+      </View>
+      <View style={styles.searchBarWrapper}>
+        <SearchBar value={searchText} onChangeText={setSearchText} />
       </View>
     </SafeAreaView>
   );
@@ -75,5 +81,9 @@ const styles = StyleSheet.create({
     color: Colors.light.white,
     fontWeight: 'bold',
     fontVariant: ['tabular-nums'],
+  },
+  searchBarWrapper: {
+    marginHorizontal: 16,
+    marginTop: 12,
   },
 });

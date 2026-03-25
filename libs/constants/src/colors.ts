@@ -38,7 +38,6 @@ export const Colors = {
     // Background variants
     backgroundLight: '#e5e7eb',
     backgroundLightGray: '#f8f8f8',
-    backgroundLightest: '#fafafa',
     backgroundDisabled: '#a0a0a0',
     backgroundGreenTint: '#e5ffed88',
 
@@ -90,7 +89,6 @@ export const Colors = {
     // Background variants
     backgroundLight: '#2a2a2a',
     backgroundLightGray: '#1f1f1f',
-    backgroundLightest: '#252525',
     backgroundDisabled: '#666',
     backgroundGreenTint: '#1a3e1a88',
 

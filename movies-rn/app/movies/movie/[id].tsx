@@ -3,6 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
+import { getPosterUrl } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -38,7 +39,7 @@ export default function MovieDetailsScreen() {
     return null;
   }
 
-  const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Poster';
+  const posterUrl = getPosterUrl(movie.poster_path);
 
   return (
     <ScrollView style={styles.container}>

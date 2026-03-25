@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
-import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Easing, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+
+const HAMBURGER_DURATION = 300;
+const CURTAIN_DURATION = HAMBURGER_DURATION + 20;
 
 export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
   const scaleAnimation = useRef(new Animated.Value(1)).current;
@@ -87,8 +90,7 @@ export function useHamburgerAnimation() {
   const middleBarOpacity = useSharedValue(1);
 
   const toggleMenuAnimation = (targetState: boolean) => {
-    const duration = 300;
-
+    const duration = HAMBURGER_DURATION;
     if (targetState) {
       // Transform to X shape - when menu opens
       topBarRotation.value = withTiming(45, { duration });
@@ -137,10 +139,13 @@ export function useCurtainAnimation() {
   };
 
   const slideOut = () => {
-    translateX.value = withTiming(-100, {
-      duration: 500,
-      easing: Easing.in(Easing.cubic), // Start slow, then accelerate
-    });
+    translateX.value = withDelay(
+      CURTAIN_DURATION, // Wait for hamburger animation to complete (300ms + buffer)
+      withTiming(-100, {
+        duration: 500,
+        easing: Easing.in(Easing.cubic), // Start slow, then accelerate
+      }),
+    );
   };
 
   const animatedStyle = useAnimatedStyle(() => ({
