@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GENRES_FILTER, YEARS_FILTER } from '@fennex-sand/constants';
-import { useDebounce, useMovieStore } from '@fennex-sand/hooks';
+import { useAbortController, useDebounce, useMovieStore } from '@fennex-sand/hooks';
 import { API_KEY, IS_ANDROID } from '@/common/constants';
 import { Filter } from './Filter';
 import { SearchBar } from './SearchBar';
@@ -18,6 +18,7 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
 
   const [searchText, setSearchText] = useState('');
   const debouncedQuery = useDebounce(searchText, 300);
+  const { getSignal, cleanup } = useAbortController();
 
   const searchMovies = useMovieStore(state => state.searchMovies);
   const clearSearchResults = useMovieStore(state => state.clearSearchResults);
@@ -25,11 +26,16 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
 
   useEffect(() => {
     if (debouncedQuery.trim()) {
-      searchMovies(API_KEY, debouncedQuery);
+      // Get a new signal, which automatically aborts any previous request
+      const signal = getSignal();
+      searchMovies(API_KEY, debouncedQuery, signal);
     } else {
       clearSearchResults();
     }
-  }, [debouncedQuery, searchMovies, clearSearchResults]);
+
+    // Cleanup function to abort request if component unmounts or query changes
+    return cleanup;
+  }, [debouncedQuery, searchMovies, clearSearchResults, getSignal, cleanup]);
 
   // const moviesToDisplay = searchText.trim() ? searchResults : moviesList;
 

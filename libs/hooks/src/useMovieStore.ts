@@ -16,7 +16,7 @@ export interface MovieAction {
   getMovies: (apiKey: string, page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
   setOpenMenu: (state: boolean) => Promise<void>;
-  searchMovies: (apiKey: string, query: string) => Promise<void>;
+  searchMovies: (apiKey: string, query: string, signal?: AbortSignal) => Promise<void>;
   clearSearchResults: () => void;
 }
 
@@ -58,14 +58,19 @@ export const useMovieStore = create<MovieStoreState>((set, get) => ({
   },
   resetList: async () => set({ moviesList: [] }),
 
-  searchMovies: async (apiKey: string, query: string) => {
+  searchMovies: async (apiKey: string, query: string, signal?: AbortSignal) => {
     set({ isLoading: true, error: null });
     try {
       const url = getSearchUrl(apiKey, query);
-      const response = await movieService.fetchMovies(url);
+      const response = await movieService.fetchMovies(url, signal);
       const sortedMovies = getMoviesByRating(response);
       set({ searchResults: sortedMovies, isLoading: false });
     } catch (e) {
+      // Don't set error state if the request was aborted
+      if (e instanceof Error && e.name === 'AbortError') {
+        console.log('Search request was aborted');
+        return;
+      }
       console.log('Error occurred while searching movies:', e instanceof Error ? e.message : e);
       set({ error: 'Failed to search movies', isLoading: false });
     }

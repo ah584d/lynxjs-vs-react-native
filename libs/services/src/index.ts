@@ -26,8 +26,8 @@ export function getSearchUrl(apiKey: string, query: string, page: number = 1): s
 }
 
 export const movieService = {
-  async fetchMovies(url: string): Promise<Movie[]> {
-    const response = await fetch(url);
+  async fetchMovies(url: string, signal?: AbortSignal): Promise<Movie[]> {
+    const response = await fetch(url, { signal });
     const { results } = await response.json();
     return results;
   },
