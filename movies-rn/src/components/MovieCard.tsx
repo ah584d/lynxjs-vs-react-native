@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@fennex-sand/constants';
 import { getGenreNames, getPosterUrl } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
-import { usePulseCardAnimation } from '@/hooks/useAnimations';
+import { usePulseCardAnimation } from '@/hooks/animations/useAnimations';
 import { MoviePicture, MoviePictureLoading } from './atoms/MoviePicture';
 
 interface MovieCardProps {

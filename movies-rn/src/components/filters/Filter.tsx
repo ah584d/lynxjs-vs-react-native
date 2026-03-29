@@ -11,7 +11,7 @@ interface FilterProps {
 
 export const Filter = ({ filters, onFilterChange, currentSelection, title }: FilterProps) => {
   return (
-    <View style={[styles.container, { marginVertical: !title ? 12 : 0 }]}>
+    <View style={[styles.container, { marginTop: !title ? 12 : 0 }]}>
       {!!title && (
         <Text style={styles.title}>
           {title}: {getCurrentSelection(currentSelection)}

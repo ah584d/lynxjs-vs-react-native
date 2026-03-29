@@ -4,7 +4,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-g
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { useCurtainAnimation } from '@/hooks/useAnimations';
+import { useCurtainAnimation } from '@/hooks/animations/useAnimations';
 import { Hamburger } from './Hamburger';
 import { PerformanceMetrics } from './PerformanceMetrics';
 
@@ -37,8 +37,8 @@ export function MenuCurtain(): ReactElement {
     <Animated.View style={[styles.container, animatedStyle]}>
       <View style={styles.hamburger}>
         <Hamburger />
-        <PerformanceMetrics style={styles.performanceMetrics} />
       </View>
+      <PerformanceMetrics style={styles.performanceMetrics} />
     </Animated.View>
     //   </GestureDetector>
     // </GestureHandlerRootView>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   hamburger: {
-    marginTop: 66,
+    marginTop: 114,
     marginLeft: 16,
     alignItems: 'flex-start',
   },

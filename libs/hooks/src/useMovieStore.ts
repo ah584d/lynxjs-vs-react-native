@@ -1,5 +1,5 @@
-import { ALL, GENRES_FILTER, GENRE_MAP, YEARS_FILTER } from '@fennex-sand/constants';
-import { getMoviesByRating, getUrl, movieService } from '@fennex-sand/services';
+import { ALL, GENRES_FILTER, GENRE_MAP, TMDB_BASE_URL, YEARS_FILTER } from '@fennex-sand/constants';
+import { getMoviesByRating, getSearchUrl, getUrl, movieService } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { create } from 'zustand';
 
@@ -16,6 +16,8 @@ export interface MovieAction {
   getMovies: (apiKey: string, page: number, yearFilter: number, genreFilter?: number) => Promise<void>;
   resetList: () => Promise<void>;
   setOpenMenu: (state: boolean) => Promise<void>;
+  searchMovies: (apiKey: string, query: string) => Promise<void>;
+  clearSearchResults: () => void;
 }
 
 export interface MovieStoreState extends MovieStore, MovieAction {}
@@ -55,4 +57,19 @@ export const useMovieStore = create<MovieStoreState>((set, get) => ({
     }
   },
   resetList: async () => set({ moviesList: [] }),
+
+  searchMovies: async (apiKey: string, query: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const url = getSearchUrl(apiKey, query);
+      const response = await movieService.fetchMovies(url);
+      const sortedMovies = getMoviesByRating(response);
+      set({ searchResults: sortedMovies, isLoading: false });
+    } catch (e) {
+      console.log('Error occurred while searching movies:', e instanceof Error ? e.message : e);
+      set({ error: 'Failed to search movies', isLoading: false });
+    }
+  },
+
+  clearSearchResults: () => set({ searchResults: [] }),
 }));

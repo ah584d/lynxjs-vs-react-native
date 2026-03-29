@@ -1,10 +1,9 @@
 import { ReactElement } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { Colors } from '@fennex-sand/constants';
-import { CloseButton } from './CloseButton';
-import { useFadeAnimation } from './useFadeAnimation';
+import { useFadeAnimation } from '../../hooks/animations/useFadeAnimation';
+import { CloseButton } from '../filters/CloseButton';
 
 interface SearchBarProps {
   value: string;
@@ -19,7 +18,7 @@ export const SearchBar = ({ value, onChangeText }: SearchBarProps): ReactElement
 
   return (
     <View style={styles.container}>
-      <Icon name='search' size={20} style={styles.icon} />
+      <Text>🔍</Text>
       <TextInput style={styles.inputSearch} value={value} onChangeText={onChangeText} placeholder='search' />
       {isVisible && (
         <Animated.View style={animatedStyle}>

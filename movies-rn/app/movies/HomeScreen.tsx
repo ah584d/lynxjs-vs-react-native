@@ -4,11 +4,11 @@ import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { Movie } from '@fennex-sand/types';
 import { router } from 'expo-router';
-import { API_KEY, GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/constants';
+import { API_KEY } from '@/common/constants';
 import { Button } from '@/components/Button';
-import { Filter } from '@/components/Filter';
 import { MenuCurtain } from '@/components/MenuCurtain';
 import { MovieCardMemo } from '@/components/MovieCard';
+import { FiltersSection } from '@/components/filters/FilrtersSection';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
@@ -49,10 +49,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <MenuCurtain />
-      <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
-        <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
-        <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
-      </View>
+      <FiltersSection genreFilter={genreFilter} yearFilter={yearFilter} onFilterGenreChange={onFilterGenreChange} onFilterYearChange={onFilterYearChange} />
       <View style={styles.body}>
         <FlatList
           ref={flatListRef}
@@ -178,15 +175,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     backgroundColor: Colors.light.background,
     paddingHorizontal: 16,
-  },
-  header: {
-    flex: 0.15,
-  },
-  filter: {
-    paddingVertical: 0,
   },
   emptyListContainer: {
     flex: 1,
@@ -204,7 +195,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   body: {
-    flex: 0.75,
+    flex: 0.87,
   },
   cardCustomStyle: {
     backgroundColor: Colors.light.lightGreen,

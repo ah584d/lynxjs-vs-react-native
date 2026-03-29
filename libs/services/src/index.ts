@@ -14,7 +14,14 @@ export function getUrl(apiKey: string, page: number, year?: string, genreId?: nu
   }
 
   url += `&page=${page}`;
-  console.log(`====> DEBUG url: `, url, 'page:', page, 'year:', year, 'genreId:', genreId);
+  console.log(`====> DEBUG getUrl: `, url, 'page:', page, 'year:', year, 'genreId:', genreId);
+  return url;
+}
+
+export function getSearchUrl(apiKey: string, query: string, page: number = 1): string {
+  const encodedQuery = encodeURIComponent(query);
+  const url = `${TMDB_BASE_URL}/search/movie?api_key=${apiKey}&language=en-US&query=${encodedQuery}&page=${page}&include_adult=false`;
+  console.log(`====> DEBUG getSearchUrl: `, url, 'query:', query, 'page:', page);
   return url;
 }
 

@@ -3,7 +3,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { useHamburgerAnimation } from '@/hooks/useAnimations';
+import { useHamburgerAnimation } from '@/hooks/animations/useAnimations';
 
 export const Hamburger = (): ReactElement => {
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);

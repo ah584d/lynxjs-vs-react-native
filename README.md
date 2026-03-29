@@ -54,6 +54,7 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 ## libs
 
 - from root folder:
+- if you want to modify one of the libs package.json run 'npm run ci' from root it will reinstall only the libs dependencies
 - npm login
 - open camera app and click on link and follow steps
 - npm run build:libs
