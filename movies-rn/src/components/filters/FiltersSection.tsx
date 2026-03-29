@@ -9,20 +9,20 @@ import { SearchBar } from './SearchBar';
 interface FiltersSectionProps {
   genreFilter: number | undefined;
   yearFilter: number;
+  searchText: string;
   onFilterGenreChange: (activeIndex: number) => void;
   onFilterYearChange: (activeIndex: number) => void;
+  onSearchTextChange: (searchText: string) => void;
 }
 
 export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
-  const { genreFilter, yearFilter, onFilterGenreChange, onFilterYearChange } = props;
+  const { genreFilter, yearFilter, searchText, onFilterGenreChange, onFilterYearChange, onSearchTextChange } = props;
 
-  const [searchText, setSearchText] = useState('');
   const debouncedQuery = useDebounce(searchText, 300);
   const { getSignal, cleanup } = useAbortController();
 
   const searchMovies = useMovieStore(state => state.searchMovies);
   const clearSearchResults = useMovieStore(state => state.clearSearchResults);
-  const searchResults = useMovieStore(state => state.searchResults);
 
   useEffect(() => {
     if (debouncedQuery.trim()) {
@@ -33,15 +33,16 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
       clearSearchResults();
     }
 
-    // Cleanup function to abort request if component unmounts or query changes
     return cleanup;
   }, [debouncedQuery, searchMovies, clearSearchResults, getSignal, cleanup]);
 
-  // const moviesToDisplay = searchText.trim() ? searchResults : moviesList;
+  const handleSearchTextChange = (text: string) => {
+    onSearchTextChange(text);
+  };
 
   return (
     <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
-      <SearchBar value={searchText} onChangeText={setSearchText} />
+      <SearchBar value={searchText} onChangeText={handleSearchTextChange} />
       <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
       <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
     </View>

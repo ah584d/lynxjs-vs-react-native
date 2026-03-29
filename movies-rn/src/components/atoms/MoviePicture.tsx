@@ -1,4 +1,4 @@
-import { ReactElement, use, useMemo } from 'react';
+import { ReactElement, Suspense, use } from 'react';
 import { Animated, Image, StyleSheet, Text, View } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import { Colors } from '@fennex-sand/constants';
@@ -19,7 +19,6 @@ const createImagePromise = (url: string): Promise<string> => {
     Image.prefetch(url)
       .then(() => resolve(url))
       .catch(() => {
-        imagePromiseCache.delete(url);
         resolve('ERROR');
       });
   });
@@ -69,7 +68,7 @@ const MoviePictureError = (): ReactElement => {
 };
 
 const MoviePictureContent = ({ posterUrl }: MoviePictureProps): ReactElement => {
-  const imagePromise = useMemo(() => createImagePromise(posterUrl), [posterUrl]);
+  const imagePromise = createImagePromise(posterUrl);
 
   const loadedImageUrl = use(imagePromise);
 
@@ -83,7 +82,9 @@ const MoviePictureContent = ({ posterUrl }: MoviePictureProps): ReactElement => 
 export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => {
   return (
     <View style={styles.container}>
-      <MoviePictureContent posterUrl={posterUrl} />
+      <Suspense fallback={<MoviePictureLoading />}>
+        <MoviePictureContent posterUrl={posterUrl} />
+      </Suspense>
     </View>
   );
 };

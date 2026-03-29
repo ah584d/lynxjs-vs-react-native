@@ -8,7 +8,7 @@ import { API_KEY } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { MenuCurtain } from '@/components/MenuCurtain';
 import { MovieCardMemo } from '@/components/MovieCard';
-import { FiltersSection } from '@/components/filters/FilrtersSection';
+import { FiltersSection } from '@/components/filters/FiltersSection';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
@@ -16,6 +16,7 @@ export default function HomeScreen() {
   const [currentPage, setCurrentPage] = useState(1);
   const [forceRefresh, setForceRefresh] = useState(false);
   const [filterChanged, setFilterChanged] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const lastScrollY = useRef(0);
@@ -25,6 +26,7 @@ export default function HomeScreen() {
   const getMovies = useMovieStore(state => state.getMovies);
   const resetList = useMovieStore(state => state.resetList);
   const moviesList = useMovieStore(state => state.moviesList);
+  const searchResults = useMovieStore(state => state.searchResults);
   const isLoading = useMovieStore(state => state.isLoading);
   const error = useMovieStore(state => state.error);
   const setOpenMenu = useMovieStore(state => state.setOpenMenu);
@@ -46,23 +48,42 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
   }, [yearFilter, genreFilter, getMovies, resetList]);
 
+  const hasSearchText = searchText.trim().length > 0;
+  const moviesToDisplay = hasSearchText ? searchResults : moviesList;
+  const showEmptySearchState = hasSearchText && searchResults.length === 0 && !isLoading;
+  const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
+
   return (
     <View style={styles.container}>
       <MenuCurtain />
-      <FiltersSection genreFilter={genreFilter} yearFilter={yearFilter} onFilterGenreChange={onFilterGenreChange} onFilterYearChange={onFilterYearChange} />
+      <FiltersSection
+        genreFilter={genreFilter}
+        yearFilter={yearFilter}
+        searchText={searchText}
+        onFilterGenreChange={onFilterGenreChange}
+        onFilterYearChange={onFilterYearChange}
+        onSearchTextChange={setSearchText}
+      />
       <View style={styles.body}>
         <FlatList
           ref={flatListRef}
-          data={moviesList}
+          data={moviesToDisplay}
           renderItem={renderMovieItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
-          contentContainerStyle={moviesList?.length ? undefined : styles.emptyListContainer}
+          contentContainerStyle={moviesToDisplay?.length ? undefined : styles.emptyListContainer}
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={fetchCleanList} />}
           onEndReachedThreshold={0.3}
-          onEndReached={() => !isLoading && setCurrentPage(prev => prev + 1)}
+          onEndReached={() => !isLoading && !hasSearchText && setCurrentPage(prev => prev + 1)}
           onScroll={handleScroll}
           scrollEventThrottle={16}
         />
+
+        {showEmptySearchState && (
+          <View style={styles.emptySearchContainer}>
+            <Text style={styles.emptySearchTitle}>No movies found</Text>
+            <Text style={styles.emptySearchSubtitle}>Try searching with different keywords</Text>
+          </View>
+        )}
 
         {/* TODO :use suspense here */}
         {isLoading && (
@@ -88,9 +109,9 @@ export default function HomeScreen() {
         <Button
           title={isLoading ? 'Loading...' : 'Refresh list'}
           onPress={fetchCleanList}
-          customStyle={[styles.loadButton, (isLoading || !filterChanged) && styles.loadButtonDisabled]}
+          customStyle={[styles.loadButton, isButtonDisabled && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
-          disabled={isLoading || !filterChanged}
+          disabled={isButtonDisabled}
         />
       </View>
     </View>
@@ -220,5 +241,24 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     color: Colors.light.white,
+  },
+  emptySearchContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  emptySearchTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.light.green,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptySearchSubtitle: {
+    fontSize: 16,
+    color: Colors.light.grayBorder,
+    textAlign: 'center',
+    lineHeight: 22,
   },
 });
