@@ -8,6 +8,7 @@ import { API_KEY } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { MenuCurtain } from '@/components/MenuCurtain';
 import { MovieCardMemo } from '@/components/MovieCard';
+import { EmptySearchResult } from '@/components/atoms/EmptySearchResult';
 import { FiltersSection } from '@/components/filters/FiltersSection';
 
 export default function HomeScreen() {
@@ -68,7 +69,7 @@ export default function HomeScreen() {
         <FlatList
           ref={flatListRef}
           data={moviesToDisplay}
-          renderItem={renderMovieItem}
+          renderItem={RenderMovieItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
           contentContainerStyle={moviesToDisplay?.length ? undefined : styles.emptyListContainer}
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={fetchCleanList} />}
@@ -77,33 +78,14 @@ export default function HomeScreen() {
           onScroll={handleScroll}
           scrollEventThrottle={16}
         />
+        {showEmptySearchState && <EmptySearchResult />}
 
-        {showEmptySearchState && (
-          <View style={styles.emptySearchContainer}>
-            <Text style={styles.emptySearchTitle}>No movies found</Text>
-            <Text style={styles.emptySearchSubtitle}>Try searching with different keywords</Text>
-          </View>
-        )}
-
-        {/* TODO :use suspense here */}
         {isLoading && (
           <View style={styles.centeredOverlay}>
             <ActivityIndicator size='large' color={Colors.light.green} />
           </View>
         )}
-        {/* TODO :use suspense here */}
-
-        {error && (
-          <View style={styles.errorContainer}>
-            <View style={styles.errorBox}>
-              <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
-              <Button title='Retry' onPress={fetchCleanList} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
-              <View style={styles.errorTextWrapper}>
-                <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
-              </View>
-            </View>
-          </View>
-        )}
+        <RenderErrorRetry />
       </View>
       <View style={styles.footer}>
         <Button
@@ -117,7 +99,24 @@ export default function HomeScreen() {
     </View>
   );
 
-  function renderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {
+  function RenderErrorRetry(): ReactElement | null {
+    if (!error) {
+      return null;
+    }
+    return (
+      <View style={styles.errorContainer}>
+        <View style={styles.errorBox}>
+          <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
+          <Button title='Retry' onPress={fetchCleanList} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
+          <View style={styles.errorTextWrapper}>
+            <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  function RenderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {
     return <MovieCardMemo index={index} movie={item} onPress={onMoviePress} customStyle={index % 2 ? undefined : styles.cardCustomStyle} scrollVelocity={scrollVelocity} />;
   }
 
@@ -241,24 +240,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: 'bold',
     color: Colors.light.white,
-  },
-  emptySearchContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 32,
-  },
-  emptySearchTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors.light.green,
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  emptySearchSubtitle: {
-    fontSize: 16,
-    color: Colors.light.grayBorder,
-    textAlign: 'center',
-    lineHeight: 22,
   },
 });
