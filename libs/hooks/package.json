@@ -21,7 +21,7 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "publish-package": "npm publish --access public",
-    "publish-increment": "npm version patch && npm run publish-package"
+    "publish-increment": "npm run publish-package || (npm version patch && npm run publish-package)"
   },
   "peerDependencies": {
     "zustand": "^5.0.9"

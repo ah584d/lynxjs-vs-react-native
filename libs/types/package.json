@@ -15,7 +15,7 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "publish-package": "npm publish --access public",
-    "publish-increment": "npm version patch && npm run publish-package"
+    "publish-increment": "npm run publish-package || (npm version patch && npm run publish-package)"
   },
   "devDependencies": {
     "typescript": "~5.8.3"
