@@ -86,7 +86,7 @@
 
 **User Traction:** ⭐⭐⭐⭐⭐ | **Dev Learning:** ⭐⭐⭐⭐
 
-**Features:**
+**Features:** 
 
 - Global search (movies, actors, directors)
 - Voice search integration

@@ -7,14 +7,20 @@ android {
     namespace = "com.github.ah584d.lynxjs"
     compileSdk = 34
     // can't be updated to 15+ because of 16kb page issue
+    
     defaultConfig {
         applicationId = "com.github.ah584d.lynxjs"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 34  // Keep at 34 until Lynx SDK fixes 16KB alignment issue
         versionCode = 1
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Workaround for 16KB page size issue in Lynx SDK native libraries
+        ndk {
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+        }
     }
 
     buildTypes {
@@ -32,6 +38,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
 
     // check version with

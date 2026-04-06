@@ -15,21 +15,23 @@ adb devices
 # RN:
 
 ✅ install on ios simulator: npm run ios
-✅ clean android build:
-    - cd android
-    - ./gradlew clean --info
+✅ clean android build: - cd android - ./gradlew clean --info
 ✅ install apk on device:
-adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
-adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
-signed: adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
+disable in android phone security option "automatic blocking" / חסימה אוטומטית
+adb devices
+
+unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
+unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
+signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 # Lynx:
 
 pnpm run build:android
-adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-android build signed apk password key0/123456
-adb -s R7ARC1EZJBP install ./android/app/debug/app-debug.apk
-adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
+adb devices
+
+unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+signed:   adb -s R7ARC1EZJBP install ./android/app/debug/app-debug.apk
+signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 ## Open android from terminal in order to make node available [for react native android compilation]
 
@@ -58,9 +60,9 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - npm login
 - open camera app and click on link and follow steps
 - npm run build:libs
-- cd  ./libs/constants
-- publish without increment version: ```npm run publish-package```
-- publish with increment version: ```npm run publish-increment```
+- cd ./libs/constants
+- publish without increment version: `npm run publish-package`
+- publish with increment version: `npm run publish-increment`
 
 ## To do / backlog
 
@@ -73,7 +75,7 @@ adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - OK - add log both in rn and lynx and check that on changing genre or year the internal list is reset
 - OK - reduce background stress
 - OK - remove title lynx js
-- android change icon
+- OK - android change icon
 - move rn to apps back since we don't use anymore mono repo
 - dark mode
 - lynx js swipe down to refresh
@@ -85,4 +87,3 @@ apps/react-native-app/android/app/build/generated/autolinking/src/main/java/com/
 import expo.core.ExpoModulesPackage;
 
 - https://github.com/expo/eas-cli/issues/2789
-
