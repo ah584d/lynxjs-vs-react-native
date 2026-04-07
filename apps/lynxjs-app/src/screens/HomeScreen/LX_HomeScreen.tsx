@@ -1,6 +1,6 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
-import { useNavigate } from 'react-router';
+import classNames from 'classnames';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
@@ -19,7 +19,6 @@ export function HomeScreen(): ReactElement {
   const [genreFilter, setGenreFilter] = useState(0);
   const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
 
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
@@ -77,7 +76,7 @@ export function HomeScreen(): ReactElement {
                 <text className={styles['title-text']}>{metrics.fps} fps</text>
               </view>
             </view>
-            <view class={`movies-count-floating ${IS_ANDROID ? 'movies-count-floating-android' : ''}`}>
+            <view class={classNames('movies-count-floating', { 'movies-count-floating-android': IS_ANDROID })}>
               <text className={styles['movies-count-value']}>{Math.abs(moviesList.length).toLocaleString()}</text>
             </view>
             <view className={styles['filter-section']}>
@@ -113,8 +112,10 @@ export function HomeScreen(): ReactElement {
             </view> */}
           </view>
 
-          <view className={`${styles['recommend-button']} ${!filterChanged ? `${styles['recommend-button-disabled']}` : ''}`} bindtap={fetchCleanList}>
-            <text className={`${styles['button-text']} ${!filterChanged ? `${styles['button-text-disabled']}` : ''}`}>{isLoading ? 'Loading...' : t('get_movies')}</text>
+          <view className={classNames(styles['recommend-button'], { [styles['recommend-button-disabled']]: !filterChanged })} bindtap={fetchCleanList}>
+            <text className={classNames(styles['button-text'], { [styles['button-text-disabled']]: !filterChanged })}>
+              {isLoading ? 'Loading...' : t('get_movies') + ` ${moviesList.length > 0 ? `(${moviesList.length})` : ''}`}
+            </text>
           </view>
         </view>
       </view>

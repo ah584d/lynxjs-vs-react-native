@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GENRES_FILTER, YEARS_FILTER } from '@fennex-sand/constants';
 import { useAbortController, useDebounce, useMovieStore } from '@fennex-sand/hooks';

@@ -89,7 +89,7 @@ export default function HomeScreen() {
       </View>
       <View style={styles.footer}>
         <Button
-          title={isLoading ? 'Loading...' : 'Refresh list'}
+          title={isLoading ? 'Loading...' : `Refresh list ${moviesList.length > 0 ? `(${moviesList.length})` : ''}`}
           onPress={fetchCleanList}
           customStyle={[styles.loadButton, isButtonDisabled && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}
