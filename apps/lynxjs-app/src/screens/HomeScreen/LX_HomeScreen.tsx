@@ -58,6 +58,8 @@ export function HomeScreen(): ReactElement {
     setForceRefresh(true);
   }
 
+  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
+
   return (
     <PageView>
       <view className={styles['main-container-layout']}>
@@ -114,7 +116,7 @@ export function HomeScreen(): ReactElement {
 
           <view className={classNames(styles['recommend-button'], { [styles['recommend-button-disabled']]: !filterChanged })} bindtap={fetchCleanList}>
             <text className={classNames(styles['button-text'], { [styles['button-text-disabled']]: !filterChanged })}>
-              {isLoading ? 'Loading...' : t('get_movies') + ` ${moviesList.length > 0 ? `(${moviesList.length})` : ''}`}
+              {isLoading ? 'Loading...' : t('get_movies') + ` ${cacheSize}`}
             </text>
           </view>
         </view>

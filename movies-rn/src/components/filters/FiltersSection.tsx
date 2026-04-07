@@ -18,7 +18,7 @@ interface FiltersSectionProps {
 export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
   const { genreFilter, yearFilter, searchText, onFilterGenreChange, onFilterYearChange, onSearchTextChange } = props;
 
-  const debouncedQuery = useDebounce(searchText, 300);
+  const debouncedQuery = useDebounce(searchText, 500);
   const { getSignal, cleanup } = useAbortController();
 
   const searchMovies = useMovieStore(state => state.searchMovies);

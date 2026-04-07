@@ -6,18 +6,29 @@ import { useMovieStore } from '@fennex-sand/hooks';
 import { getPosterUrl } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { useLocalSearchParams } from 'expo-router';
+import { useShallow } from 'zustand/react/shallow';
 
 export default function MovieDetailsScreen() {
   const { id: movieId } = useLocalSearchParams<{ id: string }>();
-  const { moviesList, isLoading, error } = useMovieStore();
+  const { moviesList, isLoading, error, searchResults } = useMovieStore(
+    useShallow(state => ({
+      moviesList: state.moviesList,
+      isLoading: state.isLoading,
+      error: state.error,
+      searchResults: state.searchResults,
+    })),
+  );
   const [movie, setMovie] = useState<Movie>();
 
   useEffect(() => {
-    if (movieId) {
-      const found = moviesList.find(item => item.id.toString() === movieId);
-      setMovie(found);
+    if (!movieId) {
+      return;
     }
-  }, [movieId, moviesList]);
+
+    const list = searchResults.length > 0 ? searchResults : moviesList;
+    const found = list.find(item => item.id.toString() === movieId);
+    setMovie(found);
+  }, [movieId, moviesList, searchResults]);
 
   if (isLoading && !movie) {
     return (

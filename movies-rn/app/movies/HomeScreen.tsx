@@ -54,6 +54,7 @@ export default function HomeScreen() {
   const showEmptySearchState = hasSearchText && searchResults.length === 0 && !isLoading;
   const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
 
+  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : ''
   return (
     <View style={styles.container}>
       <MenuCurtain />
@@ -89,7 +90,7 @@ export default function HomeScreen() {
       </View>
       <View style={styles.footer}>
         <Button
-          title={isLoading ? 'Loading...' : `Refresh list ${moviesList.length > 0 ? `(${moviesList.length})` : ''}`}
+          title={isLoading ? 'Loading...' : `Refresh list ${cacheSize}`}
           onPress={fetchCleanList}
           customStyle={[styles.loadButton, isButtonDisabled && styles.loadButtonDisabled]}
           customStyleText={styles.loadButtonLabel}

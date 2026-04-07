@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@fennex-sand/constants';
-import { useMovieStore } from '@fennex-sand/hooks';
 import { usePerformanceMonitor } from '@/hooks/usePerformanceMonitor';
 import { Hamburger } from './Hamburger';
 
