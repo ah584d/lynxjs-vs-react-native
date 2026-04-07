@@ -81,6 +81,9 @@ signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - lynx js swipe down to refresh
 - lynx js main thread
 
+- lx search
+- lx curtain animation
+
 # Issues
 
 apps/react-native-app/android/app/build/generated/autolinking/src/main/java/com/facebook/react/PackageList.java:14: error: cannot find symbol
