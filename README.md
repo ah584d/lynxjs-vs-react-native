@@ -82,7 +82,7 @@ signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - lynx js main thread
 
 - lx search
-- lx curtain animation
+- OK - lx curtain animation
 
 # Issues
 
