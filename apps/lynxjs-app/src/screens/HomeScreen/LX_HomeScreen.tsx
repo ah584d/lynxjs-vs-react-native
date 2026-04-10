@@ -73,9 +73,12 @@ export function HomeScreen(): ReactElement {
             <view className={styles['header-row']}>
               <Hamburger />
               <MenuCurtain />
-              <text className={styles['title']}>Movie with RN/Lynx</text>
+              <view className={styles['title']}>
+                <text className={styles['title-text']}>fliX</text>
+                <text className={styles['title-text']} style={{ color: '#4a4a4a' }}>trends</text>
+              </view>
               <view className={styles['actions-container']}>
-                <text className={styles['title-text']}>{metrics.fps} fps</text>
+                <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
               </view>
             </view>
             <view class={classNames('movies-count-floating', { 'movies-count-floating-android': IS_ANDROID })}>

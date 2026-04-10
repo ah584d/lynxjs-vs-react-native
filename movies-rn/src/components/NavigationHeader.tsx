@@ -11,8 +11,11 @@ export const NavigationHeader = () => {
     <SafeAreaView edges={['top']} style={styles.safeArea}>
       <View style={styles.header}>
         <Hamburger />
-        <Text style={styles.title}>Movie with RN/Lynx</Text>
-        <Text style={styles.titleText}>{metrics.fps} fps</Text>
+        <Text style={styles.title}>
+          <Text style={styles.titleText}>fliX</Text>
+          <Text style={[styles.titleText, { color: Colors.light.black }]}>trends</Text>
+        </Text>
+        <Text style={styles.fpsText}>{metrics.fps} fps</Text>
       </View>
     </SafeAreaView>
   );
@@ -31,13 +34,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
   },
   title: {
-    fontSize: 20,
-    color: Colors.light.text,
-    fontWeight: 'bold',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   titleText: {
+    fontSize: 20,
+    color: Colors.light.purple,
+    fontWeight: 'bold',
+  },
+  fpsText: {
     fontSize: 16,
     color: Colors.light.text,
+    fontWeight: 'bold',
   },
   moviesCountLabel: {
     fontSize: 14,
