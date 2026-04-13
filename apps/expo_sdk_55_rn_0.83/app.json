@@ -1,15 +1,14 @@
 {
   "expo": {
-    "name": "expo_0.85",
-    "slug": "expo_0.85",
+    "name": "expo_sdk_55_rn_0.83",
+    "slug": "expo_sdk_55_rn_0.83",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "expo085",
+    "scheme": "exposdk55rn083",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.anonymous.expo-0.85"
+      "icon": "./assets/expo.icon"
     },
     "android": {
       "adaptiveIcon": {
