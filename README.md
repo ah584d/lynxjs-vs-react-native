@@ -11,18 +11,20 @@ Comparing a new mobile framework with a stable mobile framework - all about js
 ## copy apk for debug in android device
 
 adb devices
+adb reverse tcp:8081 tcp:8081
 
 # RN:
 
 ✅ install on ios simulator: npm run ios
-✅ clean android build: - cd android - ./gradlew clean --info
+✅ clean android build: `npm run android:clean_build`
+✅ build release APK (non signed): `npm run android:build_release_apk`
 ✅ install apk on device:
 disable in android phone security option "automatic blocking" / חסימה אוטומטית
 adb devices
 
 unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/debug/app-debug.apk
 unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release.apk
-signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
+signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 # Lynx:
 
@@ -30,8 +32,8 @@ pnpm run build:android
 adb devices
 
 unsigned: adb -s R7ARC1EZJBP install ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-signed:   adb -s R7ARC1EZJBP install ./android/app/debug/app-debug.apk
-signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
+signed. : adb -s R7ARC1EZJBP install ./android/app/debug/app-debug.apk
+signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 ## Open android from terminal in order to make node available [for react native android compilation]
 
@@ -83,6 +85,9 @@ signed:   adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 
 - lx search
 - OK - lx curtain animation
+- OK - update to expo SDK 55
+- add instructions for android simulator network connection
+- upgrade gradle to 9.0.0
 
 # Issues
 
@@ -90,3 +95,10 @@ apps/react-native-app/android/app/build/generated/autolinking/src/main/java/com/
 import expo.core.ExpoModulesPackage;
 
 - https://github.com/expo/eas-cli/issues/2789
+
+Execution failed for task ':app:createBundleReleaseJsAndAssets'.
+
+> A problem occurred starting process 'command '/ynxjs-vs-react-native/movies-rn/node_modules/react-native/sdks/hermesc/osx-bin/hermesc''
+
+- run the commands: `mkdir -p node_modules/react-native/sdks/hermesc && ln -sf ../../../hermes-compiler/hermesc/* node_modules/react-native/sdks/hermesc/` [this is the postinstall so you can run npm ci as well]
+  and then run again: `npm run android:build_release_apk`
