@@ -97,14 +97,13 @@ const styles = StyleSheet.create({
   poster: {
     width: 200,
     height: 290,
-    borderRadius: 4,
+    borderRadius: 8,
     borderColor: Colors.light.grayBorder,
     borderWidth: 1,
     marginBottom: 24,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   shimmerContainer: {
     position: 'absolute',
     top: 1,

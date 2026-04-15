@@ -54,7 +54,7 @@ export default function HomeScreen() {
   const showEmptySearchState = hasSearchText && searchResults.length === 0 && !isLoading;
   const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
 
-  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : ''
+  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
   return (
     <View style={styles.container}>
       <MenuCurtain />
@@ -68,6 +68,7 @@ export default function HomeScreen() {
       />
       <View style={styles.body}>
         <FlatList
+          style={{ borderRadius: 8 }}
           ref={flatListRef}
           data={moviesToDisplay}
           renderItem={RenderMovieItem}
@@ -165,7 +166,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 0, 0, 0.08)',
+    backgroundColor: Colors.light.errorBackground,
+    borderRadius: 12,
     zIndex: 20,
   },
   errorBox: {

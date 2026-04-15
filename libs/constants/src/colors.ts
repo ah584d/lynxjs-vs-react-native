@@ -12,10 +12,10 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: '#0a7ea4',
-    grayBorder: 'gray',
-    green: 'green',
+    grayBorder: '#808080',
+    green: '#4CAF50',
     white: 'white',
-    gray: 'gray',
+    gray: '#808080',
     darkGray: '#000',
     lightGray: '#9e9b9b4d',
     lightGray2: '#d0cbcb4d',
@@ -73,9 +73,9 @@ export const Colors = {
     lightGray3: '#00000062',
     movieCardBackGround: '#1E1E1E',
     blue: '#5d7cf7ff',
-    lightGreen: '#1a3e1aff',
+    lightGreen: '#2d5a2d',
     purple: '#b865f0ff',
-    yellow: '#FFA500',
+    yellow: '#FFD700',
     orange: '#ff8c42',
 
     // Border colors
@@ -98,9 +98,9 @@ export const Colors = {
     warningBackground: '#4a3a1a',
     warningText: '#ffb74d',
     errorBackground: '#4a1a1a',
-    errorText: '#f44336',
+    errorText: '#ef5350',
     errorLight: '#3a1a1a',
-    error: '#f44336',
+    error: '#ef5350',
 
     // Brand colors
     greenDark: '#66bb6a',

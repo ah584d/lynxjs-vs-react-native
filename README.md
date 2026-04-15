@@ -79,7 +79,7 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - OK - remove title lynx js
 - OK - android change icon
 - move rn to apps back since we don't use anymore mono repo
-- dark mode
+- ===> dark mode
 - lynx js swipe down to refresh
 - lynx js main thread
 
