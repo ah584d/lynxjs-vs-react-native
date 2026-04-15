@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { Dispatch, ReactElement, SetStateAction, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { GENRES_FILTER, YEARS_FILTER } from '@fennex-sand/constants';
 import { useAbortController, useDebounce, useMovieStore } from '@fennex-sand/hooks';
@@ -12,7 +12,7 @@ interface FiltersSectionProps {
   searchText: string;
   onFilterGenreChange: (activeIndex: number) => void;
   onFilterYearChange: (activeIndex: number) => void;
-  onSearchTextChange: (searchText: string) => void;
+  onSearchTextChange: Dispatch<SetStateAction<string>>;
 }
 
 export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
@@ -36,13 +36,9 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
     return cleanup;
   }, [debouncedQuery, searchMovies, clearSearchResults, getSignal, cleanup]);
 
-  const handleSearchTextChange = (text: string) => {
-    onSearchTextChange(text);
-  };
-
   return (
     <View style={[styles.header, IS_ANDROID ? { flex: 0.2 } : null]}>
-      <SearchBar value={searchText} onChangeText={handleSearchTextChange} />
+      <SearchBar value={searchText} onChangeText={onSearchTextChange} />
       <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
       <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
     </View>

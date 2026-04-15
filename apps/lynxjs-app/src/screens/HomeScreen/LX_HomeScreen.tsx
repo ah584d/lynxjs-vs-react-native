@@ -3,6 +3,7 @@ import { useMovieStore } from '@fennex-sand/hooks';
 import classNames from 'classnames';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
 import { Filter } from '@/components/Filter/LX_Filter.jsx';
+import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
@@ -19,6 +20,7 @@ export function HomeScreen(): ReactElement {
   const [genreFilter, setGenreFilter] = useState(0);
   const [yearFilter, setYearFilter] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
 
   const moviesList = useMovieStore(state => state.moviesList);
   const isLoading = useMovieStore(state => state.isLoading);
@@ -74,8 +76,8 @@ export function HomeScreen(): ReactElement {
               <Hamburger />
               <MenuCurtain />
               <view className={styles['title']}>
-                <text className={styles['title-text']}>fliX</text>
-                <text className={styles['title-text']} style={{ color: '#4a4a4a' }}>trends</text>
+                <text className={classNames(styles['title-text'], styles['title-text-purple'])}>fliX</text>
+                <text className={styles['title-text']}>trends</text>
               </view>
               <view className={styles['actions-container']}>
                 <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
@@ -84,16 +86,14 @@ export function HomeScreen(): ReactElement {
             <view class={classNames('movies-count-floating', { 'movies-count-floating-android': IS_ANDROID })}>
               <text className={styles['movies-count-value']}>{Math.abs(moviesList.length).toLocaleString()}</text>
             </view>
-            <view className={styles['filter-section']}>
-              <view className={styles['filter-options']}>
-                <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />
-              </view>
-            </view>
-            <view className={styles['filter-section']}>
-              <view className={styles['filter-options-year']}>
-                <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
-              </view>
-            </view>
+            <FiltersSection
+              genreFilter={genreFilter}
+              yearFilter={yearFilter}
+              searchText={searchText}
+              onFilterGenreChange={onFilterGenreChange}
+              onFilterYearChange={onFilterYearChange}
+              onSearchTextChange={setSearchText}
+            />
           </view>
           <view className={styles['movie-list']}>
             <list

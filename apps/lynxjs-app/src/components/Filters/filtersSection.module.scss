@@ -1,0 +1,17 @@
+.filter-section {
+  margin: 12px 0;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+
+.filter-options-year {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: space-between;
+}

@@ -23,37 +23,13 @@
 .title-text {
   font-size: 1.6rem;
   font-weight: bold;
-  color: var(--color-purple);
+  &-purple {
+    color: var(--color-purple);
+  }
   &-fps {
     font-size: 1.25rem;
     color: var(--color-text);
   }
-}
-
-.filter-section {
-  margin: 12px 0;
-}
-
-.filter-label {
-  margin: 5px 0;
-}
-
-.filter-label {
-  margin-bottom: 5px;
-}
-
-.filter-options {
-  display: flex;
-  flex-direction: row;
-  margin-top: 5px;
-}
-
-.filter-options-year {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 5px;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .recommend-button {
@@ -129,6 +105,7 @@
   display: flex;
   flex: 1;
   padding-bottom: 52px;
+  border-radius: 10px;
 }
 
 .offline-container {
