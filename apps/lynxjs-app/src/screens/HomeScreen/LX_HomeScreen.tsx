@@ -54,12 +54,6 @@ export function HomeScreen(): ReactElement {
     setYearFilter(activeIndex);
   };
 
-  function fetchCleanList(): void {
-    setFilterChanged(false);
-    setCurrentPage(1);
-    setForceRefresh(true);
-  }
-
   const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
 
   return (
@@ -137,5 +131,11 @@ export function HomeScreen(): ReactElement {
       return;
     }
     setCurrentPage(prev => prev + 1);
+  }
+
+  function fetchCleanList(): void {
+    setFilterChanged(false);
+    setCurrentPage(1);
+    setForceRefresh(true);
   }
 }

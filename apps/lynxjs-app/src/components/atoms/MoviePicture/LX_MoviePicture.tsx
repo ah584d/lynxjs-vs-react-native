@@ -1,4 +1,5 @@
 import { type ReactElement, useState } from '@lynx-js/react';
+import classNames from 'classnames';
 import styles from './moviePicture.module.scss';
 
 interface MoviePictureProps {
@@ -28,7 +29,7 @@ export const MoviePicture = ({ posterUrl }: MoviePictureProps): ReactElement => 
         <view className={styles['shimmer-overlay']} />
         <view className={styles['shimmer-glow']} />
       </view>
-      <image src={posterUrl} className={`${styles['movie-poster']}${isLoading ? ' ' + styles['loading'] : ''}`} bindload={handleImageLoad} binderror={handleImageError} />
+      <image src={posterUrl} className={classNames(styles['movie-poster'], { [styles['loading']]: isLoading })} bindload={handleImageLoad} binderror={handleImageError} />
     </view>
   );
 

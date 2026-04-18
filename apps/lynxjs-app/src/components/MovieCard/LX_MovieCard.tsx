@@ -4,7 +4,7 @@ import type { Movie } from '@fennex-sand/types';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router';
 import appStyles from '../../app.module.scss';
-import { MoviePicture } from '../atoms/LX_MoviePicture.jsx';
+import { MoviePicture } from '../atoms/MoviePicture/LX_MoviePicture.jsx';
 import styles from './movieCard.module.scss';
 
 interface MovieCardProps {

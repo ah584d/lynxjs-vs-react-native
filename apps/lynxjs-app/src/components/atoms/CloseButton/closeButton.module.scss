@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-light-border);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+}
+.pressed {
+  opacity: 0.8;
+}
+.icon {
+  width: 18px;
+  height: 18px;
+}
