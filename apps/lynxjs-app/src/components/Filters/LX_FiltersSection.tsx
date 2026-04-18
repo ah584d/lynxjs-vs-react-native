@@ -1,9 +1,9 @@
 import { Dispatch, type ReactElement, SetStateAction } from '@lynx-js/react';
-import { runOnBackground } from '@lynx-js/react';
 import { GENRES_FILTER, YEARS_FILTER } from '@fennex-sand/constants';
 import classNames from 'classnames';
-import { Filter } from '../Filter/LX_Filter';
 import { CloseButton } from '../atoms/CloseButton/LX_CloseButton';
+import { Filter } from './Filter/LX_Filter';
+import { SearchBar } from './SearchBar/LX_SearchBar';
 import styles from './filtersSection.module.scss';
 
 interface FiltersSectionProps {
@@ -20,7 +20,7 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
 
   return (
     <view className={styles['filter-container']}>
-      <CloseButton onPress={() => onSearchTextChange('')} />
+      <SearchBar value={searchText} onChangeText={onSearchTextChange} />
       <view className={styles['filter-section']}>
         <view className={styles['filter-options']}>
           <Filter currentSelection={genreFilter} filters={GENRES_FILTER} onFilterChange={onFilterGenreChange} />

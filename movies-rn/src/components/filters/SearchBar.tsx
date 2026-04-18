@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { Colors } from '@fennex-sand/constants';
 import { useFadeAnimation } from '../../hooks/animations/useFadeAnimation';
-import { CloseButton } from '../filters/CloseButton';
+import { CloseButton } from '../atoms/CloseButton';
 
 interface SearchBarProps {
   value: string;

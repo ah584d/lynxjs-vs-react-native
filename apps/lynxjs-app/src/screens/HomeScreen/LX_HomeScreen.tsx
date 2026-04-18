@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
 import classNames from 'classnames';
 import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
-import { Filter } from '@/components/Filter/LX_Filter.jsx';
+import { Filter } from '@/components/Filters/Filter/LX_Filter.jsx';
 import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';

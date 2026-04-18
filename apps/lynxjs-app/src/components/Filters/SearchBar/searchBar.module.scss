@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  width: 80%;
+  background-color: var(--color-movie-card-back-ground);
+  border-radius: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 8px;
+}
+.inputSearch {
+  flex: 1;
+  height: 100%;
+  color: var(--color-text);
+  margin-left: 4px;
+}
+.icon {
+  color: var(--color-green);
+}
