@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
-    "@fennex-sand/constants": "^1.0.17",
+    "@fennex-sand/constants": "^1.0.18",
     "@fennex-sand/hooks": "^1.0.7",
     "@fennex-sand/services": "^1.0.7",
     "@fennex-sand/types": "^1.0.0",

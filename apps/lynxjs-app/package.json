@@ -11,7 +11,7 @@
     "preview": "rspeedy preview"
   },
   "dependencies": {
-    "@fennex-sand/constants": "^1.0.16",
+    "@fennex-sand/constants": "^1.0.18",
     "@fennex-sand/hooks": "^1.0.3",
     "@fennex-sand/services": "^1.0.3",
     "@fennex-sand/types": "^1.0.0",

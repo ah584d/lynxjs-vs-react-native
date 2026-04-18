@@ -63,8 +63,7 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - open camera app and click on link and follow steps
 - npm run build:libs
 - cd ./libs/constants
-- publish without increment version: `npm run publish-package`
-- publish with increment version: `npm run publish-increment`
+- publish with increment version if necessary: `npm run publish`
 
 ## To do / backlog
 
@@ -88,6 +87,8 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - OK - update to expo SDK 55
 - add instructions for android simulator network connection
 - upgrade gradle to 9.0.0
+- update lx 3.7 and gradle
+- support svg in lx
 
 # Issues
 
