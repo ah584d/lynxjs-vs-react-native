@@ -61,9 +61,9 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - if you want to modify one of the libs package.json run 'npm run ci' from root it will reinstall only the libs dependencies
 - npm login
 - open camera app and click on link and follow steps
-- npm run build:libs
+- npm run build:libs. ===> YOU MUST COMPILE BEFORE PUBLISHING NEW PACKAGE
 - cd ./libs/constants
-- publish with increment version if necessary: `npm run publish`
+- publish with increment version if necessary: `npm run publish-increment`
 
 ## To do / backlog
 

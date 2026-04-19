@@ -1,6 +1,6 @@
 {
   "name": "@fennex-sand/hooks",
-  "version": "1.0.7",
+  "version": "1.0.18",
   "description": "Shared hooks for lynxjs projects",
   "author": "Avraham Hamu",
   "license": "MIT",
@@ -20,7 +20,8 @@
     "build": "tsc -p tsconfig.json",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
-    "publish": "npm publish --access public || (npm version patch && npm run publish-package)"
+    "publish-package": "npm publish --access public",
+    "publish-increment": "npm version patch && npm run publish-package"
   },
   "peerDependencies": {
     "zustand": "^5.0.9"

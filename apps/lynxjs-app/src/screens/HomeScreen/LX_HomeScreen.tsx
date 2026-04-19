@@ -1,8 +1,7 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
 import classNames from 'classnames';
-import { GENRES_FILTER, IS_ANDROID, YEARS_FILTER } from '@/common/LX_constants.js';
-import { Filter } from '@/components/Filters/Filter/LX_Filter.jsx';
+import { IS_ANDROID } from '@/common/LX_constants.js';
 import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
@@ -23,7 +22,9 @@ export function HomeScreen(): ReactElement {
   const [searchText, setSearchText] = useState('');
 
   const moviesList = useMovieStore(state => state.moviesList);
+  const searchResults = useMovieStore(state => state.searchResults);
   const isLoading = useMovieStore(state => state.isLoading);
+
   const [isOffline] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, handleScrollAnimation] = useScrollAnimation();
   const { metrics } = usePerformanceMonitor();
@@ -55,6 +56,10 @@ export function HomeScreen(): ReactElement {
   };
 
   const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
+  const hasSearchText = searchText.trim().length > 0;
+  const moviesToDisplay = hasSearchText ? searchResults : moviesList;
+  const showEmptySearchState = hasSearchText && searchResults.length === 0 && !isLoading;
+  const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
 
   return (
     <PageView>
@@ -101,18 +106,22 @@ export function HomeScreen(): ReactElement {
               bounces={false}
               bindscroll={handleScrollAnimation}
               bindscrolltolower={() => !isLoading && increaseCurrentPage()}>
-              {moviesList.map((movie, index) => (
+              {moviesToDisplay.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
             </list>
+            {/* {showEmptySearchState && <EmptySearchResult />} */}
+
             {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
               <text>Exposed nodes:</text>
               <text style={{ color: 'red' }}>{eventLog}</text>
             </view> */}
           </view>
 
-          <view className={classNames(styles['recommend-button'], { [styles['recommend-button-disabled']]: !filterChanged })} bindtap={fetchCleanList}>
-            <text className={classNames(styles['button-text'], { [styles['button-text-disabled']]: !filterChanged })}>
+          <view
+            className={classNames(styles['recommend-button'], { [styles['recommend-button-disabled']]: isButtonDisabled })}
+            bindtap={fetchCleanList}>
+            <text className={classNames(styles['button-text'], { [styles['button-text-disabled']]: isButtonDisabled })}>
               {isLoading ? 'Loading...' : t('get_movies') + ` ${cacheSize}`}
             </text>
           </view>
