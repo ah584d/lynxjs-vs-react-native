@@ -68,7 +68,7 @@ export default function HomeScreen() {
       />
       <View style={styles.body}>
         <FlatList
-          style={{ borderRadius: 8 }}
+          style={styles.listContainer}
           ref={flatListRef}
           data={moviesToDisplay}
           renderItem={RenderMovieItem}
@@ -81,7 +81,6 @@ export default function HomeScreen() {
           scrollEventThrottle={16}
         />
         {showEmptySearchState && <EmptySearchResult />}
-
         {isLoading && (
           <View style={styles.centeredOverlay}>
             <ActivityIndicator size='large' color={Colors.light.green} />
@@ -109,7 +108,12 @@ export default function HomeScreen() {
       <View style={styles.errorContainer}>
         <View style={styles.errorBox}>
           <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
-          <Button title='Retry' onPress={fetchCleanList} customStyle={[styles.loadButton, styles.errorButton]} customStyleText={styles.loadButtonLabel} />
+          <Button
+            title='Retry'
+            onPress={fetchCleanList}
+            customStyle={[styles.loadButton, styles.errorButton]}
+            customStyleText={styles.loadButtonLabel}
+          />
           <View style={styles.errorTextWrapper}>
             <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
           </View>
@@ -119,7 +123,15 @@ export default function HomeScreen() {
   }
 
   function RenderMovieItem({ item, index }: { item: Movie; index: number }): ReactElement {
-    return <MovieCardMemo index={index} movie={item} onPress={onMoviePress} customStyle={index % 2 ? undefined : styles.cardCustomStyle} scrollVelocity={scrollVelocity} />;
+    return (
+      <MovieCardMemo
+        index={index}
+        movie={item}
+        onPress={onMoviePress}
+        customStyle={index % 2 ? undefined : styles.cardCustomStyle}
+        scrollVelocity={scrollVelocity}
+      />
+    );
   }
 
   function onMoviePress(movieId: number): void {
@@ -158,6 +170,11 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  listContainer: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.light.borderLight,
+  },
   errorContainer: {
     position: 'absolute',
     top: 0,
@@ -229,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadButton: {
-    width: '90%',
+    width: '100%',
     backgroundColor: Colors.light.green,
     height: 50,
     padding: 12,

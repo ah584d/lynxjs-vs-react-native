@@ -22,7 +22,7 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
   useSearchMovies(searchText, API_KEY);
 
   return (
-    <view className={styles['filter-container']}>
+    <>
       <SearchBar value={searchText} onChangeText={onSearchTextChange} />
       <view className={styles['filter-section']}>
         <view className={styles['filter-options']}>
@@ -34,6 +34,6 @@ export const FiltersSection = (props: FiltersSectionProps): ReactElement => {
           <Filter currentSelection={yearFilter} filters={YEARS_FILTER} onFilterChange={onFilterYearChange} />
         </view>
       </view>
-    </view>
+    </>
   );
 };

@@ -1,3 +1,6 @@
+$poster-width: 220px;
+$poster-height: 310px;
+
 .movie-picture-container {
   width: 100%;
   align-items: center;
@@ -9,13 +12,11 @@
 }
 
 .movie-poster {
-  width: 200px;
-  height: 290px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border-light);
-  margin-bottom: 24px;
-  transition: opacity 0.25s ease-in-out;
+  width: $poster-width;
+  height: $poster-height;
   border-radius: 10px;
+  border: 1px solid var(--color-border-light);
+  transition: opacity 0.25s ease-in-out;
 }
 
 .movie-poster.loading {
@@ -27,8 +28,8 @@
   top: 20px; /* matches container padding */
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 290px;
+  width: $poster-width;
+  height: $poster-height;
   border-radius: 4px;
   border: 1px solid var(--color-border-light);
   margin-bottom: 24px;

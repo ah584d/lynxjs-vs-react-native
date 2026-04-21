@@ -6,6 +6,7 @@ import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
+import { EmptySearchResult } from '@/components/atoms/EmptySearchResult/EmptySearchResult';
 import { PageView } from '@/components/index.js';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
 import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
@@ -55,12 +56,12 @@ export function HomeScreen(): ReactElement {
     setYearFilter(activeIndex);
   };
 
-  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
   const hasSearchText = searchText.trim().length > 0;
   const moviesToDisplay = hasSearchText ? searchResults : moviesList;
   const showEmptySearchState = hasSearchText && searchResults.length === 0 && !isLoading;
   const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
 
+  const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
   return (
     <PageView>
       <view className={styles['main-container-layout']}>
@@ -82,6 +83,7 @@ export function HomeScreen(): ReactElement {
                 <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
               </view>
             </view>
+            {/* <RenderHeader /> */}
             <view class={classNames('movies-count-floating', { 'movies-count-floating-android': IS_ANDROID })}>
               <text className={styles['movies-count-value']}>{Math.abs(moviesList.length).toLocaleString()}</text>
             </view>
@@ -105,17 +107,12 @@ export function HomeScreen(): ReactElement {
               lower-threshold-item-count={1}
               bounces={false}
               bindscroll={handleScrollAnimation}
-              bindscrolltolower={() => !isLoading && increaseCurrentPage()}>
+              bindscrolltolower={() => !isLoading && !hasSearchText && increaseCurrentPage()}>
               {moviesToDisplay.map((movie, index) => (
                 <MovieCard movie={movie} index={index} isScrolling={isScrolling} />
               ))}
             </list>
-            {/* {showEmptySearchState && <EmptySearchResult />} */}
-
-            {/* <view style='align-items:center;justify-content:center;position:absolute;bottom:0;width:100%;padding:4px 0;align-self:center;background-color:white;z-index:2'>
-              <text>Exposed nodes:</text>
-              <text style={{ color: 'red' }}>{eventLog}</text>
-            </view> */}
+            {showEmptySearchState && <EmptySearchResult />}
           </view>
 
           <view
@@ -146,5 +143,21 @@ export function HomeScreen(): ReactElement {
     setFilterChanged(false);
     setCurrentPage(1);
     setForceRefresh(true);
+  }
+
+  function RenderHeader(): ReactElement {
+    return (
+      <view className={styles['header-row']}>
+        <Hamburger />
+        <MenuCurtain />
+        <view className={styles['title']}>
+          <text className={classNames(styles['title-text'], styles['title-text-purple'])}>fliX</text>
+          <text className={styles['title-text']}>trends</text>
+        </view>
+        <view className={styles['actions-container']}>
+          <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
+        </view>
+      </view>
+    );
   }
 }
