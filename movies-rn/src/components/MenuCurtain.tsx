@@ -1,15 +1,16 @@
 import { ReactElement, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
+import { Gesture } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
-import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { useCurtainAnimation } from '@/hooks/animations/useAnimations';
+import { createThemedStyles, useThemedStyles } from '@/hooks/useTheme';
 import { Hamburger } from './Hamburger';
 import { PerformanceMetrics } from './PerformanceMetrics';
 
 export function MenuCurtain(): ReactElement {
   const menuOpened = useMovieStore(state => state.menuOpened);
+  const style = useThemedStyles(styles.light, styles.dark);
 
   const { slideIn, slideOut, animatedStyle } = useCurtainAnimation();
 
@@ -34,46 +35,48 @@ export function MenuCurtain(): ReactElement {
   return (
     // <GestureHandlerRootView style={styles.container}>
     //   <GestureDetector gesture={panGesture}>
-    <Animated.View style={[styles.container, animatedStyle]}>
-      <View style={styles.hamburger}>
+    <Animated.View style={[style.container, animatedStyle]}>
+      <View style={style.hamburger}>
         <Hamburger />
       </View>
-      <PerformanceMetrics style={styles.performanceMetrics} />
+      <PerformanceMetrics customStyle={style.performanceMetrics} />
     </Animated.View>
     //   </GestureDetector>
     // </GestureHandlerRootView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.lightGreen,
-    opacity: 0.96,
-    height: '150%',
-    width: '110%',
-    position: 'absolute',
-    top: -150,
-    left: -5,
-    zIndex: 30,
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
-    shadowColor: Colors.light.black,
-    shadowOffset: {
-      width: 5,
-      height: 0,
+const styles = createThemedStyles(colors =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.lightGreen,
+      opacity: 0.96,
+      height: '150%',
+      width: '110%',
+      position: 'absolute',
+      top: -150,
+      left: -5,
+      zIndex: 30,
+      borderTopRightRadius: 12,
+      borderBottomRightRadius: 12,
+      shadowColor: colors.black,
+      shadowOffset: {
+        width: 5,
+        height: 0,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  hamburger: {
-    marginTop: 114,
-    marginLeft: 16,
-    alignItems: 'flex-start',
-  },
-  performanceMetrics: {
-    marginTop: 20,
-    marginHorizontal: 16,
-  },
-});
+    hamburger: {
+      marginTop: 114,
+      marginLeft: 16,
+      alignItems: 'flex-start',
+    },
+    performanceMetrics: {
+      marginTop: 20,
+      marginHorizontal: 16,
+    },
+  }),
+);

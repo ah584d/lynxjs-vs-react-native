@@ -1,15 +1,16 @@
 import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, FlatList, NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, Text, View } from 'react-native';
-import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { Movie } from '@fennex-sand/types';
 import { router } from 'expo-router';
+import { useShallow } from 'zustand/react/shallow';
 import { API_KEY } from '@/common/constants';
 import { Button } from '@/components/Button';
 import { MenuCurtain } from '@/components/MenuCurtain';
 import { MovieCardMemo } from '@/components/MovieCard';
 import { EmptySearchResult } from '@/components/atoms/EmptySearchResult';
 import { FiltersSection } from '@/components/filters/FiltersSection';
+import { createThemedStyles, useTheme, useThemedStyles } from '@/hooks/useTheme';
 
 export default function HomeScreen() {
   const [genreFilter, setGenreFilter] = useState<number | undefined>(0);
@@ -24,13 +25,20 @@ export default function HomeScreen() {
   const lastScrollTime = useRef(Date.now());
   const flatListRef = useRef<FlatList<Movie> | null>(null);
 
-  const getMovies = useMovieStore(state => state.getMovies);
-  const resetList = useMovieStore(state => state.resetList);
-  const moviesList = useMovieStore(state => state.moviesList);
-  const searchResults = useMovieStore(state => state.searchResults);
-  const isLoading = useMovieStore(state => state.isLoading);
-  const error = useMovieStore(state => state.error);
-  const setOpenMenu = useMovieStore(state => state.setOpenMenu);
+  const { colors } = useTheme();
+  const style = useThemedStyles(styles.light, styles.dark);
+
+  const { getMovies, resetList, moviesList, searchResults, isLoading, error, setOpenMenu } = useMovieStore(
+    useShallow(state => ({
+      getMovies: state.getMovies,
+      resetList: state.resetList,
+      moviesList: state.moviesList,
+      searchResults: state.searchResults,
+      isLoading: state.isLoading,
+      error: state.error,
+      setOpenMenu: state.setOpenMenu,
+    })),
+  );
 
   useEffect(() => {
     getMovies(API_KEY, currentPage, yearFilter, genreFilter);
@@ -56,7 +64,7 @@ export default function HomeScreen() {
 
   const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
   return (
-    <View style={styles.container}>
+    <View style={style.container}>
       <MenuCurtain />
       <FiltersSection
         genreFilter={genreFilter}
@@ -66,14 +74,14 @@ export default function HomeScreen() {
         onFilterYearChange={onFilterYearChange}
         onSearchTextChange={setSearchText}
       />
-      <View style={styles.body}>
+      <View style={style.body}>
         <FlatList
-          style={styles.listContainer}
+          style={style.listContainer}
           ref={flatListRef}
           data={moviesToDisplay}
           renderItem={RenderMovieItem}
           keyExtractor={(item, index) => `${item.id ?? 'movie'}_${index}`}
-          contentContainerStyle={moviesToDisplay?.length ? undefined : styles.emptyListContainer}
+          contentContainerStyle={moviesToDisplay?.length ? undefined : style.emptyListContainer}
           refreshControl={<RefreshControl refreshing={forceRefresh} onRefresh={fetchCleanList} />}
           onEndReachedThreshold={0.3}
           onEndReached={() => !isLoading && !hasSearchText && setCurrentPage(prev => prev + 1)}
@@ -82,18 +90,18 @@ export default function HomeScreen() {
         />
         {showEmptySearchState && <EmptySearchResult />}
         {isLoading && (
-          <View style={styles.centeredOverlay}>
-            <ActivityIndicator size='large' color={Colors.light.green} />
+          <View style={style.centeredOverlay}>
+            <ActivityIndicator size='large' color={colors.green} />
           </View>
         )}
         <RenderErrorRetry />
       </View>
-      <View style={styles.footer}>
+      <View style={style.footer}>
         <Button
           title={isLoading ? 'Loading...' : `Refresh list ${cacheSize}`}
           onPress={fetchCleanList}
-          customStyle={[styles.loadButton, isButtonDisabled && styles.loadButtonDisabled]}
-          customStyleText={styles.loadButtonLabel}
+          customStyle={[style.loadButton, isButtonDisabled && style.loadButtonDisabled]}
+          customStyleText={style.loadButtonLabel}
           disabled={isButtonDisabled}
         />
       </View>
@@ -105,17 +113,17 @@ export default function HomeScreen() {
       return null;
     }
     return (
-      <View style={styles.errorContainer}>
-        <View style={styles.errorBox}>
-          <ActivityIndicator size='small' color={Colors.light.green} style={{ marginBottom: 8 }} />
+      <View style={style.errorContainer}>
+        <View style={style.errorBox}>
+          <ActivityIndicator size='small' color={colors.green} style={{ marginBottom: 8 }} />
           <Button
             title='Retry'
             onPress={fetchCleanList}
-            customStyle={[styles.loadButton, styles.errorButton]}
-            customStyleText={styles.loadButtonLabel}
+            customStyle={[style.loadButton, style.errorButton]}
+            customStyleText={style.loadButtonLabel}
           />
-          <View style={styles.errorTextWrapper}>
-            <Text style={styles.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
+          <View style={style.errorTextWrapper}>
+            <Text style={style.errorText}>{typeof error === 'string' ? error : 'An unexpected error occurred.'}</Text>
           </View>
         </View>
       </View>
@@ -128,7 +136,7 @@ export default function HomeScreen() {
         index={index}
         movie={item}
         onPress={onMoviePress}
-        customStyle={index % 2 ? undefined : styles.cardCustomStyle}
+        customStyle={index % 2 ? undefined : style.cardCustomStyle}
         scrollVelocity={scrollVelocity}
       />
     );
@@ -169,96 +177,98 @@ export default function HomeScreen() {
   }
 }
 
-const styles = StyleSheet.create({
-  listContainer: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: Colors.light.borderLight,
-  },
-  errorContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.light.errorBackground,
-    borderRadius: 12,
-    zIndex: 20,
-  },
-  errorBox: {
-    backgroundColor: Colors.light.white,
-    borderRadius: 12,
-    padding: 24,
-    alignItems: 'center',
-    shadowColor: Colors.light.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
-    minWidth: 260,
-  },
-  errorTextWrapper: {
-    marginTop: 12,
-    paddingHorizontal: 8,
-  },
-  errorText: {
-    color: Colors.light.green,
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '600',
-  },
-  errorButton: {
-    backgroundColor: Colors.light.green,
-    marginTop: 8,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: Colors.light.background,
-    paddingHorizontal: 16,
-  },
-  emptyListContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-  },
-  body: {
-    flex: 0.87,
-  },
-  cardCustomStyle: {
-    backgroundColor: Colors.light.lightGreen,
-  },
-  footer: {
-    paddingTop: 12,
-    flex: 0.11,
-    alignItems: 'center',
-  },
-  loadButton: {
-    width: '100%',
-    backgroundColor: Colors.light.green,
-    height: 50,
-    padding: 12,
-  },
-  loadButtonDisabled: {
-    opacity: 0.5,
-    backgroundColor: Colors.light.grayBorder,
-  },
-  loadButtonLabel: {
-    fontSize: 18,
-    lineHeight: 20,
-    fontWeight: 'bold',
-    color: Colors.light.white,
-  },
-});
+const styles = createThemedStyles(colors =>
+  StyleSheet.create({
+    listContainer: {
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: colors.borderLight,
+    },
+    errorContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: colors.errorBackground,
+      borderRadius: 12,
+      zIndex: 20,
+    },
+    errorBox: {
+      backgroundColor: colors.white,
+      borderRadius: 12,
+      padding: 24,
+      alignItems: 'center',
+      shadowColor: colors.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 4,
+      minWidth: 260,
+    },
+    errorTextWrapper: {
+      marginTop: 12,
+      paddingHorizontal: 8,
+    },
+    errorText: {
+      color: colors.green,
+      fontSize: 16,
+      textAlign: 'center',
+      fontWeight: '600',
+    },
+    errorButton: {
+      backgroundColor: colors.green,
+      marginTop: 8,
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      backgroundColor: colors.background,
+      paddingHorizontal: 16,
+    },
+    emptyListContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    centeredOverlay: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 10,
+    },
+    body: {
+      flex: 0.87,
+    },
+    cardCustomStyle: {
+      backgroundColor: colors.lightGreen,
+    },
+    footer: {
+      paddingTop: 12,
+      flex: 0.11,
+      alignItems: 'center',
+    },
+    loadButton: {
+      width: '100%',
+      backgroundColor: colors.green,
+      height: 50,
+      padding: 12,
+    },
+    loadButtonDisabled: {
+      opacity: 0.5,
+      backgroundColor: colors.grayBorder,
+    },
+    loadButtonLabel: {
+      fontSize: 18,
+      lineHeight: 20,
+      fontWeight: 'bold',
+      color: colors.white,
+    },
+  }),
+);

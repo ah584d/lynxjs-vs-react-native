@@ -16,6 +16,7 @@
     "^react-native-.*$",
     "^@react-navigation.*$",
     "^@expo.*$",
+    "^zustand$",
     "<THIRD_PARTY_MODULES>",
     "^@movies/(.*)$",
     "^@navigation/(.*)$",

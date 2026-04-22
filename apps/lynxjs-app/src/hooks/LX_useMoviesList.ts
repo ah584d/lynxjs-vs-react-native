@@ -1,11 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
+import { useShallow } from 'zustand/react/shallow';
 import { API_KEY, IMDB_CHUNK_SIZE } from '@/common/LX_constants.js';
 
 export function useMoviesList(currentPage: number, yearFilter: number, genreFilter: number, forceRefresh: boolean): [boolean, boolean] {
-  const getMovies = useMovieStore(state => state.getMovies);
-  const error = useMovieStore(state => state.error);
-  const moviesList = useMovieStore(state => state.moviesList);
+  const { getMovies, error, moviesList } = useMovieStore(
+    useShallow(state => ({
+      getMovies: state.getMovies,
+      error: state.error,
+      moviesList: state.moviesList,
+    })),
+  );
   const [previousMoviesLength, setPreviousMoviesLength] = useState(0);
   const [hasMoreData, setHasMoreData] = useState(true);
 

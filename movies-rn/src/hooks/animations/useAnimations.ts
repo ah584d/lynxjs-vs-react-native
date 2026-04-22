@@ -39,7 +39,9 @@ export function usePulseCardAnimation(scrollVelocity: number): Animated.Value {
   return scaleAnimation;
 }
 
-export function useShimmerAnimation(isLoading: boolean): [Animated.AnimatedInterpolation<string | number>, Animated.AnimatedInterpolation<string | number>] {
+export function useShimmerAnimation(
+  isLoading: boolean,
+): [Animated.AnimatedInterpolation<string | number>, Animated.AnimatedInterpolation<string | number>] {
   const shimmerAnimation = useRef(new Animated.Value(0)).current;
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -158,5 +160,3 @@ export function useCurtainAnimation() {
     animatedStyle,
   };
 }
-
-

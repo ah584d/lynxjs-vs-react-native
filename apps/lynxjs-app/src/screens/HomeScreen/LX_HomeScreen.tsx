@@ -1,6 +1,7 @@
 import { type ReactElement, useEffect, useState } from '@lynx-js/react';
 import { useMovieStore } from '@fennex-sand/hooks';
 import classNames from 'classnames';
+import { useShallow } from 'zustand/react/shallow';
 import { IS_ANDROID } from '@/common/LX_constants.js';
 import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
@@ -22,9 +23,13 @@ export function HomeScreen(): ReactElement {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
 
-  const moviesList = useMovieStore(state => state.moviesList);
-  const searchResults = useMovieStore(state => state.searchResults);
-  const isLoading = useMovieStore(state => state.isLoading);
+  const { moviesList, searchResults, isLoading } = useMovieStore(
+    useShallow(state => ({
+      moviesList: state.moviesList,
+      searchResults: state.searchResults,
+      isLoading: state.isLoading,
+    })),
+  );
 
   const [isOffline] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, handleScrollAnimation] = useScrollAnimation();

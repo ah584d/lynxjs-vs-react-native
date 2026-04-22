@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Colors } from '@fennex-sand/constants';
 import { useMovieStore } from '@fennex-sand/hooks';
 import { getPosterUrl } from '@fennex-sand/services';
 import { Movie } from '@fennex-sand/types';
 import { useLocalSearchParams } from 'expo-router';
 import { useShallow } from 'zustand/react/shallow';
+import { createThemedStyles, useTheme, useThemedStyles } from '@/hooks/useTheme';
 
 export default function MovieDetailsScreen() {
   const { id: movieId } = useLocalSearchParams<{ id: string }>();
@@ -19,6 +19,8 @@ export default function MovieDetailsScreen() {
     })),
   );
   const [movie, setMovie] = useState<Movie>();
+  const { colors } = useTheme();
+  const style = useThemedStyles(styles.light, styles.dark);
 
   useEffect(() => {
     if (!movieId) {
@@ -32,7 +34,7 @@ export default function MovieDetailsScreen() {
 
   if (isLoading && !movie) {
     return (
-      <View style={styles.container}>
+      <View style={style.container}>
         <Text>Loading...</Text>
       </View>
     );
@@ -40,8 +42,8 @@ export default function MovieDetailsScreen() {
 
   if (error) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>{error}</Text>
+      <View style={style.container}>
+        <Text style={style.errorText}>{error}</Text>
       </View>
     );
   }
@@ -53,69 +55,74 @@ export default function MovieDetailsScreen() {
   const posterUrl = getPosterUrl(movie.poster_path);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.body}>
-        <Image source={{ uri: posterUrl }} style={styles.poster} />
-        <Text style={styles.title}>{movie.title}</Text>
-        <View style={styles.metaContainer}>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.text}>Rating:</Text>
-            <Icon name='star' size={20} color={Colors.light.yellow} />
-            <Text style={styles.text}>{movie.vote_average.toFixed(1)}/10</Text>
+    <ScrollView style={style.container}>
+      <View style={style.body}>
+        <Image source={{ uri: posterUrl }} style={style.poster} />
+        <Text style={style.title}>{movie.title}</Text>
+        <View style={style.metaContainer}>
+          <View style={style.ratingContainer}>
+            <Text style={style.text}>Rating:</Text>
+            <Icon name='star' size={20} color={colors.yellow} />
+            <Text style={style.text}>{movie.vote_average.toFixed(1)}/10</Text>
           </View>
-          <Text style={styles.text}>Release date: {movie.release_date}</Text>
+          <Text style={style.text}>Release date: {movie.release_date}</Text>
         </View>
-        <Text style={[styles.text, { marginBottom: 8 }]}>Overview:</Text>
-        <Text style={styles.summary}>{movie.overview}</Text>
+        <Text style={[style.text, { marginBottom: 8 }]}>Overview:</Text>
+        <Text style={style.summary}>{movie.overview}</Text>
       </View>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.movieCardBackGround,
-  },
-  body: {
-    paddingHorizontal: 16,
-  },
-  poster: {
-    width: 250,
-    height: 350,
-    borderRadius: 4,
-    borderColor: Colors.light.grayBorder,
-    borderWidth: 1,
-    marginVertical: 16,
-    alignSelf: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  metaContainer: {
-    alignItems: 'flex-start',
-    marginBottom: 16,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    lineHeight: 24,
-  },
-  summary: {
-    fontSize: 18,
-    fontWeight: 'normal',
-    lineHeight: 24,
-  },
-  errorText: {
-    color: Colors.light.purple,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-});
+const styles = createThemedStyles(colors =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.movieCardBackGround,
+    },
+    body: {
+      paddingHorizontal: 16,
+    },
+    poster: {
+      width: 250,
+      height: 350,
+      borderRadius: 4,
+      borderColor: colors.grayBorder,
+      borderWidth: 1,
+      marginVertical: 16,
+      alignSelf: 'center',
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: colors.darkGray,
+    },
+    metaContainer: {
+      alignItems: 'flex-start',
+      marginBottom: 16,
+    },
+    ratingContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 16,
+    },
+    text: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      lineHeight: 24,
+      color: colors.darkGray,
+    },
+    summary: {
+      fontSize: 18,
+      fontWeight: 'normal',
+      lineHeight: 24,
+      color: colors.darkGray,
+    },
+    errorText: {
+      color: colors.purple,
+      textAlign: 'center',
+      marginTop: 20,
+    },
+  }),
+);

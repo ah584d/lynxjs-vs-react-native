@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from '@fennex-sand/constants';
 import { Button } from '@/components/Button';
+import { createThemedStyles, useThemedStyles } from '@/hooks/useTheme';
 
 interface FilterProps {
   filters: string[];
@@ -10,14 +10,16 @@ interface FilterProps {
 }
 
 export const Filter = ({ filters, onFilterChange, currentSelection, title }: FilterProps) => {
+  const style = useThemedStyles(styles.light, styles.dark);
+
   return (
-    <View style={[styles.container, { marginTop: !title ? 12 : 0 }]}>
+    <View style={[style.container, { marginTop: !title ? 12 : 0 }]}>
       {!!title && (
-        <Text style={styles.title}>
+        <Text style={style.title}>
           {title}: {getCurrentSelection(currentSelection)}
         </Text>
       )}
-      <View style={styles.filterContainer}>
+      <View style={style.filterContainer}>
         {filters.map((filter, index) => {
           const isSelected = index === currentSelection;
           const spacingStyle = { marginLeft: index === 0 ? 0 : 8 };
@@ -26,8 +28,8 @@ export const Filter = ({ filters, onFilterChange, currentSelection, title }: Fil
               key={filter}
               title={filter}
               onPress={onFilterChange.bind(null, index)}
-              customStyle={[isSelected ? styles.selectedFilterButton : undefined, spacingStyle]}
-              customStyleText={isSelected ? styles.selectedFilterButtonText : undefined}
+              customStyle={[isSelected ? style.selectedFilterButton : undefined, spacingStyle]}
+              customStyleText={isSelected ? style.selectedFilterButtonText : undefined}
             />
           );
         })}
@@ -43,21 +45,23 @@ export const Filter = ({ filters, onFilterChange, currentSelection, title }: Fil
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.light.background,
-  },
-  title: {
-    fontSize: 16,
-    marginBottom: 7,
-  },
-  filterContainer: {
-    flexDirection: 'row',
-  },
-  selectedFilterButton: {
-    backgroundColor: Colors.light.green,
-  },
-  selectedFilterButtonText: {
-    color: Colors.light.white,
-  },
-});
+const styles = createThemedStyles(colors =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+    },
+    title: {
+      fontSize: 16,
+      marginBottom: 7,
+    },
+    filterContainer: {
+      flexDirection: 'row',
+    },
+    selectedFilterButton: {
+      backgroundColor: colors.green,
+    },
+    selectedFilterButtonText: {
+      color: colors.white,
+    },
+  }),
+);

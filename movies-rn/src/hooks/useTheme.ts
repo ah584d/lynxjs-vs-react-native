@@ -43,7 +43,9 @@ export function useThemedStyles<T>(lightStyles: T, darkStyles: T): T {
  * // Then in component:
  * const componentStyles = useThemedStyles(styles.light, styles.dark);
  */
-export function createThemedStyles<T>(styleFactoryCB: (colors: typeof Colors.light) => T): { light: T; dark: T } {
+type styleFactoryCBType<T> = (colors: typeof Colors.light) => T;
+
+export function createThemedStyles<T>(styleFactoryCB: styleFactoryCBType<T>): { light: T; dark: T } {
   return {
     light: styleFactoryCB(Colors.light),
     dark: styleFactoryCB(Colors.dark),
