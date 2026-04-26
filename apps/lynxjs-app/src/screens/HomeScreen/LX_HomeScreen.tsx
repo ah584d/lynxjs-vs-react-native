@@ -67,6 +67,7 @@ export function HomeScreen(): ReactElement {
   const isButtonDisabled = isLoading || (!filterChanged && !hasSearchText);
 
   const cacheSize = moviesList.length > 0 ? `(${moviesList.length})` : '';
+
   return (
     <PageView>
       <view className={styles['main-container-layout']}>
@@ -89,9 +90,6 @@ export function HomeScreen(): ReactElement {
               </view>
             </view>
             {/* <RenderHeader /> */}
-            <view class={classNames('movies-count-floating', { 'movies-count-floating-android': IS_ANDROID })}>
-              <text className={styles['movies-count-value']}>{Math.abs(moviesList.length).toLocaleString()}</text>
-            </view>
             <FiltersSection
               genreFilter={genreFilter}
               yearFilter={yearFilter}
