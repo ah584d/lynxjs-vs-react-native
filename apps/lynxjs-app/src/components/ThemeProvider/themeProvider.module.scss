@@ -1,0 +1,31 @@
+/**
+ * Theme Provider Styles
+ * Uses SCSS mixins from @fennex-sand/constants to avoid color duplication
+ * Single source of truth: libs/constants/src/colors.ts
+ */
+
+@use '@fennex-sand/constants/theme-mixins' as theme;
+
+.light {
+  /* Include all light theme color variables from mixin */
+  @include theme.light-theme;
+
+  /* Layout styles */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.dark {
+  /* Include all dark theme color variables from mixin */
+  @include theme.dark-theme;
+
+  /* Layout styles */
+  background-color: var(--color-background);
+  color: var(--color-text);
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}

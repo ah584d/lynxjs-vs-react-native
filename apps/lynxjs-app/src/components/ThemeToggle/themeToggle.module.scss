@@ -1,0 +1,23 @@
+@import url('@fennex-sand/constants/colors.css');
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-background-light);
+  border: 2px solid var(--color-gray-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:active {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+.theme-icon {
+  font-size: 20px;
+  line-height: 1;
+}

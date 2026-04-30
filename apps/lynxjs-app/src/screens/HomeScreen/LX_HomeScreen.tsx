@@ -7,6 +7,7 @@ import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
 import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
+import { ThemeToggle } from '@/components/ThemeToggle/LX_ThemeToggle';
 import { EmptySearchResult } from '@/components/atoms/EmptySearchResult/EmptySearchResult';
 import { PageView } from '@/components/index.js';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
@@ -86,6 +87,7 @@ export function HomeScreen(): ReactElement {
                 <text className={styles['title-text']}>trends</text>
               </view>
               <view className={styles['actions-container']}>
+                <ThemeToggle />
                 <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
               </view>
             </view>
