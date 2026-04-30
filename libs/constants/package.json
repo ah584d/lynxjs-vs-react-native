@@ -1,6 +1,6 @@
 {
   "name": "@fennex-sand/constants",
-  "version": "1.0.19",
+  "version": "1.0.21",
   "description": "Shared constants for lynxjs projects",
   "author": "Avraham Hamu",
   "license": "MIT",
@@ -12,7 +12,8 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./colors.css": "./dist/colors.css"
+    "./colors.css": "./dist/colors.css",
+    "./theme-mixins": "./dist/_theme-mixins.scss"
   },
   "files": [
     "dist"
