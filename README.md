@@ -89,6 +89,9 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - upgrade gradle to 9.0.0
 - update lx 3.7 and gradle
 - support svg in lx
+- move to pnpm back
+- support AI in lynx per agent
+- extract lx header in separate component and hide fps with toggle button lx + rn
 
 # Issues
 
