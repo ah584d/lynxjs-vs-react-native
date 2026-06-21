@@ -1,0 +1,32 @@
+.header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  &-purple {
+    color: var(--color-purple);
+  }
+  &-fps {
+    font-size: 1.25rem;
+    color: var(--color-text);
+  }
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}

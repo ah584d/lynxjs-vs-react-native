@@ -5,6 +5,7 @@ Comparing a new mobile framework with a stable mobile framework - all about js
 ## Debug Lynxjs
 
 - checkout https://github.com/lynx-family/lynx-devtool
+- for RN run app in iPhone 16 Pro and for LX run iPhone 16 plus
 
 # Utils
 
@@ -80,7 +81,7 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - move rn to apps back since we don't use anymore mono repo
 - ===> dark mode
 - lynx js swipe down to refresh
-- lynx js main thread
+- lynx js main thread to improve performance
 
 - lx search
 - OK - lx curtain animation
@@ -91,7 +92,7 @@ signed. : adb -s R7ARC1EZJBP install ./android/app/release/app-release.apk
 - support svg in lx
 - move to pnpm back
 - support AI in lynx per agent
-- extract lx header in separate component and hide fps with toggle button lx + rn
+- OK almost - extract lx header in separate component and hide fps with toggle button lx + rn
 
 # Issues
 

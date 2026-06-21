@@ -4,14 +4,12 @@ import classNames from 'classnames';
 import { useShallow } from 'zustand/react/shallow';
 import { IS_ANDROID } from '@/common/LX_constants.js';
 import { FiltersSection } from '@/components/Filters/LX_FiltersSection';
-import { Hamburger } from '@/components/Hamburger/LX_Hamburger';
+import { Header } from '@/components/Header/LX_Header';
 import { MenuCurtain } from '@/components/MenuCurtain/LX_MenuCurtain';
 import { MovieCard } from '@/components/MovieCard/LX_MovieCard.jsx';
-import { ThemeToggle } from '@/components/ThemeToggle/LX_ThemeToggle';
 import { EmptySearchResult } from '@/components/atoms/EmptySearchResult/EmptySearchResult';
 import { PageView } from '@/components/index.js';
 import { useMoviesList, useScrollAnimation } from '@/hooks/LX_useMoviesList.js';
-import { usePerformanceMonitor } from '@/hooks/LX_usePerformanceMonitor.js';
 import { t } from '@/i18n/i18n.js';
 import styles from './homeScreen.module.scss';
 
@@ -34,7 +32,6 @@ export function HomeScreen(): ReactElement {
 
   const [isOffline] = useMoviesList(currentPage, yearFilter, genreFilter, forceRefresh);
   const [isScrolling, handleScrollAnimation] = useScrollAnimation();
-  const { metrics } = usePerformanceMonitor();
 
   useEffect(() => {
     if (forceRefresh && !isLoading) {
@@ -79,19 +76,8 @@ export function HomeScreen(): ReactElement {
         )}
         <view className={styles['main-content']}>
           <view>
-            <view className={styles['header-row']}>
-              <Hamburger />
-              <MenuCurtain />
-              <view className={styles['title']}>
-                <text className={classNames(styles['title-text'], styles['title-text-purple'])}>fliX</text>
-                <text className={styles['title-text']}>trends</text>
-              </view>
-              <view className={styles['actions-container']}>
-                <ThemeToggle />
-                <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
-              </view>
-            </view>
-            {/* <RenderHeader /> */}
+            <Header />
+            <MenuCurtain />
             <FiltersSection
               genreFilter={genreFilter}
               yearFilter={yearFilter}
@@ -148,21 +134,5 @@ export function HomeScreen(): ReactElement {
     setFilterChanged(false);
     setCurrentPage(1);
     setForceRefresh(true);
-  }
-
-  function RenderHeader(): ReactElement {
-    return (
-      <view className={styles['header-row']}>
-        <Hamburger />
-        <MenuCurtain />
-        <view className={styles['title']}>
-          <text className={classNames(styles['title-text'], styles['title-text-purple'])}>fliX</text>
-          <text className={styles['title-text']}>trends</text>
-        </view>
-        <view className={styles['actions-container']}>
-          <text className={classNames(styles['title-text'], styles['title-text-fps'])}>{metrics.fps} fps</text>
-        </view>
-      </view>
-    );
   }
 }
