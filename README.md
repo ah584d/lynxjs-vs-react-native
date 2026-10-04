@@ -107,3 +107,8 @@ Execution failed for task ':app:createBundleReleaseJsAndAssets'.
 
 - run the commands: `mkdir -p node_modules/react-native/sdks/hermesc && ln -sf ../../../hermes-compiler/hermesc/* node_modules/react-native/sdks/hermesc/` [this is the postinstall so you can run npm ci as well]
   and then run again: `npm run android:build_release_apk`
+
+# Dev
+
+iphone 16 pro - rn
+iphone 16 plus - lx
