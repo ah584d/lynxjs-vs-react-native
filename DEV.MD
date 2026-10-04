@@ -1,6 +1,6 @@
 # Development Notes
 
-## Android Dependency Upgrade (apps/lynxjs-app/android)
+## Android Dependency Upgrade (apps/lynxjs-app/android) 3
 
 ### Key blocker
 `compileSdk`/`targetSdk` are pinned to **34** because **Lynx SDK 3.4.1** ships native
